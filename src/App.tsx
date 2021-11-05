@@ -1,9 +1,10 @@
 import './App.css';
+import Header from './components/header/header.component';
 
 function App() {
   return (
     <div className="App">
-      <p>Hello React</p>
+      <Header />
     </div>
   );
 }

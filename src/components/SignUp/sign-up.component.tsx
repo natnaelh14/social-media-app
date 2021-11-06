@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import FormInput from '../FormInput/FormInput.component';
-import CustomButton from '../CustomButton/CustomButton.component';
-import { SignUpContainer, SignUpTitle } from './SignUp.styles';
+import FormInput from '../FormInput/form-input.component';
+import CustomButton from '../CustomButton/custom-button.component';
+import { SignUpContainer, SignUpTitle } from './sign-up.styles';
 
 class SignUp extends Component {
 

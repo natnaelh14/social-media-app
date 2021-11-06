@@ -2,7 +2,7 @@ import {
   GroupContainer,
   FormInputContainer,
   FormInputLabel
-} from './FormInput.styles';
+} from './form-input.styles';
 
 type InputProps = {
     name: string,

@@ -1,5 +1,5 @@
-import SignIn from '../../components/SignIn/SignIn.component';
-import SignUp from '../../components/SignUp/SignUp.component';
+import SignIn from '../../components/SignIn/sign-in.component';
+import SignUp from '../../components/SignUp/sign-up.component';
 
 import { SignInAndSignUpContainer } from './SignInAndSignUp.styles';
 

@@ -30,14 +30,18 @@ const googleSigninStyles = css`
   }
 `;
 
+type ButtonProps = {
+  inverted?: boolean,
+  googleSignin?: boolean
+}
 //We are conditionally rendering a className based on a prop.
-// const getButtonStyles = props => {
-//   if (props.googleSignin) {
-//     return googleSigninStyles;
-//   }
+const getButtonStyles = (props: ButtonProps) => {
+  if (props.googleSignin) {
+    return googleSigninStyles;
+  }
 
-//   return props.inverted ? invertedButtonStyles : buttonStyles;
-// };
+  return props.inverted ? invertedButtonStyles : buttonStyles;
+};
 
 export const CustomButtonContainer = styled.button`
   min-width: 165px;
@@ -52,4 +56,6 @@ export const CustomButtonContainer = styled.button`
   cursor: pointer;
   border: none;
   color: white;
+
+  ${getButtonStyles}
 `;

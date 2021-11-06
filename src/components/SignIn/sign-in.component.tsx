@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import FormInput from '../FormInput/FormInput.component';
-import CustomButton from '../CustomButton/CustomButton.component';
+import FormInput from '../FormInput/form-input.component';
+import CustomButton from '../CustomButton/custom-button.component';
 import {
     SigninContainer,
     SigninTitle,
     ButtonsBarContainer
-} from './SignIn.styles';
+} from './sign-in.styles';
 
 class SignIn extends Component {
 
@@ -30,8 +30,8 @@ class SignIn extends Component {
                         onChange={() => console.log('test')}
                     />
                     <ButtonsBarContainer>
-                        <CustomButton>Sign In</CustomButton>
-                        <CustomButton>
+                        <CustomButton type='submit' >Sign In</CustomButton>
+                        <CustomButton onClick={() => console.log('test')} googleSignin={true}>
                             Sign In With Google
                         </CustomButton>
                     </ButtonsBarContainer>

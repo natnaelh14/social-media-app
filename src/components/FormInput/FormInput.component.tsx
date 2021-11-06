@@ -5,15 +5,18 @@ import {
 } from './FormInput.styles';
 
 type InputProps = {
-    label: string
-    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    name: string,
+    label: string,
+    type: string,
+    value: string,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FormInput = ({ handleChange, label}: InputProps, {...props}) => (
+const FormInput = ({ onChange, label, name, type, value}: InputProps) => (
   <GroupContainer>
-    <FormInputContainer onChange={handleChange} {...props} />
+    <FormInputContainer onChange={onChange} name={name} required type={type} />
     {label ? (
-      <FormInputLabel className={props.value.length ? 'shrink' : ''}>
+      <FormInputLabel className={value.length ? 'shrink' : ''}>
         {label}
       </FormInputLabel>
     ) : null}

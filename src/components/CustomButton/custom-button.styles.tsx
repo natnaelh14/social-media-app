@@ -31,15 +31,18 @@ const googleSigninStyles = css`
 `;
 
 type ButtonProps = {
+  children: React.ReactNode,
+  type?: string,
   inverted?: boolean,
+  onClick?: (event: React.ChangeEvent<HTMLInputElement>) => void,
   googleSignin?: boolean
 }
+
 //We are conditionally rendering a className based on a prop.
 const getButtonStyles = (props: ButtonProps) => {
   if (props.googleSignin) {
     return googleSigninStyles;
   }
-
   return props.inverted ? invertedButtonStyles : buttonStyles;
 };
 

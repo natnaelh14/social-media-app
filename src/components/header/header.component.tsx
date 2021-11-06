@@ -8,17 +8,20 @@ import {
 
 const Header = () => (
     <HeaderContainer>
-        <LogoContainer>
+        <LogoContainer to='/'>
             <Logo className='logo' />
         </LogoContainer>
         <OptionsContainer>
-            <OptionLink>
+            <OptionLink to='/profile'>
                 <span>PROFILE</span>
             </OptionLink>
-            <OptionLink>
+            <OptionLink to='/message'>
                 <span>MESSAGE</span>
             </OptionLink>
-            <OptionLink>
+            <OptionLink to='/signin'>
+                <span>SIGN IN</span>
+            </OptionLink>
+            <OptionLink to='/signout'>
                 <span>SIGN OUT</span>
             </OptionLink>
         </OptionsContainer>

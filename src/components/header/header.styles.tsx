@@ -10,10 +10,11 @@ export const HeaderContainer = styled.div`
   position: relative;
 `;
 
-export const LogoContainer = styled.div`
+export const LogoContainer = styled(Link)`
   height: 100%;
   width: 70px;
   padding: 25px;
+  text-decoration: none;
 `;
 
 export const OptionsContainer = styled.div`
@@ -27,8 +28,9 @@ export const OptionsContainer = styled.div`
   }
 `;
 
-export const OptionLink = styled.div`
+export const OptionLink = styled(Link)`
   padding: 10px 15px;
   margin: 0 10px;
   cursor: pointer;
+  text-decoration: none;
 `;

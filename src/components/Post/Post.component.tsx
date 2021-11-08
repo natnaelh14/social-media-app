@@ -20,7 +20,7 @@ const Post = () => {
     return (
         <>
             <Link
-                to={`/posts`}
+                to={`/home/post`}
                 style={{ textDecoration: "none", color: "inherit" }}
             >
                 <Box

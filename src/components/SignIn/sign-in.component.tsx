@@ -25,12 +25,13 @@ const SignIn: React.FunctionComponent = () => {
         <SigninContainer>
             <SigninTitle>I already have an account</SigninTitle>
             <span>Sign in with your email and password.</span>
-            <form className='sign-in-form' onSubmit={(e) => handleSubmit}>
+            <form className='sign-in-form' onSubmit={() => handleSubmit}>
                 <FormInput
                     type='email'
                     name='email'
                     value={email}
                     label='Email'
+                    autoComplete="off"
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <FormInput
@@ -38,6 +39,7 @@ const SignIn: React.FunctionComponent = () => {
                     name='password'
                     value={password}
                     label='Password'
+                    autoComplete="off"
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <ButtonsBarContainer>

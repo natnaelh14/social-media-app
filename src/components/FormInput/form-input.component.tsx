@@ -9,12 +9,13 @@ type InputProps = {
     label: string,
     type: string,
     value: string,
+    autoComplete?: string,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FormInput = ({ onChange, label, name, type, value}: InputProps) => (
+const FormInput = ({ onChange, label, name, type, autoComplete, value}: InputProps) => (
   <GroupContainer>
-    <FormInputContainer onChange={onChange} name={name} required type={type} />
+    <FormInputContainer onChange={onChange} name={name} required type={type} autoComplete={autoComplete} />
     {label ? (
       <FormInputLabel className={value.length ? 'shrink' : ''}>
         {label}

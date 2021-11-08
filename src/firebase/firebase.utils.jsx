@@ -3,13 +3,13 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 
 const config = {
-  apiKey: "AIzaSyBEFROU_qKelvSPkEZBmCCc5FxeGruirTo",
-  authDomain: "crypto-connect-c6c31.firebaseapp.com",
-  projectId: "crypto-connect-c6c31",
-  storageBucket: "crypto-connect-c6c31.appspot.com",
-  messagingSenderId: "981600023666",
-  appId: "1:981600023666:web:c41d180a0f2ccc03adbeeb",
-  measurementId: "G-Z4RB83BM4J"
+  apiKey: "AIzaSyAiHiR1VpaHR9vgeZKJb_4kkPDy1dpO2BE",
+  authDomain: "afro-clothing-fb999.firebaseapp.com",
+  projectId: "afro-clothing-fb999",
+  storageBucket: "afro-clothing-fb999.appspot.com",
+  messagingSenderId: "915890910339",
+  appId: "1:915890910339:web:f2032f4f34ff00df7c57b6",
+  measurementId: "G-9TNX89ZBTX"
 };
 
 firebase.initializeApp(config);

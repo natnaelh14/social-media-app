@@ -12,12 +12,6 @@ const Header = () => (
             <Logo className='logo' />
         </LogoContainer>
         <OptionsContainer>
-            <OptionLink to='/profile'>
-                <span>PROFILE</span>
-            </OptionLink>
-            <OptionLink to='/message'>
-                <span>MESSAGE</span>
-            </OptionLink>
             <OptionLink to='/signin'>
                 <span>SIGN IN</span>
             </OptionLink>

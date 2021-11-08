@@ -8,6 +8,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import PostList from "./components/PostList/post-list.component";
 import Profile from './components/Profile/profile.component';
 import AddPost from "./components/AddPost/add-post.component";
+import PostDetails from "./screens/ProfileDetails/profile-details.component";
 import styled from 'styled-components';
 
 const FeedContainer = styled.div`
@@ -31,6 +32,7 @@ const RouterFile = () => {
             <Route exact path="/home/profile" component={Profile} />
             <Route exact path="/home/explore" component={PostList} />
             <Route exact path="/home/notifications" component={PostList} />
+            <Route exact path='/home/post' component={PostDetails} />
             <Route exact path="/home/add-post" component={AddPost} />
             <Route exact path="/home/feed" component={PostList} />
             <Route path="/home" component={RightSidebar} />

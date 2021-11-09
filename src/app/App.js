@@ -1,12 +1,15 @@
-import './App.scss';
-import Router from '../Router'
+import "./App.scss";
+import Routes from "../Router";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const App = () => {
   return (
+    <Router>
       <div className="App">
-        <Router />
+        <Routes />
       </div>
+    </Router>
   );
-}
+};
 
 export default App;

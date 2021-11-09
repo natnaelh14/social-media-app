@@ -1,12 +1,8 @@
-
-
+import React, { useEffect } from "react";
 import {
     Grid,
     IconButton,
-    Input,
     Typography,
-    Menu,
-    MenuItem,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
@@ -14,9 +10,19 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from '../../app/hooks'
 
 
 const Post = () => {
+
+    const dispatch = useAppDispatch();
+    const postList = useAppSelector((state) => state.postList);
+    const {loading, error, posts} = postList;
+
+    useEffect(() => { 
+        console.log(posts)
+    }, [])
+
     return (
         <>
             <Link

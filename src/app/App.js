@@ -1,14 +1,12 @@
+import React from "react";
 import "./App.scss";
-import Routes from "../Router/Router";
-import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "../Router/Routes";
 
 const App = () => {
   return (
-    <Router>
-      <div className="App">
-        <Routes />
-      </div>
-    </Router>
+    <div className="App">
+      <Routes />
+    </div>
   );
 };
 

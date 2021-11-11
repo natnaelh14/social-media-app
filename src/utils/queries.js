@@ -8,3 +8,15 @@ export const QUERY_POSTS = gql`
     }
   }
 `;
+
+export const QUERY_USERS = gql`
+  query getUsers {
+    users {
+      id
+      avatar
+      bio
+      handle
+      isActive
+    }
+  }
+`;

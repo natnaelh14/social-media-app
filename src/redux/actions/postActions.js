@@ -9,13 +9,13 @@ export const listPosts = () => async (
       dispatch({ type: POST_LIST_REQUEST });
       const { error, data, loading } = useQuery(QUERY_POSTS, {
         variables: {
-          postsUserId: 1
+          postsUserId: 2
         }
       })
   
       dispatch({
         type: POST_LIST_SUCCESS,
-        payload: data.posts,
+        payload: data,
       });
     } catch (error) {
       dispatch({

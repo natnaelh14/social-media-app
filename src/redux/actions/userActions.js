@@ -1,33 +1,21 @@
 import axios from 'axios';
+import { USER_LIST_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS } from '../constants/userConstants';
+import { useQuery } from '@apollo/client';
+import { QUERY_USERS } from "../../utils/queries";
 
-export const register = (name, email, password) => async (dispatch) => {
+export const listUsers = () => async (dispatch) => {
     try {
       dispatch({
-        type: USER_REGISTER_REQUEST,
+        type: USER_LIST_REQUEST,
       });
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const { data } = await axios.post(
-        '/api/users',
-        { name, email, password },
-        config,
-      );
+      const { error, data, loading } = useQuery(QUERY_USERS);
       dispatch({
-        type: USER_REGISTER_SUCCESS,
+        type: USER_LIST_SUCCESS,
         payload: data,
       });
-      // Log user in after registration
-      dispatch({
-        type: USER_LOGIN_SUCCESS,
-        payload: data,
-      });
-      localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (e) {
       dispatch({
-        type: USER_REGISTER_FAIL,
+        type: USER_LIST_FAIL,
         payload:
           e.response && e.response.data.message
             ? e.response.data.message

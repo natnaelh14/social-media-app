@@ -10,18 +10,23 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from '../../app/hooks'
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { listPosts } from '../../redux/actions/postActions';
+import { listUsers } from '../../redux/actions/userActions';
 
-
-const Post = () => {
-
+const Post: React.FC = () => {
     const dispatch = useAppDispatch();
     const postList = useAppSelector((state) => state.postList);
-    const {loading, error, posts} = postList;
+    const { loading, error, posts } = postList;
+    const userList = useAppSelector((state) => state.userList);
+    const { loading: userLoading, error: userError, users } = userList;
 
-    useEffect(() => { 
-        console.log(posts)
-    }, [])
+    useEffect(() => {
+        dispatch(listUsers())
+        dispatch(listPosts())
+        console.log('posts', posts)
+        console.log('users', users)
+    }, [dispatch])
 
     return (
         <>

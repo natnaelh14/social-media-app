@@ -1,20 +1,23 @@
 import thunk from "redux-thunk";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { postListReducer } from './reducers/postReducers'
+import { postListReducer } from './reducers/postReducers';
+import { userListReducer } from './reducers/userReducers';
+
 
 const reducer = combineReducers({
   postList: postListReducer,
+  userList: userListReducer
 });
 
 const initialState = {};
 
-const middleware = [thunk];
+// const middleware = [thunk];
 
 export const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

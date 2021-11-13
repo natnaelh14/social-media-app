@@ -14,7 +14,7 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { listPosts } from '../../redux/actions/postActions';
 import { listUsers } from '../../redux/actions/userActions';
 import { useQuery } from "@apollo/client";
-import { QUERY_POSTS } from "../../utils/queries";
+import { QUERY_POSTS, QUERY_USERS } from "../../utils/queries";
 
 const Post: React.FC = () => {
 
@@ -24,17 +24,17 @@ const Post: React.FC = () => {
     const userList = useAppSelector((state) => state.userList);
     const { loading: userLoading, error: userError, users } = userList;
 
-      const { error: queryError, data, loading: queryLoading } = useQuery(QUERY_POSTS, {
+    const { error: queryPostsError, data: postsData, loading: queryPostsLoading } = useQuery(QUERY_POSTS, {
         variables: {
-          postsUserId: 2
+            postsUserId: 2
         }
-      })
+    })
+
+    const { error: queryUserError, data: usersData, loading: queryUserLoading } = useQuery(QUERY_USERS);
 
     useEffect(() => {
-        dispatch(listUsers())
-        dispatch(listPosts(data))
-        console.log('posts', posts)
-        console.log('users', users)
+        dispatch(listUsers(usersData))
+        dispatch(listPosts(postsData))
     }, [dispatch])
 
     return (

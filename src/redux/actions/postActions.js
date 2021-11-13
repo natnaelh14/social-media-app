@@ -2,16 +2,12 @@ import { POST_LIST_FAIL, POST_LIST_REQUEST, POST_LIST_SUCCESS } from "../constan
 import { useQuery } from '@apollo/client';
 import { QUERY_POSTS } from "../../utils/queries";
 
-export const listPosts = () => async (
+export const listPosts = (data) => async (
     dispatch,
   ) => {
+    console.log('listPost called with',{data})
     try {
       dispatch({ type: POST_LIST_REQUEST });
-      const { error, data, loading } = useQuery(QUERY_POSTS, {
-        variables: {
-          postsUserId: 2
-        }
-      })
   
       dispatch({
         type: POST_LIST_SUCCESS,

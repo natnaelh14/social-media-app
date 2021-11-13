@@ -3,6 +3,17 @@ import { USER_LIST_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS } from '../constan
 import { useQuery } from '@apollo/client';
 import { QUERY_USERS } from "../../utils/queries";
 
+
+/**
+ * listUsers = function(){
+ *  return function(dispatch){
+ *    try{
+ *      dispatch...........
+ *      }
+ * }
+ * }
+ * @returns 
+ */
 export const listUsers = () => async (dispatch) => {
     try {
       dispatch({

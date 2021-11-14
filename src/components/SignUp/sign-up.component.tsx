@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import axios from "axios";
+import { useMutation } from "@apollo/client";
+import { ADD_USER } from "../../utils/mutations";
+import Auth from "../../utils/auth"; //import Auth feature that we created, which will be the decoder
 import FormInput from '../FormInput/form-input.component';
 import CustomButton from '../CustomButton/custom-button.component';
 import { SignUpContainer, SignUpTitle } from './sign-up.styles';
@@ -16,6 +20,32 @@ const SignUp: React.FunctionComponent = () => {
   const [gender, setGender] = useState<string>('')
   const [avatar, setAvatar] = useState<string>('')
   const [birthDate, setBirthDate] = useState<string>('')
+
+  const [addUser, { error, data }] = useMutation(ADD_USER);
+
+  const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+            // //API call to upload resume and receive a pdf url file
+            // const resumeData = new FormData();
+            // resumeData.append("upload_preset", "resume");
+            // resumeData.append("file", avatar);
+            // const resumeRes = await axios.post(
+            //   `https://api.cloudinary.com/v1_1/doalzf6o2/image/upload`,
+            //   resumeData
+            // );
+            // const avatarUr = resumeRes.data.secure_url
+            // console.log(avatarUr)
+            const avatarUrl = 'https://res.cloudinary.com/doalzf6o2/image/upload/v1630350221/l7cectdjrheqnfpt1v7j.pdf'
+            const { data } = await addUser({
+              variables: { email, password, handle, gender, avatarUrl, birthDate },
+            });
+            Auth.login(data.addUser.token);
+
+    } catch (e) {
+
+    }
+  };
 
   return (
     <SignUpContainer>
@@ -84,7 +114,8 @@ const SignUp: React.FunctionComponent = () => {
           label=''
           onChange={(e) => setBirthDate(e.target.value)}
         />
-        <CustomButton type='submit'>Sign Up</CustomButton>
+        <button type='submit' onClick={handleRegister}>Sign Up</button>
+        {/* <CustomButton type='submit' onClick={handleRegister}>Sign Up</CustomButton> */}
       </form>
     </SignUpContainer>
   );

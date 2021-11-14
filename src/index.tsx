@@ -1,13 +1,31 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/App.js';
 import './bootstrap.min.css';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
+const { store } = require("./redux/store.ts");
+import { Provider } from "react-redux";
+
+//Enable apollo devtools, if  production is set to false
+const connectToDevTools = process.env.REACT_APP_PRODUCTION === "false";
+const client = new ApolloClient({
+  //New instance of ApolloClient
+  cache: new InMemoryCache(), //New instance of InMemoryCache
+  uri: "http://localhost:3001/graphql",
+  connectToDevTools
+});
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <ApolloProvider client={client}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ApolloProvider>
   , document.getElementById('root')
 );
 

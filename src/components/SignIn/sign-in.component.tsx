@@ -1,54 +1,14 @@
-import React, { useState } from 'react';
-import FormInput from '../FormInput/form-input.component';
-import CustomButton from '../CustomButton/custom-button.component';
-import {SigninContainer, SigninTitle, ButtonsBarContainer} from './sign-in.styles';
-import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
+import React from 'react';
+import { SigninContainer, SigninTitle } from './sign-in.styles';
+import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { Button } from '@mui/material';
 
 const SignIn: React.FunctionComponent = () => {
 
-    const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-
-    const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        console.log('hello there!hello there!hello there!hello there!hello there!hello there!hello there!')
-        try {
-            console.log('hello there!hello there!hello there!hello there!hello there!hello there!hello there!')
-            await auth.signInWithEmailAndPassword(email, password);
-        } catch (error) {
-            console.error(error);
-        }
-        setEmail('')
-        setPassword('')
-    };
     return (
         <SigninContainer>
-            <SigninTitle>I already have an account</SigninTitle>
-            <span>Sign in with your email and password.</span>
-            <form className='sign-in-form' onSubmit={() => handleSubmit}>
-                <FormInput
-                    type='email'
-                    name='email'
-                    value={email}
-                    label='Email'
-                    autoComplete="off"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <FormInput
-                    type='password'
-                    name='password'
-                    value={password}
-                    label='Password'
-                    autoComplete="off"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <ButtonsBarContainer>
-                    <CustomButton type='submit' >Sign In</CustomButton>
-                    <CustomButton onClick={signInWithGoogle} googleSignin={true}>
-                        Sign In With Google
-                    </CustomButton>
-                </ButtonsBarContainer>
-            </form>
+            <SigninTitle>Welcome, Please Sign in </SigninTitle>
+            <Button variant="contained" disableElevation onClick={signInWithGoogle}>Sign in with Google</Button>
         </SigninContainer>
     );
 }

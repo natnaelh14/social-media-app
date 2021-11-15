@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
     Grid,
     IconButton,
@@ -10,25 +10,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { listPosts } from '../../redux/actions/postActions';
-import { useQuery } from "@apollo/client";
-import { QUERY_POSTS } from "../../utils/queries";
 
-const Post: React.FC = () => {
+type postProps = {
+    text: string;
+  }; 
 
-    const dispatch = useAppDispatch();
-    const postList = useAppSelector((state) => state.postList);
-    const { loading, error, posts } = postList;
-    const { error: queryPostsError, data: postsData, loading: queryPostsLoading } = useQuery(QUERY_POSTS, {
-        variables: {
-            postsUserId: 2
-        }
-    })
-
-    useEffect(() => {
-        dispatch(listPosts(postsData))
-    }, [dispatch])
+const Post = ({text}: postProps) => {
 
     return (
         <>

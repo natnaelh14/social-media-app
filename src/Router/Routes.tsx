@@ -31,21 +31,21 @@ const client = new ApolloClient({
   uri: "http://localhost:3001/graphql",
 });
 const qr = gql`
-    query getUser($user_id: ID!) {
-    userProfile(user_id: $user_id) {
-      user_id
+    query getUser($id: ID!) {
+    userProfile(id: $id) {
+      id
       email
       handle
     }
   }
   `;
 const newUser = gql`
-  mutation($user_id: ID!, $email: String!, $handle: String!) {
+  mutation($id: ID!, $email: String!, $handle: String!) {
     addUserProfile(        
-        user_id: $user_id
+        id: $id
         email: $email
         handle: $handle) {
-        user_id
+        id
         email
         handle
         }
@@ -65,7 +65,7 @@ class Routes extends Component<MyProps, {}> {
           const result = await client.query({
             query: qr,
             variables: {
-              user_id: userAuth.uid
+              id: userAuth.uid
             }
           })          
         } catch (e) {
@@ -73,7 +73,7 @@ class Routes extends Component<MyProps, {}> {
               const wow = await client.mutate({
                 mutation: newUser,
                 variables: {
-                  user_id: userAuth.uid,
+                  id: userAuth.uid,
                   email: userAuth.email,
                   handle: userAuth.displayName
                 }

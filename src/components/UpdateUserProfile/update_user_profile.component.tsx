@@ -3,7 +3,7 @@ import axios from "axios";
 import { useMutation } from "@apollo/client";
 import FormInput from '../FormInput/form-input.component';
 import CustomButton from '../CustomButton/custom-button.component';
-import { SignUpContainer, SignUpTitle } from './update_user_profile..styles';
+import {  SignUpContainer, SignUpTitle } from './update_user_profile.styles';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { Input } from '@mui/material';
 import { IconButton } from '@mui/material';

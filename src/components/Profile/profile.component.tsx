@@ -143,10 +143,6 @@ const Profile = () => {
                 Posts
               </Typography>
             </Box>
-            <Post />
-            <Post />
-            <Post />
-            <Post />
           </Box>
         </Box>
       </div>

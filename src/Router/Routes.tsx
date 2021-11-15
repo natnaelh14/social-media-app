@@ -16,10 +16,42 @@ import { FeedContainer } from "./Router.styles";
 import { setCurrentUser } from '../redux/actions/userActions';
 import { getCurrentUser } from '../redux/user.selectors';
 import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
+import {
+  ApolloClient,
+  InMemoryCache, gql
+} from "@apollo/client";
+
 type MyProps = {
   setCurrentUser: any;
   currentUser: any;
 };
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(), //New instance of InMemoryCache
+  uri: "http://localhost:3001/graphql",
+});
+const qr = gql`
+    query getUser($user_id: ID!) {
+    userProfile(user_id: $user_id) {
+      user_id
+      email
+      handle
+    }
+  }
+  `;
+const newUser = gql`
+  mutation($user_id: ID!, $email: String!, $handle: String!) {
+    addUserProfile(        
+        user_id: $user_id
+        email: $email
+        handle: $handle) {
+        user_id
+        email
+        handle
+        }
+  }
+`;
+
 class Routes extends Component<MyProps, {}> {
   unsubscribeFromAuth: any = null;
 
@@ -29,6 +61,28 @@ class Routes extends Component<MyProps, {}> {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       // userAuth returns null when auth.signOut() is called
       if (userAuth) {
+        try {
+          const result = await client.query({
+            query: qr,
+            variables: {
+              user_id: userAuth.uid
+            }
+          })          
+        } catch (e) {
+          try {
+              const wow = await client.mutate({
+                mutation: newUser,
+                variables: {
+                  user_id: userAuth.uid,
+                  email: userAuth.email,
+                  handle: userAuth.displayName
+                }
+              })
+          } catch (e) {
+            console.log("Well, That didnt't work either")
+          }
+        }
+
         const userRef: any = await createUserProfileDocument(userAuth);
         //From this, we are going to get back the first state from our data.
         userRef.onSnapshot((snapShot: any) => {
@@ -51,40 +105,39 @@ class Routes extends Component<MyProps, {}> {
       <Router history={history}>
         <Header />
         <Switch>
-          <Route exact path="/signin" component={SignIn}>
-          {this.props.currentUser ?  <Redirect to="/home/feed" />:<SignIn /> }
+          <Route exact path="/signin">
+            {this.props.currentUser ? <Redirect to="/home/feed" /> : <SignIn />}
           </Route>
-          <Route exact path="/" component={Feed}>
-          {this.props.currentUser ?  <Redirect to="/home/feed" /> :<SignIn /> }
+          <Route exact path="/">
+            {this.props.currentUser ? <Redirect to="/home/feed" /> : <SignIn />}
           </Route>
           <FeedContainer>
-
             <Route path="/home">
-              {this.props.currentUser ?  <LeftSidebar />:<Redirect to="/signin" /> }
+              {this.props.currentUser ? <LeftSidebar /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/messages">
-              {this.props.currentUser ?  <PostList />:<Redirect to="/signin" /> }
+              {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/profile">
-              {this.props.currentUser ?  <Profile />:<Redirect to="/signin" /> }
+              {this.props.currentUser ? <Profile /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/explore">
-              {this.props.currentUser ?  <PostList />:<Redirect to="/signin" /> }
+              {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/notifications">
-              {this.props.currentUser ?  <PostList />: <Redirect to="/signin" /> }
+              {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}
             </Route>
-            <Route exact path="/home/post" component={PostDetails}>
-              {this.props.currentUser ?  <PostDetails />: <Redirect to="/signin" /> }
+            <Route exact path="/home/post">
+              {this.props.currentUser ? <PostDetails /> : <Redirect to="/signin" />}
             </Route>
-            <Route exact path="/home/add-post" component={AddPost}>
-              {this.props.currentUser ?  <AddPost />: <Redirect to="/signin" /> }
+            <Route exact path="/home/add-post">
+              {this.props.currentUser ? <AddPost /> : <Redirect to="/signin" />}
             </Route>
-            <Route exact path="/home/feed" component={PostList}>
-              {this.props.currentUser ?  <PostList />: <Redirect to="/signin" /> }
+            <Route exact path="/home/feed">
+              {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}
             </Route>
-            <Route path="/home" component={RightSidebar}>
-              {this.props.currentUser ?  <RightSidebar />: <Redirect to="/signin" /> }
+            <Route path="/home">
+              {this.props.currentUser ? <RightSidebar /> : <Redirect to="/signin" />}
             </Route>
           </FeedContainer>
         </Switch>

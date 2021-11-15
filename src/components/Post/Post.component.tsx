@@ -12,28 +12,21 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { listPosts } from '../../redux/actions/postActions';
-import { listUsers } from '../../redux/actions/userActions';
 import { useQuery } from "@apollo/client";
-import { QUERY_POSTS, QUERY_USERS } from "../../utils/queries";
+import { QUERY_POSTS } from "../../utils/queries";
 
 const Post: React.FC = () => {
 
     const dispatch = useAppDispatch();
     const postList = useAppSelector((state) => state.postList);
     const { loading, error, posts } = postList;
-    const userList = useAppSelector((state) => state.userList);
-    const { loading: userLoading, error: userError, users } = userList;
-
     const { error: queryPostsError, data: postsData, loading: queryPostsLoading } = useQuery(QUERY_POSTS, {
         variables: {
             postsUserId: 2
         }
     })
 
-    const { error: queryUserError, data: usersData, loading: queryUserLoading } = useQuery(QUERY_USERS);
-
     useEffect(() => {
-        dispatch(listUsers(usersData))
         dispatch(listPosts(postsData))
     }, [dispatch])
 

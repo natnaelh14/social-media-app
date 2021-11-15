@@ -1,6 +1,6 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import 'firebase/compat/auth';
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+import "firebase/compat/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEFROU_qKelvSPkEZBmCCc5FxeGruirTo",
@@ -9,7 +9,7 @@ const firebaseConfig = {
   storageBucket: "crypto-connect-c6c31.appspot.com",
   messagingSenderId: "981600023666",
   appId: "1:981600023666:web:c41d180a0f2ccc03adbeeb",
-  measurementId: "G-Z4RB83BM4J"
+  measurementId: "G-Z4RB83BM4J",
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -19,7 +19,7 @@ export const auth = firebase.auth();
 
 const provider = new firebase.auth.GoogleAuthProvider();
 // We want to trigger the google pop whenever we use the GoogleAuthProvider
-provider.setCustomParameters({ prompt: 'select_account' });
+provider.setCustomParameters({ prompt: "select_account" });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
@@ -30,7 +30,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   const userRef = firestore.doc(`users/${userAuth.uid}`);
 
   const snapshot = await userRef.get();
-//We are creating the user data.
+  //We are creating the user data.
   if (!snapshot.exists) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -39,23 +39,21 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         displayName,
         email,
         createdAt,
-        ...additionalData
+        ...additionalData,
       });
     } catch (error) {
-      console.error('error creating user', error.message);
+      console.error("error creating user", error.message);
     }
   }
-
   return getUserDocumentRef(userAuth.uid);
 };
 
-export const getUserDocumentRef = async uid => {
+export const getUserDocumentRef = async (uid) => {
   if (!uid) return null;
-
   try {
     return firestore.doc(`users/${uid}`);
   } catch (error) {
-    console.error('error fetching user', error.message);
+    console.error("error fetching user", error.message);
   }
 };
 

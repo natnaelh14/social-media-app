@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { useMutation } from "@apollo/client";
-import { ADD_USER } from "../../utils/mutations";
-import Auth from "../../utils/auth"; //import Auth feature that we created, which will be the decoder
 import FormInput from '../FormInput/form-input.component';
 import CustomButton from '../CustomButton/custom-button.component';
-import { SignUpContainer, SignUpTitle } from './sign-up.styles';
+import { SignUpContainer, SignUpTitle } from './update_user_profile..styles';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { Input } from '@mui/material';
 import { IconButton } from '@mui/material';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
-const SignUp: React.FunctionComponent = () => {
+const UpdateUserProfile: React.FunctionComponent = () => {
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -21,7 +19,7 @@ const SignUp: React.FunctionComponent = () => {
   const [avatar, setAvatar] = useState<string>('')
   const [birthDate, setBirthDate] = useState<string>('')
 
-  const [addUser, { error, data }] = useMutation(ADD_USER);
+  // const [addUser, { error, data }] = useMutation(ADD_USER);
 
   const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -37,10 +35,10 @@ const SignUp: React.FunctionComponent = () => {
             // const avatarUr = resumeRes.data.secure_url
             // console.log(avatarUr)
             const avatarUrl = 'https://res.cloudinary.com/doalzf6o2/image/upload/v1630350221/l7cectdjrheqnfpt1v7j.pdf'
-            const { data } = await addUser({
-              variables: { email, password, handle, gender, avatarUrl, birthDate },
-            });
-            Auth.login(data.addUser.token);
+            // const { data } = await addUser({
+            //   variables: { email, password, handle, gender, avatarUrl, birthDate },
+            // });
+            // Auth.login(data.addUser.token);
 
     } catch (e) {
 
@@ -121,4 +119,4 @@ const SignUp: React.FunctionComponent = () => {
   );
 }
 
-export default SignUp;
+export default UpdateUserProfile;

@@ -9,14 +9,12 @@ export const QUERY_POSTS = gql`
   }
 `;
 
-export const QUERY_USERS = gql`
-  query getUsers {
-    users {
-      id
-      avatar
-      bio
+export const QUERY_USER = gql`
+  query getUser($user_id: ID!) {
+    userProfile(user_id: $user_id) {
+      user_id
+      email
       handle
-      isActive
     }
   }
 `;

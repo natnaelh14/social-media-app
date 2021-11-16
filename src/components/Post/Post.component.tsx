@@ -14,7 +14,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import moment from 'moment';
 import { Link } from "react-router-dom";
 import { QUERY_USER } from '../../utils/queries';
-import { DELETE_POST } from '../../utils/mutations'
+import { DELETE_POST, ADD_COMMENT } from '../../utils/mutations'
 import { useQuery, useMutation } from '@apollo/client';
 import Comment from "../Comment/comment.component";
 
@@ -30,14 +30,29 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
         variables: { id: userId },
     });
     const user = data.userProfile;
-    const [deletePost, {}] = useMutation(DELETE_POST);
+    const [deletePost, { }] = useMutation(DELETE_POST);
+    const [addComment, { }] = useMutation(ADD_COMMENT);
+
 
 
     const [displayComment, setDisplayComment] = useState(false);
+    const [commentText, setCommentText] = useState("");
 
-    const handleDeletePost = async(e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleDeletePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         await deletePost({ variables: { id: postId } });
+    }
+
+    const handleAddComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        await addComment({
+            variables: {
+                user_id: userId,
+                post_id: postId,
+                text: commentText
+            }
+        });
+        setCommentText("");
     }
 
     return (
@@ -121,8 +136,8 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                     <Grid item>
                                         <Box padding=".5rem 0">
                                             <Input
-                                                onChange={() => console.log('Hello WOrld')}
-                                                value=''
+                                                onChange={(e) => setCommentText(e.target.value)}
+                                                value={commentText}
                                                 multiline
                                                 rows="2"
                                                 disableUnderline
@@ -133,8 +148,9 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                         </Box>
                                         <Box textAlign="right" paddingBottom=".5rem">
                                             <Button
-                                                onClick={() => console.log('Hello WOrld')}
+                                                onClick={handleAddComment}
                                                 variant="contained"
+                                                disabled={commentText.length === 0}
                                                 color="primary"
                                                 size="small"
                                                 sx={{

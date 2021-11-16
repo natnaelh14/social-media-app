@@ -33,7 +33,7 @@ const PostList: React.FC = () => {
 
         <Box>
           {postData &&
-            postData.map((post) => <Post key={post.id} text={post.text} />)}
+            postData.map((post) => <Post key={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
         </Box>
 
       </div>

@@ -2,29 +2,23 @@ import React, { useEffect } from 'react';
 import Post from '../Post/Post.component';
 import AddPost from '../AddPost/add-post.component';
 import { Fade } from "@mui/material";
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { useQuery } from '@apollo/client';
-import { QUERY_POSTS } from '../../utils/queries';
+import { useAppSelector } from '../../app/hooks';
 import { CircularProgress, Box } from "@mui/material";
-import { listPosts } from '../../redux/actions/postActions';
 
 const PostList: React.FC = () => {
 
-  const dispatch = useAppDispatch();
-  const currentUser = useAppSelector((state) => state.currentUser);
-  const { user } = currentUser
-
-  const { error, data, loading } = useQuery(QUERY_POSTS, {
-    variables: {
-      user_id: "two"
-    }
-  })
+  const postList = useAppSelector((state) => state.postList)
+  const { posts, loading } = postList
+  const postData: Array<{
+    id: number,
+    user_id: string,
+    text: string,
+    created_at: Date
+  }> = posts
 
   useEffect(() => {
-    dispatch(listPosts(data))
-    console.log('user', user)
-    console.log("data", data)
-  }, [])
+    console.log(posts)
+  }, [posts])
 
   return (
 
@@ -32,14 +26,14 @@ const PostList: React.FC = () => {
       <div style={{ border: '1px solid #cdcdcd', padding: '20px', margin: '50px' }}>
         <AddPost />
         <Box>
-          {!data && (
+          {loading && (
             <CircularProgress size={20} color="primary" />
           )}
         </Box>
 
         <Box>
-          {data &&
-            data.posts.map((post: any) => <Post key={post.id} text={post.text} />)}
+          {postData &&
+            postData.map((post) => <Post key={post.id} text={post.text} />)}
         </Box>
 
       </div>

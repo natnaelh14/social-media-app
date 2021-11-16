@@ -116,10 +116,10 @@ class Routes extends Component<MyProps, {}> {
     });
   };
 
-  componentDidUpdate () {
-    // const { listPosts, postsList } = this.props;
-    // listPosts(postsList)
-  }
+  // componentDidUpdate () {
+  //   // const { listPosts, postsList } = this.props;
+  //   // listPosts(postsList)
+  // }
 
   componentWillUnmount = async () => {
     // To prevent memory leak, when it unmounts, it removes the userAuth object

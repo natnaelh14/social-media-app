@@ -1,14 +1,9 @@
 import React, { useState } from "react";
-import {
-    Grid,
-    IconButton,
-    Typography,
-    Input,
-    Button
-} from "@mui/material";
+import { Grid, IconButton, Typography, Input, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import IosShareIcon from "@mui/icons-material/IosShare";
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import moment from 'moment';
@@ -16,7 +11,7 @@ import { Link } from "react-router-dom";
 import { QUERY_USER } from '../../utils/queries';
 import { DELETE_POST, ADD_COMMENT } from '../../utils/mutations'
 import { useQuery, useMutation } from '@apollo/client';
-import Comment from "../Comment/comment.component";
+import CommentList from "../CommentList/comment_list.component";
 
 type postProps = {
     postId: number,
@@ -30,10 +25,9 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
         variables: { id: userId },
     });
     const user = data.userProfile;
+
     const [deletePost, { }] = useMutation(DELETE_POST);
     const [addComment, { }] = useMutation(ADD_COMMENT);
-
-
 
     const [displayComment, setDisplayComment] = useState(false);
     const [commentText, setCommentText] = useState("");
@@ -127,6 +121,9 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                 <IconButton size="small">
                                     <ThumbDownIcon fontSize="small" />
                                 </IconButton>
+                                <IconButton size="small">
+                                    <IosShareIcon fontSize="small" />
+                                </IconButton>
                                 <IconButton onClick={handleDeletePost} size="small">
                                     <DeleteIcon fontSize="small" />
                                 </IconButton>
@@ -162,9 +159,8 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                         </Box>
                                     </Grid>
                                     <Box textAlign="center" marginTop="1rem">
+                                        <CommentList postId={postId} />
                                     </Box>
-                                    <Comment />
-                                    <Comment />
                                 </Box>)}
                         </Box>
                     </Grid>

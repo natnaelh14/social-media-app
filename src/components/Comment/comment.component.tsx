@@ -1,9 +1,18 @@
+import React from "react";
 import { Grid, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+const Moment = require('moment');
 
-const Comment = () => {
+type commentProps = {
+  commentId: number,
+  postId: number,
+  userId: string,
+  text: string,
+  commentTime: Date
+};
+
+const Comment = ({commentId, postId, userId, text, commentTime}: commentProps) => {
   return (
     <Box
       padding="1rem"
@@ -45,12 +54,12 @@ const Comment = () => {
                   <Typography
                     sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
                   >
-                    11/07/2021
+                    {Moment(commentTime).format('MMMM Do YYYY')}
                   </Typography>
                 </Box>
                 <Box>
                   <Typography sx={{ fontSize: "15px", color: "#555" }}>
-                    This is a comment. This is a comment. This is a comment. This is a comment.
+                    {text}
                   </Typography>
                 </Box>
               </Grid>

@@ -4,17 +4,21 @@ import AddPost from '../AddPost/add-post.component';
 import { Fade } from "@mui/material";
 import { useAppSelector } from '../../app/hooks';
 import { CircularProgress, Box } from "@mui/material";
-import { listPosts } from '../../redux/actions/postActions';
 
 const PostList: React.FC = () => {
 
-  const postList = useAppSelector((state) => state.postList);
+  const postList = useAppSelector((state) => state.postList)
   const { posts, loading } = postList
+  const postData: Array<{
+    id: number,
+    user_id: string,
+    text: string,
+    created_at: Date
+  }> = posts
 
-  // useEffect(() => {
-  //   dispatch(listPosts(data))
-
-  // }, [dispatch])
+  useEffect(() => {
+    console.log(posts)
+  }, [posts])
 
   return (
 
@@ -28,9 +32,8 @@ const PostList: React.FC = () => {
         </Box>
 
         <Box>
-          {posts &&
-         (<div>Hello</div>)}
-            {/* posts.map((post: any) => <Post key={post.id} text={post.text} />)} */}
+          {postData &&
+            postData.map((post) => <Post key={post.id} text={post.text} />)}
         </Box>
 
       </div>

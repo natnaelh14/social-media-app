@@ -102,14 +102,15 @@ class Routes extends Component<MyProps, {}> {
           //We actually don't get any data, until we use the data method.
           setCurrentUser({ id: snapShot.id, ...snapShot.data() });
         });
-      }
       const { data: { posts: postsData } } = await client.query({
         query: QUERY_POSTS,
         variables: {
-          user_id: "chG0WmOFPheLzl528legA3iIpbO2"
+          user_id: userAuth.uid
         }
       })
       listPosts(postsData)
+      }
+
       setCurrentUser(userAuth);
     });
   };

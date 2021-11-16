@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import {
     Grid,
     IconButton,
     Typography,
+    Input,
+    Button
 } from "@mui/material";
 import { Box } from "@mui/system";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
@@ -12,24 +14,31 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import moment from 'moment';
 import { Link } from "react-router-dom";
 import { QUERY_USER } from '../../utils/queries';
-import { useQuery } from '@apollo/client';
+import { DELETE_POST } from '../../utils/mutations'
+import { useQuery, useMutation } from '@apollo/client';
+import Comment from "../Comment/comment.component";
 
 type postProps = {
+    postId: number,
     text: string,
     userId: string,
     postTime: Date
 };
 
-const Post = ({ text, userId, postTime }: postProps) => {
-
+const Post = ({ postId, text, userId, postTime }: postProps) => {
     const { loading, error, data } = useQuery(QUERY_USER, {
         variables: { id: userId },
     });
     const user = data.userProfile;
+    const [deletePost, {}] = useMutation(DELETE_POST);
 
-    useEffect(() => {
-        console.log('data', data)
-    }, [data])
+
+    const [displayComment, setDisplayComment] = useState(false);
+
+    const handleDeletePost = async(e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        await deletePost({ variables: { id: postId } });
+    }
 
     return (
         <>
@@ -78,16 +87,11 @@ const Post = ({ text, userId, postTime }: postProps) => {
                                             {moment(postTime).format('MMMM Do YYYY')}
                                         </Typography>
                                     </Box>
-                                    <Link
-                                        to={`/home/post`}
-                                        style={{ textDecoration: "none", color: "inherit" }}
-                                    >
-                                        <Box>
-                                            <Typography sx={{ fontSize: "15px", color: "#555" }}>
-                                                {text}
-                                            </Typography>
-                                        </Box>
-                                    </Link>
+                                    <Box>
+                                        <Typography sx={{ fontSize: "15px", color: "#555" }}>
+                                            {text}
+                                        </Typography>
+                                    </Box>
                                 </Grid>
                             </Grid>
                             <Box
@@ -97,7 +101,7 @@ const Post = ({ text, userId, postTime }: postProps) => {
                                 marginTop=".8rem"
                             >
                                 <IconButton
-                                    onClick={() => console.log('hello world')}
+                                    onClick={() => setDisplayComment(!displayComment)}
                                     size="small"
                                 >
                                     <ChatBubbleOutlineIcon fontSize="small" />
@@ -108,10 +112,44 @@ const Post = ({ text, userId, postTime }: postProps) => {
                                 <IconButton size="small">
                                     <ThumbDownIcon fontSize="small" />
                                 </IconButton>
-                                <IconButton size="small">
+                                <IconButton onClick={handleDeletePost} size="small">
                                     <DeleteIcon fontSize="small" />
                                 </IconButton>
                             </Box>
+                            {displayComment && (
+                                <Box>
+                                    <Grid item>
+                                        <Box padding=".5rem 0">
+                                            <Input
+                                                onChange={() => console.log('Hello WOrld')}
+                                                value=''
+                                                multiline
+                                                rows="2"
+                                                disableUnderline
+                                                type="text"
+                                                placeholder="Post your comment"
+                                                sx={{ width: "100%" }}
+                                            />
+                                        </Box>
+                                        <Box textAlign="right" paddingBottom=".5rem">
+                                            <Button
+                                                onClick={() => console.log('Hello WOrld')}
+                                                variant="contained"
+                                                color="primary"
+                                                size="small"
+                                                sx={{
+                                                    fontSize: "12px",
+                                                }}
+                                            >
+                                                Comment
+                                            </Button>
+                                        </Box>
+                                    </Grid>
+                                    <Box textAlign="center" marginTop="1rem">
+                                    </Box>
+                                    <Comment />
+                                    <Comment />
+                                </Box>)}
                         </Box>
                     </Grid>
                 </Grid>

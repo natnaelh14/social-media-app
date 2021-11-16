@@ -30,18 +30,6 @@ const LeftSidebar = () => {
   return (
     <>
       <Box sx={{ height: "100vh", maxWidth: "100%" }}>
-        <Box textAlign="center">
-          <NavLink
-            to="/"
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              backgroundColor: "inherit",
-            }}
-          >
-            <img src="https://res.cloudinary.com/doalzf6o2/image/upload/v1635983850/hero-image_yccwx5.png" alt="logo" width="50px" />
-          </NavLink>
-        </Box>
         <List>
           <NavLink
             to="/home/feed"

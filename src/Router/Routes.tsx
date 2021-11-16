@@ -15,7 +15,7 @@ import PostDetails from "../screens/ProfileDetails/profile-details.component";
 import { FeedContainer } from "./Router.styles";
 import { setCurrentUser } from '../redux/actions/userActions';
 import { listPosts } from '../redux/actions/postActions'
-import { getCurrentUser } from '../redux/user.selectors';
+import { getCurrentUser, getPostsList } from '../redux/user.selectors';
 import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
 import {
   ApolloClient,
@@ -27,6 +27,7 @@ type MyProps = {
   setCurrentUser: any;
   listPosts: any;
   currentUser: any;
+  // postsList: any;
 };
 
 const qr = gql`
@@ -115,6 +116,11 @@ class Routes extends Component<MyProps, {}> {
     });
   };
 
+  componentDidUpdate () {
+    // const { listPosts, postsList } = this.props;
+    // listPosts(postsList)
+  }
+
   componentWillUnmount = async () => {
     // To prevent memory leak, when it unmounts, it removes the userAuth object
     this.unsubscribeFromAuth();
@@ -167,7 +173,8 @@ class Routes extends Component<MyProps, {}> {
 };
 
 const mapStateToProps = (state: any) => ({
-  currentUser: getCurrentUser(state)
+  currentUser: getCurrentUser(state),
+  // postsList: getPostsList(state)
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

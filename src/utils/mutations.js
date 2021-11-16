@@ -43,18 +43,20 @@ export const UPDATE_USER_PROFILE = gql`
 `;
 
 export const ADD_POST = gql`
-  mutation addPost(
-    $user_id: ID!
-    $text: String!
-  ) {
-    addPost(
-      user_id: $user_id
-      text: $text
-    ) {
+  mutation addPost($user_id: ID!, $text: String!) {
+    addPost(user_id: $user_id, text: $text) {
       id
       text
       user_id
       created_at
     }
   }
-  `;
+`;
+
+export const DELETE_POST = gql`
+  mutation DeletePostMutation($id: ID!) {
+    deletePost(id: $id) {
+      id
+    }
+  }
+`;

@@ -4,21 +4,21 @@ import AddPost from '../AddPost/add-post.component';
 import { Fade } from "@mui/material";
 import { useAppSelector } from '../../app/hooks';
 import { CircularProgress, Box } from "@mui/material";
+const Moment = require('moment')
+
 
 const PostList: React.FC = () => {
 
   const postList = useAppSelector((state) => state.postList)
   const { posts, loading } = postList
-  const postData: Array<{
+
+  let postsData = [...posts].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
+  let postData: Array<{
     id: number,
     user_id: string,
     text: string,
     created_at: Date
-  }> = posts
-
-  useEffect(() => {
-    console.log(posts)
-  }, [posts])
+  }> = postsData
 
   return (
 
@@ -33,7 +33,7 @@ const PostList: React.FC = () => {
 
         <Box>
           {postData &&
-            postData.map((post) => <Post key={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
+            postData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
         </Box>
 
       </div>

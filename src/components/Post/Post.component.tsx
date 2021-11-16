@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Grid,
     IconButton,
@@ -9,13 +9,27 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import DeleteIcon from '@mui/icons-material/Delete';
+import moment from 'moment';
 import { Link } from "react-router-dom";
+import { QUERY_USER } from '../../utils/queries';
+import { useQuery } from '@apollo/client';
 
 type postProps = {
-    text: string;
-  }; 
+    text: string,
+    userId: string,
+    postTime: Date
+};
 
-const Post = ({text}: postProps) => {
+const Post = ({ text, userId, postTime }: postProps) => {
+
+    const { loading, error, data } = useQuery(QUERY_USER, {
+        variables: { id: userId },
+    });
+    const user = data.userProfile;
+
+    useEffect(() => {
+        console.log('data', data)
+    }, [data])
 
     return (
         <>
@@ -46,12 +60,12 @@ const Post = ({text}: postProps) => {
                                         <Typography
                                             sx={{ fontSize: "16px", fontWeight: 500, mr: "6px" }}
                                         >
-                                            Natnael Haile
+                                            {user.handle}
                                         </Typography>
                                         <Typography
                                             sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
                                         >
-                                            @natnaelh14
+                                            @{user.handle.toLowerCase().trim()}
                                         </Typography>
                                         <Typography
                                             sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
@@ -61,7 +75,7 @@ const Post = ({text}: postProps) => {
                                         <Typography
                                             sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
                                         >
-                                            11/03/2021
+                                            {moment(postTime).format('MMMM Do YYYY')}
                                         </Typography>
                                     </Box>
                                     <Link
@@ -70,7 +84,7 @@ const Post = ({text}: postProps) => {
                                     >
                                         <Box>
                                             <Typography sx={{ fontSize: "15px", color: "#555" }}>
-                                                Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                                                {text}
                                             </Typography>
                                         </Box>
                                     </Link>

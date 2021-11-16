@@ -19,7 +19,6 @@ const Post = ({text}: postProps) => {
 
     return (
         <>
-
             <Box
                 padding="1rem"
                 sx={{

@@ -1,9 +1,28 @@
 
-   
+import React, { useState } from "react";
 import { Button, Grid, Input } from "@mui/material";
 import { Box } from "@mui/system";
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { useMutation } from '@apollo/client';
+import { ADD_POST } from "../../utils/mutations";
 
 const AddPost = () => {
+
+  const currentUser = useAppSelector((state) => state.currentUser);
+  const { user } = currentUser
+
+  const [postText, setPostText] = useState("");
+const [addPost, { data }] = useMutation(ADD_POST);
+
+  const handleAddPost = async() => {
+    await addPost({
+      variables: {
+        user_id: user.id,
+        text: postText
+      }
+    })
+    setPostText("");
+  }
 
   return (
     <Box padding="1rem 1rem 0 1rem" borderBottom="1px solid #ccc">
@@ -14,13 +33,13 @@ const AddPost = () => {
         <Grid item >
           <Box padding=".5rem 0">
             <Input
-              value=''
-              onChange={() => console.log('hello world')}
+              value={postText}
+              onChange={(e) => setPostText(e.target.value)}
               multiline
               rows="2"
               disableUnderline
               type="text"
-              placeholder="What's happening?"
+              placeholder="What's new in Crypto World?"
               sx={{ width: "100%" }}
             />
           </Box>
@@ -31,8 +50,8 @@ const AddPost = () => {
             borderTop="1px solid #ccc"
           >
             <Button
-              onClick={() => console.log('hello world')}
-            //   disabled={postText.length === 0}
+              onClick={handleAddPost}
+              disabled={postText.length === 0}
               variant="contained"
               color="primary"
               sx={{

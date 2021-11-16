@@ -12,7 +12,7 @@ export const postListReducer = (state = { posts: [] }, action) => {
     case POST_LIST_SUCCESS:
       return {
         loading: false,
-        posts: action.payload.posts,
+        posts: action.payload,
       };
     case POST_LIST_FAIL:
       return { loading: false, error: action.payload };

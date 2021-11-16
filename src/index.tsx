@@ -13,7 +13,7 @@ import { Provider } from "react-redux";
 
 //Enable apollo devtools, if  production is set to false
 const connectToDevTools = process.env.REACT_APP_PRODUCTION === "false";
-const client = new ApolloClient({
+export const client = new ApolloClient({
   //New instance of ApolloClient
   cache: new InMemoryCache(), //New instance of InMemoryCache
   uri: "http://localhost:3001/graphql",

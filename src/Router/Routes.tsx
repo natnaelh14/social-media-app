@@ -20,16 +20,17 @@ import {
   ApolloClient,
   InMemoryCache, gql
 } from "@apollo/client";
+import { client } from '../index';
 
 type MyProps = {
   setCurrentUser: any;
   currentUser: any;
 };
 
-const client = new ApolloClient({
-  cache: new InMemoryCache(), //New instance of InMemoryCache
-  uri: "http://localhost:3001/graphql",
-});
+// const client = new ApolloClient({
+//   cache: new InMemoryCache(), //New instance of InMemoryCache
+//   uri: "http://localhost:3001/graphql",
+// });
 const qr = gql`
     query getUser($id: ID!) {
     userProfile(id: $id) {
@@ -67,7 +68,8 @@ class Routes extends Component<MyProps, {}> {
             variables: {
               id: userAuth.uid
             }
-          })          
+          }) 
+          console.log("result", result)         
         } catch (e) {
           try {
               const wow = await client.mutate({

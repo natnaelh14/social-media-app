@@ -6,6 +6,7 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { useQuery } from '@apollo/client';
 import { QUERY_POSTS } from '../../utils/queries';
 import { CircularProgress, Box } from "@mui/material";
+import { listPosts } from '../../redux/actions/postActions';
 
 const PostList: React.FC = () => {
 
@@ -15,14 +16,15 @@ const PostList: React.FC = () => {
 
   const { error, data, loading } = useQuery(QUERY_POSTS, {
     variables: {
-      postsUserId: "chG0WmOFPheLzl528legA3iIpbO2"
+      user_id: "two"
     }
   })
 
   useEffect(() => {
-    console.log('user', user.id)
-    console.log('data', data)
-  }, [user, data])
+    dispatch(listPosts(data))
+    console.log('user', user)
+    console.log("data", data)
+  }, [])
 
   return (
 
@@ -37,7 +39,7 @@ const PostList: React.FC = () => {
 
         <Box>
           {data &&
-            data.map((post: any) => <Post key={post.id} text={post.text} />)}
+            data.posts.map((post: any) => <Post key={post.id} text={post.text} />)}
         </Box>
 
       </div>

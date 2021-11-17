@@ -6,7 +6,6 @@ import { createMemoryHistory } from 'history';
 const history = createMemoryHistory()
 import Header from "../components/Header/header.component";
 import SignIn from "../components/SignIn/sign-in.component";
-import Feed from "../components/Feed/feed.component";
 import LeftSidebar from "../components/LeftSideBar/left-sidebar.component";
 import RightSidebar from "../components/RightSideBar/right-sidebar.component";
 import { BrowserRouter as Switch, Route, Router, Redirect } from "react-router-dom";
@@ -16,12 +15,9 @@ import AddPost from "../components/AddPost/add-post.component";
 import { FeedContainer } from "./Router.styles";
 import { setCurrentUser } from '../redux/actions/userActions';
 import { listPosts } from '../redux/actions/postActions'
-import { getCurrentUser, getPostsList } from '../redux/user.selectors';
+import { getCurrentUser } from '../redux/user.selectors';
 import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
-import {
-  ApolloClient,
-  InMemoryCache, gql
-} from "@apollo/client";
+import { gql } from "@apollo/client";
 import { client } from '../index';
 import { QUERY_USER } from '../utils/queries';
 
@@ -29,18 +25,7 @@ type MyProps = {
   setCurrentUser: any;
   listPosts: any;
   currentUser: any;
-  // postsList: any;
 };
-
-const qr = gql`
-    query getUser($id: ID!) {
-    userProfile(id: $id) {
-      id
-      email
-      handle
-    }
-  }
-  `;
 
 const QUERY_POSTS = gql`
 query posts($user_id: ID!) {
@@ -100,7 +85,7 @@ class Routes extends Component<MyProps, {}> {
         //From this, we are going to get back the first state from our data.
         userRef.onSnapshot((snapShot: any) => {
           //We actually don't get any data, until we use the data method.
-          setCurrentUser({ _id: snapShot.id, ...snapShot.data() });
+          // setCurrentUser({ _id: snapShot.id, ...snapShot.data() });
         });
       const { data: { posts: postsData } } = await client.query({
         query: QUERY_POSTS,
@@ -117,8 +102,7 @@ class Routes extends Component<MyProps, {}> {
       })
       setCurrentUser(userProfile);
       }
-
-      
+      // setCurrentUser(userAuth);
     });
   };
 

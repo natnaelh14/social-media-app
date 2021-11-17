@@ -18,8 +18,11 @@ import { Fade } from "@mui/material";
 import { useAppSelector } from "../../app/hooks";
 import { userProps } from '../../index.types';
 import Post from "../Post/Post.component";
+import UpdateUserProfile from "../UpdateUserProfile/update_user_profile.component";
+import Modal from '../Modal/modal.component'
 
 const Profile = () => {
+
 
     const currentUser = useAppSelector(state => state.currentUser)
     const { loading, user } = currentUser
@@ -35,6 +38,15 @@ const Profile = () => {
     }> = posts
     let postsData = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
 
+    const [openModal, setOpenModal] = React.useState(false);
+
+
+    const handleModalOpen = () => {
+        setOpenModal(true);
+    };
+    const handleModalClose = () => {
+        setOpenModal(false);
+    };
 
     return (
         <>
@@ -84,12 +96,23 @@ const Profile = () => {
                                     </Box>
                                 </Box>
                                 <Box textAlign="right" padding="10px 20px">
-                                    <IconButton>
-                                        <MoreHorizIcon />
-                                    </IconButton>
-                                    <IconButton>
-                                        <MailOutlineIcon />
-                                    </IconButton>
+                                    <Button
+                                        onClick={handleModalOpen}
+                                        size="small"
+                                        sx={{
+                                            textTransform: "capitalize",
+                                            padding: "6px 20px",
+                                            marginRight: "10px",
+                                            background: "#2196f3",
+                                            "&:hover": {
+                                                background: "#2097f3bd",
+                                            },
+                                        }}
+                                        variant="contained"
+
+                                    >
+                                        Update
+                                    </Button>
                                     <Button
                                         onClick={() => console.log('Hello THere')}
                                         size="small"
@@ -111,7 +134,7 @@ const Profile = () => {
                                         {userInfo.handle}
                                     </Typography>
                                     <Typography sx={{ fontSize: "14px", color: "#555" }}>
-                                        @{userInfo.handle.trim().toLowerCase()}
+                                        {/* @{userInfo.handle.trim().toLowerCase()} */}
                                     </Typography>
                                     <Typography fontSize="16px" color="#333" padding="10px 0">
                                         {userInfo.bio}
@@ -172,6 +195,14 @@ const Profile = () => {
                         </Box>
                     </div>
                 </Fade>
+            )}
+            {openModal && (
+                <Modal
+                    open={openModal}
+                    handleClose={handleModalClose}
+                >
+                    <UpdateUserProfile />
+                </Modal>
             )}
 
         </>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, IconButton, Typography, Input, Button } from "@mui/material";
+import { Grid, IconButton, Typography, Input, Button, CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -21,10 +21,13 @@ type postProps = {
 };
 
 const Post = ({ postId, text, userId, postTime }: postProps) => {
+
     const { loading, error, data } = useQuery(QUERY_USER, {
-        variables: { id: userId },
-    });
-    const user = data.userProfile;
+        variables: { 
+            id: userId
+         },
+      });
+    const { userProfile } = data;
 
     const [deletePost, { }] = useMutation(DELETE_POST);
     const [addComment, { }] = useMutation(ADD_COMMENT);
@@ -51,6 +54,10 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
 
     return (
         <>
+        {loading && (
+            <CircularProgress color="success" />
+        )}
+        {userProfile && (
             <Box
                 padding="1rem"
                 sx={{
@@ -62,7 +69,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                 <Grid container flexWrap="nowrap">
                     <Grid item sx={{ paddingRight: "1rem" }}>
                         <Link to={`/profile`}>
-                            <img src="https://res.cloudinary.com/doalzf6o2/image/upload/v1635983850/hero-image_yccwx5.png" alt="lgoog" width="50px" />
+                            <img src={userProfile.avatar} alt="lgoog" width="50px" />
                         </Link>
                     </Grid>
                     <Grid item >
@@ -78,12 +85,12 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                         <Typography
                                             sx={{ fontSize: "16px", fontWeight: 500, mr: "6px" }}
                                         >
-                                            {user.handle}
+                                            {userProfile.handle}
                                         </Typography>
                                         <Typography
                                             sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
                                         >
-                                            @{user.handle.toLowerCase().trim()}
+                                            @{userProfile.handle.trim().toLowerCase()}
                                         </Typography>
                                         <Typography
                                             sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
@@ -166,6 +173,8 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                     </Grid>
                 </Grid>
             </Box>
+        )}
+            
         </>
     )
 }

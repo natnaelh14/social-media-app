@@ -1,44 +1,31 @@
+
+
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { createMemoryHistory } from 'history';
 const history = createMemoryHistory()
 import Header from "../components/Header/header.component";
 import SignIn from "../components/SignIn/sign-in.component";
-import Feed from "../components/Feed/feed.component";
 import LeftSidebar from "../components/LeftSideBar/left-sidebar.component";
 import RightSidebar from "../components/RightSideBar/right-sidebar.component";
 import { BrowserRouter as Switch, Route, Router, Redirect } from "react-router-dom";
 import PostList from "../components/PostList/post-list.component";
 import Profile from "../components/Profile/profile.component";
 import AddPost from "../components/AddPost/add-post.component";
-import PostDetails from "../screens/ProfileDetails/profile-details.component";
 import { FeedContainer } from "./Router.styles";
 import { setCurrentUser } from '../redux/actions/userActions';
 import { listPosts } from '../redux/actions/postActions'
-import { getCurrentUser, getPostsList } from '../redux/user.selectors';
+import { getCurrentUser } from '../redux/user.selectors';
 import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
-import {
-  ApolloClient,
-  InMemoryCache, gql
-} from "@apollo/client";
+import { gql } from "@apollo/client";
 import { client } from '../index';
+import { QUERY_USER } from '../utils/queries';
 
 type MyProps = {
   setCurrentUser: any;
   listPosts: any;
   currentUser: any;
-  // postsList: any;
 };
-
-const qr = gql`
-    query getUser($id: ID!) {
-    userProfile(id: $id) {
-      id
-      email
-      handle
-    }
-  }
-  `;
 
 const QUERY_POSTS = gql`
 query posts($user_id: ID!) {
@@ -75,7 +62,7 @@ class Routes extends Component<MyProps, {}> {
       if (userAuth) {
         try {
           const result = await client.query({
-            query: qr,
+            query: QUERY_USER,
             variables: {
               id: userAuth.uid
             }
@@ -94,32 +81,30 @@ class Routes extends Component<MyProps, {}> {
             console.log("Unable to create a user account")
           }
         }
-
-
-
         const userRef: any = await createUserProfileDocument(userAuth);
         //From this, we are going to get back the first state from our data.
-        userRef.onSnapshot((snapShot: any) => {
+        userRef.onSnapshot(async(snapShot: any) => {
           //We actually don't get any data, until we use the data method.
-          setCurrentUser({ id: snapShot.id, ...snapShot.data() });
+          const { data: { posts: postsData } } = await client.query({
+            query: QUERY_POSTS,
+            variables: {
+              user_id: userAuth.uid
+            }
+          })
+          listPosts(postsData)
+          const { data: { userProfile } } = await client.query({
+            query: QUERY_USER,
+            variables: {
+              id: userAuth.uid
+            }
+          })
+          setCurrentUser({ id: snapShot.id, ...snapShot.data(), ...userProfile});
         });
-      const { data: { posts: postsData } } = await client.query({
-        query: QUERY_POSTS,
-        variables: {
-          user_id: userAuth.uid
-        }
-      })
-      listPosts(postsData)
-      }
 
+      }
       setCurrentUser(userAuth);
     });
   };
-
-  // componentDidUpdate () {
-  //   // const { listPosts, postsList } = this.props;
-  //   // listPosts(postsList)
-  // }
 
   componentWillUnmount = async () => {
     // To prevent memory leak, when it unmounts, it removes the userAuth object
@@ -153,9 +138,9 @@ class Routes extends Component<MyProps, {}> {
             <Route exact path="/home/notifications">
               {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}
             </Route>
-            <Route exact path="/home/post">
+            {/* <Route exact path="/home/post">
               {this.props.currentUser ? <PostDetails /> : <Redirect to="/signin" />}
-            </Route>
+            </Route> */}
             <Route exact path="/home/add-post">
               {this.props.currentUser ? <AddPost /> : <Redirect to="/signin" />}
             </Route>

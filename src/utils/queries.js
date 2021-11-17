@@ -29,6 +29,17 @@ export const QUERY_USER = gql`
       id
       email
       handle
+      avatar
+      birth_date
+      gender
+      bio
+      state
+      city
+      status
+      country
+      isActive
+      updated_at
+      created_at
     }
   }
 `;

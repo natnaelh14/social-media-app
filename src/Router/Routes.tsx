@@ -1,5 +1,5 @@
 
-   
+
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { createMemoryHistory } from 'history';
@@ -83,26 +83,26 @@ class Routes extends Component<MyProps, {}> {
         }
         const userRef: any = await createUserProfileDocument(userAuth);
         //From this, we are going to get back the first state from our data.
-        userRef.onSnapshot((snapShot: any) => {
+        userRef.onSnapshot(async(snapShot: any) => {
           //We actually don't get any data, until we use the data method.
-          // setCurrentUser({ _id: snapShot.id, ...snapShot.data() });
+          const { data: { posts: postsData } } = await client.query({
+            query: QUERY_POSTS,
+            variables: {
+              user_id: userAuth.uid
+            }
+          })
+          listPosts(postsData)
+          const { data: { userProfile } } = await client.query({
+            query: QUERY_USER,
+            variables: {
+              id: userAuth.uid
+            }
+          })
+          setCurrentUser({ id: snapShot.id, ...snapShot.data(), ...userProfile});
         });
-      const { data: { posts: postsData } } = await client.query({
-        query: QUERY_POSTS,
-        variables: {
-          user_id: userAuth.uid
-        }
-      })
-      listPosts(postsData)
-      const { data: { userProfile }} = await client.query({
-        query: QUERY_USER,
-        variables: {
-          id: userAuth.uid
-        }
-      })
-      setCurrentUser(userProfile);
+
       }
-      // setCurrentUser(userAuth);
+      setCurrentUser(userAuth);
     });
   };
 

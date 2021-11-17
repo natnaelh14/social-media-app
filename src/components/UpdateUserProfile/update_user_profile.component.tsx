@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
-import axios from "axios";
-import { useMutation } from "@apollo/client";
-import FormInput from '../FormInput/form-input.component';
-import CustomButton from '../CustomButton/custom-button.component';
 import {  SignUpContainer, SignUpTitle } from './update_user_profile.styles';
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { Input } from '@mui/material';
-import { IconButton } from '@mui/material';
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { FormControl, Select, MenuItem } from '@mui/material';
 
 const UpdateUserProfile: React.FunctionComponent = () => {
 
@@ -50,44 +43,39 @@ const UpdateUserProfile: React.FunctionComponent = () => {
       <SignUpTitle>I already have an account</SignUpTitle>
       <span>Sign in with your email and password.</span>
       <form className='sign-up-form'>
-      <FormInput
+      <input
           type='email'
           name='email'
           value={email}
-          label='Email'
           autoComplete="off"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <FormInput
+        <input
           type='password'
           name='password'
           value={password}
-          label='Password'
           autoComplete="off"
           onChange={(e) => setPassword(e.target.value)}
         />
-                <FormInput
+                <input
           type='confirmPassword'
           name='confirmPassword'
           value={confirmPassword}
-          label='Confirm Password'
           autoComplete="off"
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <FormInput
+        <input
           type='text'
           name='handle'
           value={handle}
-          label='Handle'
           autoComplete="off"
           onChange={(e) => setHandle(e.target.value)}
         />
         <label style={{ fontSize: '13px', marginLeft: '5px' }}>Avatar</label>
-        <FormInput
+        <input
           type='file'
           name='avatar'
           value={avatar}
-          label=''
           onChange={(e) => setAvatar(e.target.value)}
         />
         <label style={{ fontSize: '13px', marginLeft: '5px' }}>Gender</label>
@@ -105,11 +93,10 @@ const UpdateUserProfile: React.FunctionComponent = () => {
           </Select>
         </FormControl>
         <label style={{ fontSize: '13px', marginLeft: '5px' }}>Birth Date</label>
-        <FormInput
+        <input
           type='date'
           name='birthDate'
           value={birthDate}
-          label=''
           onChange={(e) => setBirthDate(e.target.value)}
         />
         <button type='submit' onClick={handleRegister}>Sign Up</button>

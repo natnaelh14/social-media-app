@@ -11,14 +11,14 @@ const PostList: React.FC = () => {
 
   const postList = useAppSelector((state) => state.postList)
   const { posts, loading } = postList
-
-  let postsData = [...posts].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
   let postData: Array<{
     id: number,
     user_id: string,
     text: string,
     created_at: Date
-  }> = postsData
+  }> = posts
+    let postsData = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
+
 
   return (
 
@@ -32,8 +32,8 @@ const PostList: React.FC = () => {
         </Box>
 
         <Box>
-          {postData &&
-            postData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
+          {postsData &&
+            postsData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
         </Box>
 
       </div>

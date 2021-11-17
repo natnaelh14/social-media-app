@@ -1,10 +1,25 @@
 import {
-  SET_CURRENT_USER,
+  USER_INFO_REQUEST,
+  USER_INFO_SUCCESS,
+  USER_INFO_FAIL
 } from "../constants/userConstants";
 
 export const setCurrentUser = (user) => async(dispatch) => {
+  try {
+      dispatch({ type: USER_INFO_REQUEST });
   dispatch({
-    type: SET_CURRENT_USER,
+    type: USER_INFO_SUCCESS,
     payload: user,
   });
+  } catch (e) {
+    dispatch({
+      type: USER_INFO_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+
+
 };

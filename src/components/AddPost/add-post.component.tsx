@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Button, Grid, Input } from "@mui/material";
+import { Button, Grid, Input, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Box } from "@mui/system";
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { useMutation } from '@apollo/client';
@@ -14,6 +14,7 @@ const AddPost = () => {
   const userInfo: userProps = user
 
   const [postText, setPostText] = useState("");
+  const [mood, setMood] = useState<string>(userInfo.status)
   const [addPost, { data }] = useMutation(ADD_POST);
 
   const handleAddPost = async () => {
@@ -46,22 +47,41 @@ const AddPost = () => {
             />
           </Box>
           <Box
-            textAlign="right"
             paddingBottom=".5rem"
-            paddingTop=".5rem"
+            paddingTop=".8rem"
             borderTop="1px solid #ccc"
           >
-            <Button
-              onClick={handleAddPost}
-              disabled={postText.length === 0}
-              variant="contained"
-              color="primary"
-              sx={{
-                fontSize: "12px"
-              }}
-            >
-              Post
-            </Button>
+            <Box textAlign="left">
+              <FormControl style={{minWidth: 120}} >
+                <InputLabel id="demo-simple-select-label">Mood</InputLabel>
+                <Select
+                  id="demo-simple-select"
+                  value={mood}
+                  variant="standard"
+                  onChange={() => { console.log('hellow') }}
+                >
+                  <MenuItem value='HAPPY'>HAPPY 😀</MenuItem>
+                  <MenuItem value='SAD'>SAD 😔</MenuItem>
+                  <MenuItem value='EXCITED'>EXCITED 😃</MenuItem>
+                  <MenuItem value='AMUSED'>AMUSED 🙂</MenuItem>
+                  <MenuItem value='OPTIMISTIC'>OPTIMISTIC 😊</MenuItem>
+                  <MenuItem value='FRUSTRATED'>FRUSTRATED 😩</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <Box textAlign="right">
+              <Button
+                onClick={handleAddPost}
+                disabled={postText.length === 0}
+                variant="contained"
+                color="primary"
+                sx={{
+                  fontSize: "12px"
+                }}
+              >
+                Post
+              </Button>
+            </Box>
           </Box>
         </Grid>
       </Grid>

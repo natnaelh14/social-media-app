@@ -17,13 +17,13 @@ export const UPDATE_USER_PROFILE = gql`
     $created_at: Date!
     $updated_at: Date!
   ) {
-    #add user mutation call.
     updateUserProfile(
       id: $id
       email: $email
       handle: $handle
       avatar: $avatar
       gender: $gender
+      birth_date: $birth_date
       bio: $bio
       city: $city
       state: $state
@@ -33,11 +33,7 @@ export const UPDATE_USER_PROFILE = gql`
       created_at: $created_at
       updated_at: $updated_at
     ) {
-      user {
-        id
-        handle
-        email
-      }
+      user 
     }
   }
 `;

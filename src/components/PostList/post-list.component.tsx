@@ -19,7 +19,6 @@ const PostList: React.FC = () => {
   }> = posts
     let postsData = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
 
-
   return (
 
     <Fade in={true} timeout={1000}>

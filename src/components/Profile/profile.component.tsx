@@ -19,7 +19,7 @@ import { useAppSelector } from "../../app/hooks";
 import { userProps } from '../../index.types';
 import Post from "../Post/Post.component";
 import UpdateUserProfile from "../UpdateUserProfile/update_user_profile.component";
-import Modal from '../Modal/modal.component'
+import Modal from '../Modal/modal.component';
 
 const Profile = () => {
 

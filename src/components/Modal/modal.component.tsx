@@ -4,9 +4,10 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { IconButton } from "@mui/material";
+import { IconButton,Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, useTheme } from "@mui/system";
+// import Typography from "material-ui/styles/typography";
 
 type ModalProps = {
     open: boolean,
@@ -24,15 +25,16 @@ const Modal = ({
     handleClose();
   };
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth  maxWidth="md">
+    <Dialog open={open} onClose={handleClose} fullWidth  maxWidth="sm">
       <DialogTitle>
+        <Typography textAlign='center' variant="h5">Update Profile</Typography>
         <Box textAlign="right" borderBottom="1px solid #ccc">
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
         </Box>
       </DialogTitle>
-      <DialogContent style={{height:'600px'}}>{children}</DialogContent>
+      <DialogContent style={{height:'800px'}}>{children}</DialogContent>
       <DialogActions>
         <Button
          

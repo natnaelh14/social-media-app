@@ -28,6 +28,7 @@ const GuestProfile = () => {
             id: profileId
         },
     });
+    
     const { userProfile } = data;
 
     const { loading: postLoading, error: postError, data: { posts } } = useQuery(QUERY_POSTS, {

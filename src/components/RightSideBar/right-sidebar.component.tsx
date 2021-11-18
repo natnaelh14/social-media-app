@@ -1,11 +1,28 @@
+import React, { useState, useEffect } from "react";
 import { Search } from "@mui/icons-material";
-import SearchIcon from '@mui/icons-material/Search';
-import { Input, Typography } from "@mui/material";
+import { Input, Typography, CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import WhoToFollow from "../WhoToFollow/who-to-follow.component";
+import DummyWhoToFollow from '../DummyWhoToFollow/dummy_who-to-follow.component';
+import { QUERY_USERS_LIST } from "../../utils/queries";
+import { useQuery } from '@apollo/client';
 
 const RightSidebar = () => {
-  
+
+  const [searchText, setSearchText] = useState<string>("")
+  const { loading, error, data } = useQuery(QUERY_USERS_LIST, {
+    variables: { handle: searchText },
+  });
+  if (data) {
+    var { usersList } = data;
+    var usersArray: Array<{
+      id: string,
+      handle: string,
+      avatar: string,
+      isActive: string
+    }> | undefined = usersList
+  }
+
 
   return (
     <Box sx={{ height: "100vh" }}>
@@ -28,6 +45,8 @@ const RightSidebar = () => {
             }}
             disableUnderline
             fullWidth
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
             placeholder="Search User"
             startAdornment={
               <Search
@@ -45,16 +64,26 @@ const RightSidebar = () => {
             borderRadius: "28px",
             padding: "10px 20px",
             margin: "1rem 0",
+            minHeight: '600px'
           }}
         >
           <Typography variant="h6" textAlign='center' sx={{ fontWeight: "bold" }}>
             Who to follow
           </Typography>
-          <WhoToFollow />
-          <WhoToFollow />
-          <WhoToFollow />
-          <WhoToFollow />
-          <WhoToFollow />
+          {/* {loading && (
+            <CircularProgress color="success" />
+          )} */}
+          {(searchText && usersArray) && (
+            usersArray.map((user) => <WhoToFollow key={user.id} id={user.id} handle={user.handle} avatar={user.avatar} isActive={user.isActive} />)
+          )}
+          {(!searchText) && (
+            <>
+              <DummyWhoToFollow />
+              <DummyWhoToFollow />
+              <DummyWhoToFollow />
+              <DummyWhoToFollow />
+            </>
+          )}
         </Box>
       </Box>
     </Box>

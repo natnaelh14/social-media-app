@@ -43,3 +43,14 @@ export const QUERY_USER = gql`
     }
   }
 `;
+
+export const QUERY_USERS_LIST = gql`
+  query getUsers($handle: String!) {
+    usersList(handle: $handle) {
+      id
+      handle
+      avatar
+      isActive
+    }
+  }
+`;

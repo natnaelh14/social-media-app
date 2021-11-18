@@ -56,7 +56,7 @@ const AddPost = () => {
                 <InputLabel id="demo-simple-select-label">Mood</InputLabel>
                 <Select
                   id="demo-simple-select"
-                  value={mood}
+                  value={mood || ""}
                   variant="standard"
                   onChange={() => { console.log('hellow') }}
                 >

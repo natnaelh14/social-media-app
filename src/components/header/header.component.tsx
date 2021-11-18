@@ -19,7 +19,7 @@ const Header = () => {
     }, [user]);
     return (
         <HeaderContainer>
-            <LogoContainer to='/'>
+            <LogoContainer to='/home/feed'>
                 <Logo className='logo' />
             </LogoContainer>
             <OptionsContainer>

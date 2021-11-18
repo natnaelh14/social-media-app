@@ -68,8 +68,8 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
             >
                 <Grid container flexWrap="nowrap">
                     <Grid item sx={{ paddingRight: "1rem" }}>
-                        <Link to={`/profile`}>
-                            <img src={userProfile.avatar} alt="lgoog" width="50px" />
+                        <Link to={`/home/profile/${userProfile.id}`}>
+                            <img src={userProfile.avatar} alt="logo" width="50px" />
                         </Link>
                     </Grid>
                     <Grid item >
@@ -130,9 +130,6 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                 </IconButton>
                                 <IconButton size="small">
                                     <IosShareIcon fontSize="small" />
-                                </IconButton>
-                                <IconButton onClick={handleDeletePost} size="small">
-                                    <DeleteIcon fontSize="small" />
                                 </IconButton>
                             </Box>
                             {displayComment && (

@@ -28,7 +28,7 @@ const RightSidebar = () => {
             }}
             disableUnderline
             fullWidth
-            placeholder="Search"
+            placeholder="Search User"
             startAdornment={
               <Search
                 sx={{
@@ -47,11 +47,9 @@ const RightSidebar = () => {
             margin: "1rem 0",
           }}
         >
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          <Typography variant="h6" textAlign='center' sx={{ fontWeight: "bold" }}>
             Who to follow
           </Typography>
-          <WhoToFollow />
-          <WhoToFollow />
           <WhoToFollow />
           <WhoToFollow />
           <WhoToFollow />

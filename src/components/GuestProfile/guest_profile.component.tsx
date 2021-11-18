@@ -13,45 +13,56 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Link as RouteLink } from "react-router-dom";
 const Moment = require('moment')
 import { Fade } from "@mui/material";
-import { useAppSelector } from "../../app/hooks";
-import { userProps } from '../../index.types';
 import Post from "../Post/Post.component";
-import UpdateUserProfile from "../UpdateUserProfile/update_user_profile.component";
-import Modal from '../Modal/modal.component';
+import { useParams } from 'react-router-dom';
+import { QUERY_USER, QUERY_POSTS } from '../../utils/queries';
+import { useQuery } from '@apollo/client';
+// import Modal from '../Modal/modal.component';
 
-const Profile = () => {
+const GuestProfile = () => {
 
+    const { profileId } = useParams<{ profileId: string | undefined }>();
 
-    const currentUser = useAppSelector(state => state.currentUser)
-    const { loading, user } = currentUser
-    const userInfo: userProps = user
+    const { loading, error, data } = useQuery(QUERY_USER, {
+        variables: {
+            id: profileId
+        },
+    });
+    const { userProfile } = data;
 
-    const postList = useAppSelector((state) => state.postList)
-    const { posts } = postList
-    let postData: Array<{
+    const { loading: postLoading, error: postError, data: { posts } } = useQuery(QUERY_POSTS, {
+        variables: {
+            user_id: userProfile.id
+        },
+    });
+
+    const postData: Array<{
         id: number,
         user_id: string,
         text: string,
         created_at: Date
     }> = posts
-    let postsData = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
+    const postArray = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
 
-    const [openModal, setOpenModal] = React.useState(false);
+    // const [openModal, setOpenModal] = React.useState(false);
 
 
-    const handleModalOpen = () => {
-        setOpenModal(true);
-    };
-    const handleModalClose = () => {
-        setOpenModal(false);
-    };
+    // const handleModalOpen = () => {
+    //     setOpenModal(true);
+    // };
+    // const handleModalClose = () => {
+    //     setOpenModal(false);
+    // };
 
+    useEffect(() => {
+        console.log('test', profileId)
+    })
     return (
         <>
             {loading && (
                 <CircularProgress color="success" />
             )}
-            {userInfo && (
+            {userProfile && (
                 <Fade in={true} timeout={1000}>
                     <div style={{ margin: '50px' }}>
                         <Box>
@@ -66,7 +77,7 @@ const Profile = () => {
                                     </Grid>
                                     <Grid item>
                                         <Typography variant="h6">
-                                            {userInfo.handle}
+                                            {userProfile.handle}
                                         </Typography>
                                         <Typography sx={{ fontSize: "12px", color: "#555" }}>
                                             120 posts
@@ -90,12 +101,12 @@ const Profile = () => {
                                             borderRadius: "50%",
                                         }}
                                     >
-                                        <img width="150px" src={userInfo.avatar} alt="profile" />
+                                        <img width="150px" src={userProfile.avatar} alt="profile" />
                                     </Box>
                                 </Box>
                                 <Box textAlign="right" padding="10px 20px">
                                     <Button
-                                        onClick={handleModalOpen}
+                                        onClick={() => console.log('Hello THere')}
                                         size="small"
                                         sx={{
                                             textTransform: "capitalize",
@@ -106,20 +117,19 @@ const Profile = () => {
                                             },
                                         }}
                                         variant="contained"
-
                                     >
-                                        Update
+                                        Follow
                                     </Button>
                                 </Box>
                                 <Box padding="10px 20px">
                                     <Typography variant="h6" sx={{ fontWeight: "500" }}>
-                                        {userInfo.handle}
+                                        {userProfile.handle}
                                     </Typography>
                                     <Typography sx={{ fontSize: "14px", color: "#555" }}>
                                         {/* @{userInfo.handle.trim().toLowerCase()} */}
                                     </Typography>
                                     <Typography fontSize="16px" color="#333" padding="10px 0">
-                                        {userInfo.bio}
+                                        {userProfile.bio}
                                     </Typography>
                                     <Box
                                         display="flex"
@@ -130,13 +140,13 @@ const Profile = () => {
                                         <Box display="flex">
                                             <LocationOnIcon htmlColor="#555" />
                                             <Typography sx={{ ml: "6px", color: "#555" }}>
-                                                {userInfo.city}, {userInfo.state}, {userInfo.country}
+                                                {userProfile.city}, {userProfile.state}, {userProfile.country}
                                             </Typography>
                                         </Box>
                                         <Box display="flex" marginLeft="1rem">
                                             <DateRangeIcon htmlColor="#555" />
                                             <Typography sx={{ ml: "6px", color: "#555" }}>
-                                                {Moment(userInfo.birth_date).format('MMMM Do YYYY')}
+                                                {Moment(userProfile.birth_date).format('MMMM Do YYYY')}
                                             </Typography>
                                         </Box>
                                     </Box>
@@ -155,7 +165,7 @@ const Profile = () => {
                                         </Typography>
                                     </Box>
                                     <Box display="flex" marginTop='1rem'>
-                                        <Typography color="#555" marginRight="1rem">Member Since {Moment(userInfo.created_at).format('YYYY')}</Typography>
+                                        <Typography color="#555" marginRight="1rem">Member Since {Moment(userProfile.created_at).format('YYYY')}</Typography>
                                     </Box>
                                 </Box>
                                 <Box borderBottom="1px solid #ccc">
@@ -171,24 +181,26 @@ const Profile = () => {
                                         Posts
                                     </Typography>
                                 </Box>
-                                {postsData &&
-                                    postsData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
+                                {postLoading && (
+                                    <CircularProgress color="success" />
+                                )}
+                                {postArray &&
+                                    postArray.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
                             </Box>
                         </Box>
                     </div>
                 </Fade>
             )}
-            {openModal && (
+            {/* {openModal && (
                 <Modal
                     open={openModal}
                     handleClose={handleModalClose}
                 >
                     <UpdateUserProfile />
                 </Modal>
-            )}
-
+            )} */}
         </>
     );
 }
 
-export default Profile;
+export default GuestProfile;

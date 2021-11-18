@@ -5,6 +5,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
 import TagIcon from "@mui/icons-material/Tag";
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import {
   Button,
@@ -87,7 +88,34 @@ const LeftSidebar = () => {
               </Hidden>
             </ListItem>
           </NavLink>
-
+          <NavLink
+            to={`/home/cryptocurrency`}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              backgroundColor: "inherit",
+            }}
+          >
+            <ListItem
+              button
+              sx={{
+                borderRadius: "28px",
+                margin: ".5rem 0",
+              }}
+            >
+              <ListItemIcon>
+                <AccountBalanceIcon fontSize="medium" color="action" />
+              </ListItemIcon>
+              <Hidden lgDown>
+                <ListItemText
+                  primaryTypographyProps={{
+                    fontSize: "18px",
+                  }}
+                  primary="Cryptocurrency"
+                />
+              </Hidden>
+            </ListItem>
+          </NavLink>
           <NavLink
             to={`/home/notifications`}
             style={{
@@ -204,6 +232,21 @@ const LeftSidebar = () => {
               </Hidden>
             </ListItem>
           </NavLink>
+          <Button
+            // onClick={handleModalOpen}
+            variant="contained"
+            fullWidth
+            sx={{
+              borderRadius: "28px",
+              padding: "10px",
+              background: "black",
+              "&:hover": {
+                  background: "#333",
+              },
+            }}
+          >
+            POST
+          </Button>
         </List>
       </Box>
     </>

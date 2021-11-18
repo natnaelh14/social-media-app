@@ -20,6 +20,7 @@ import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
 import { gql } from "@apollo/client";
 import { client } from '../index';
 import { QUERY_USER } from '../utils/queries';
+import GuestProfile from "../components/GuestProfile/guest_profile.component";
 
 type MyProps = {
   setCurrentUser: any;
@@ -138,9 +139,9 @@ class Routes extends Component<MyProps, {}> {
             <Route exact path="/home/notifications">
               {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}
             </Route>
-            {/* <Route exact path="/home/post">
-              {this.props.currentUser ? <PostDetails /> : <Redirect to="/signin" />}
-            </Route> */}
+            <Route exact path="/home/profile/:profileId">
+              {this.props.currentUser ? <GuestProfile /> : <Redirect to="/signin" />}
+            </Route>
             <Route exact path="/home/add-post">
               {this.props.currentUser ? <AddPost /> : <Redirect to="/signin" />}
             </Route>

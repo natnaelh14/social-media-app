@@ -148,7 +148,20 @@ const UpdateUserProfile: React.FunctionComponent = () => {
           <br />
           <br />
           <br />
-          <Button type="submit" fullWidth variant="contained" color="primary" onClick={handleUpdate}>
+          <Button 
+          type="submit" 
+          fullWidth 
+          size="small"
+          sx={{
+              textTransform: "capitalize",
+              padding: "6px 20px",
+              background: "black",
+              "&:hover": {
+                  background: "#333",
+              },
+          }}
+          variant="contained"
+          onClick={handleUpdate}>
             Update
           </Button>
         </form>

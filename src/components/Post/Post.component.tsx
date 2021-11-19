@@ -3,8 +3,10 @@ import { Grid, IconButton, Typography, Input, Button, CircularProgress } from "@
 import { Box } from "@mui/system";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IosShareIcon from "@mui/icons-material/IosShare";
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import moment from 'moment';
 import { Link } from "react-router-dom";
@@ -123,13 +125,18 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                     <ChatBubbleOutlineIcon fontSize="small" />
                                 </IconButton>
                                 <IconButton onClick={() => console.log('hello world')} size="small">
-                                    <FavoriteIcon fontSize="small" />
+                                    <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
+                                    <FavoriteBorderIcon fontSize="small" />
                                 </IconButton>
                                 <IconButton size="small">
-                                    <ThumbDownIcon fontSize="small" />
+                                    <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
+                                    <ThumbDownAltOutlinedIcon fontSize="small" />
                                 </IconButton>
                                 <IconButton size="small">
                                     <IosShareIcon fontSize="small" />
+                                </IconButton>
+                                <IconButton size="small">
+                                    <DeleteIcon fontSize="small" />
                                 </IconButton>
                             </Box>
                             {displayComment && (

@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -7,15 +8,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import TagIcon from "@mui/icons-material/Tag";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import {
   Button,
   Grid,
   Hidden,
-  IconButton,
   Input,
-  Menu,
-  MenuItem,
-  useTheme,
 } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -25,8 +23,20 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { NavLink } from "react-router-dom";
+import { userProps } from "../../index.types";
+import { useAppSelector } from "../../app/hooks";
+import AddPostModal from "../AddPostModal/add_post_modal.component";
 
 const LeftSidebar = () => {
+  
+  const [openModal, setOpenModal] = React.useState(false);
+
+  const handleModalOpen = () => {
+    setOpenModal(true);
+  };
+  const handleModalClose = () => {
+    setOpenModal(false);
+  };
 
   return (
     <>
@@ -112,6 +122,34 @@ const LeftSidebar = () => {
                     fontSize: "18px",
                   }}
                   primary="Cryptocurrency"
+                />
+              </Hidden>
+            </ListItem>
+          </NavLink>
+          <NavLink
+            to={`/home/friendrequests`}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              backgroundColor: "inherit",
+            }}
+          >
+            <ListItem
+              button
+              sx={{
+                borderRadius: "28px",
+                margin: ".5rem 0",
+              }}
+            >
+              <ListItemIcon>
+                <NotificationAddIcon fontSize="medium" color="action" />
+              </ListItemIcon>
+              <Hidden lgDown>
+                <ListItemText
+                  primaryTypographyProps={{
+                    fontSize: "18px",
+                  }}
+                  primary="Friend Requests"
                 />
               </Hidden>
             </ListItem>
@@ -233,7 +271,7 @@ const LeftSidebar = () => {
             </ListItem>
           </NavLink>
           <Button
-            // onClick={handleModalOpen}
+           onClick={handleModalOpen}
             variant="contained"
             fullWidth
             sx={{
@@ -241,7 +279,7 @@ const LeftSidebar = () => {
               padding: "10px",
               background: "black",
               "&:hover": {
-                  background: "#333",
+                background: "#333",
               },
             }}
           >
@@ -249,6 +287,12 @@ const LeftSidebar = () => {
           </Button>
         </List>
       </Box>
+      {openModal && (
+        <AddPostModal
+          open={openModal}
+          handleClose={handleModalClose}
+        />
+      )}
     </>
   );
 }

@@ -2,6 +2,12 @@ import React from "react";
 import { Grid, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IosShareIcon from "@mui/icons-material/IosShare";
 const Moment = require('moment');
 
 type commentProps = {
@@ -12,7 +18,7 @@ type commentProps = {
   commentTime: Date
 };
 
-const Comment = ({commentId, postId, userId, text, commentTime}: commentProps) => {
+const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps) => {
   return (
     <Box
       padding="1rem"
@@ -69,29 +75,27 @@ const Comment = ({commentId, postId, userId, text, commentTime}: commentProps) =
                 </IconButton>
               </Grid>
             </Grid>
-            {/* <Box
-                display="flex"
-                justifyContent="space-between"
-                marginRight="5rem"
-                marginTop=".8rem"
-              >
-                <IconButton size="small">
-                  <ChatBubbleOutlineIcon fontSize="small" />
-                </IconButton>
-                <IconButton size="small">
-                  <SyncIcon fontSize="small" />
-                </IconButton>
-                <IconButton size="small">
-                  {comment.isLiked ? (
-                    <FavoriteIcon fontSize="small" />
-                  ) : (
-                    <FavoriteBorderIcon fontSize="small" />
-                  )}
-                </IconButton>
-                <IconButton size="small">
-                  <IosShareIcon fontSize="small" />
-                </IconButton>
-              </Box> */}
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              marginRight="5rem"
+              marginTop=".8rem"
+            >
+              <IconButton size="small">
+                <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
+                <FavoriteBorderIcon fontSize="small" />
+              </IconButton>
+              <IconButton size="small">
+                <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
+                <ThumbDownAltOutlinedIcon fontSize="small" />
+              </IconButton>
+              <IconButton size="small">
+                <IosShareIcon fontSize="small" />
+              </IconButton>
+              <IconButton size="small">
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Box>
           </Box>
         </Grid>
       </Grid>

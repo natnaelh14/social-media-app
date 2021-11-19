@@ -1,63 +1,50 @@
 import React, { useEffect } from "react";
 import { Box } from "@mui/system";
-import {
-    Button,
-    CircularProgress,
-    Grid,
-    IconButton,
-    Typography,
-} from "@mui/material";
+import { Button, CircularProgress, Grid, IconButton, Typography, Fade } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Link as RouteLink } from "react-router-dom";
-const Moment = require('moment')
-import { Fade } from "@mui/material";
 import Post from "../Post/Post.component";
 import { useParams } from 'react-router-dom';
 import { QUERY_USER, QUERY_POSTS } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
-// import Modal from '../Modal/modal.component';
+const Moment = require('moment')
 
 const GuestProfile = () => {
-
     const { profileId } = useParams<{ profileId: string | undefined }>();
-
     const { loading, error, data } = useQuery(QUERY_USER, {
         variables: {
             id: profileId
         },
     });
-    
-    const { userProfile } = data;
-
-    const { loading: postLoading, error: postError, data: { posts } } = useQuery(QUERY_POSTS, {
-        variables: {
-            user_id: userProfile.id
-        },
-    });
-
-    const postData: Array<{
+    var postArray: Array<{
         id: number,
         user_id: string,
         text: string,
         created_at: Date
-    }> = posts
-    const postArray = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
-
-    // const [openModal, setOpenModal] = React.useState(false);
-
-
-    // const handleModalOpen = () => {
-    //     setOpenModal(true);
-    // };
-    // const handleModalClose = () => {
-    //     setOpenModal(false);
-    // };
+    }> = []
+    if (data) {
+        var { userProfile } = data;
+        var { loading: postLoading, error: postError, data: postData } = useQuery(QUERY_POSTS, {
+            variables: {
+                user_id: userProfile.id
+            },
+        });
+        var { posts } = postData;
+        var postArray: Array<{
+            id: number,
+            user_id: string,
+            text: string,
+            created_at: Date
+        }> = posts
+        // [...posts].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
+    }
 
     useEffect(() => {
-        console.log('test', profileId)
-    })
+        console.log("Run something")
+    }, [])
+
     return (
         <>
             {loading && (
@@ -186,12 +173,14 @@ const GuestProfile = () => {
                                     <CircularProgress color="success" />
                                 )}
                                 {postArray &&
-                                    postArray.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
+                                    postArray.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)
+                                }
                             </Box>
                         </Box>
                     </div>
                 </Fade>
             )}
+
             {/* {openModal && (
                 <Modal
                     open={openModal}

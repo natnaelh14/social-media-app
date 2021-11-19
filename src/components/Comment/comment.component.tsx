@@ -9,6 +9,8 @@ import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IosShareIcon from "@mui/icons-material/IosShare";
 const Moment = require('moment');
+import { useQuery } from '@apollo/client';
+import { QUERY_USER } from '../../utils/queries';
 
 type commentProps = {
   commentId: number,
@@ -19,6 +21,15 @@ type commentProps = {
 };
 
 const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps) => {
+
+  const { loading, error, data } = useQuery(QUERY_USER, {
+    variables: { 
+        id: userId
+     },
+  });
+
+  const { userProfile } = data;
+
   return (
     <Box
       padding="1rem"
@@ -30,7 +41,7 @@ const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps)
     >
       <Grid container flexWrap="nowrap">
         <Grid item sx={{ paddingRight: "1rem" }}>
-          <img src="https://res.cloudinary.com/doalzf6o2/image/upload/v1635983850/hero-image_yccwx5.png" alt="lgoog" width="50px" />
+          <img src={userProfile.avatar} alt="lgoog" width="50px" />
         </Grid>
         <Grid item>
           <Box>
@@ -45,34 +56,24 @@ const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps)
                   <Typography
                     sx={{ fontSize: "16px", fontWeight: 500, mr: "6px" }}
                   >
-                    Natnael Haile
+                    {userProfile.handle}
                   </Typography>
                   <Typography
-                    sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
+                    sx={{ fontSize: "12px", mr: "8px", color: "#555" }}
                   >
-                    @natnaelh14
+                    @{userProfile.handle.toLowerCase().trim()}
                   </Typography>
                   <Typography
-                    sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
+                    sx={{ fontSize: "15px", mr: "8px", color: "#555" }}
                   >
-                    .
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
-                  >
-                    {Moment(commentTime).format('MMMM Do YYYY')}
+                    {Moment(commentTime).format('MMM DD YY')}
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography sx={{ fontSize: "15px", color: "#555" }}>
+                  <Typography sx={{ fontSize: "15px", color: "#555", textAlign: "left" }}>
                     {text}
                   </Typography>
                 </Box>
-              </Grid>
-              <Grid item>
-                <IconButton>
-                  <MoreHorizIcon />
-                </IconButton>
               </Grid>
             </Grid>
             <Box

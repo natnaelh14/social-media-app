@@ -38,15 +38,14 @@ const UpdateUserProfile = ({
   const { user } = currentUser
   const userInfo: userProps = user
 
+  const [bio, setBio] = useState<string>(userInfo.bio)
   const [city, setCity] = useState<string>(userInfo.city)
   const [state, setState] = useState<string>(userInfo.state)
   const [country, setCountry] = useState<string>(userInfo.country)
   const [gender, setGender] = useState<string>(userInfo.gender)
   const [avatar, setAvatar] = useState<FileList | any>()
   const [birthDate, setBirthDate] = useState<Date | any>(userInfo.birth_date)
-
   const [updateUserProfile, { data, loading, error }] = useMutation(UPDATE_USER_PROFILE)
-
 
   const handleUpdateProfile = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -61,12 +60,25 @@ const UpdateUserProfile = ({
       const avatarUrl = resumeRes.data.secure_url
       console.log(city, state, country, avatarUrl, gender, birthDate)
       const { data } = await updateUserProfile({
-        variables: { city, state, country, avatar: avatarUrl, gender, status: userInfo.status, birth_date: birthDate },
+        variables: { 
+          id: userInfo.id, 
+          handle: userInfo.handle, 
+          email: userInfo.email, 
+          avatar: avatarUrl, bio, 
+          city, 
+          state, 
+          country,  
+          gender, 
+          status: userInfo.status, 
+          birth_date: birthDate, 
+          updated_at: userInfo.updated_at, 
+          created_at: userInfo.created_at 
+        },
       });
       handleClose();
     } catch (e) {
       handleClose();
-      throw new Error('Unable to upload file and update profile.')
+      throw new Error('Unable to Update Profile.')
     }
   };
 
@@ -96,6 +108,19 @@ const UpdateUserProfile = ({
               @natnaelhaile
             </Typography>
             <form noValidate>
+            <TextField
+                variant="standard"
+                margin="normal"
+                minRows={3}
+                fullWidth
+                id="bio"
+                label="Bio"
+                name="bio"
+                autoComplete="off"
+                autoFocus
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+              />
               <TextField
                 variant="standard"
                 margin="normal"
@@ -154,7 +179,6 @@ const UpdateUserProfile = ({
                 variant="standard"
                 label="Birthday"
                 type="date"
-                defaultValue={userInfo.birth_date}
                 value={birthDate}
                 onChange={(e) => setBirthDate(e.target.value)}
                 sx={{ width: 220 }}

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.4.17",
+    "@coinpaprika/api-nodejs-client": "^1.2.0",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@material-ui/styles": "^4.11.4",

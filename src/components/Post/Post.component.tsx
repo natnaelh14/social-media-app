@@ -85,24 +85,19 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                 <Grid item>
                                     <Box display="flex">
                                         <Typography
-                                            sx={{ fontSize: "16px", fontWeight: 500, mr: "6px" }}
+                                            sx={{ fontSize: "16px", fontWeight: 500, mr: "10px" }}
                                         >
                                             {userProfile.handle}
                                         </Typography>
                                         <Typography
-                                            sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
+                                            sx={{ fontSize: "15px", mr: "10px", color: "#555" }}
                                         >
                                             @{userProfile.handle.trim().toLowerCase()}
                                         </Typography>
                                         <Typography
-                                            sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
+                                            sx={{ fontSize: "15px", mr: "10px", color: "#555" }}
                                         >
-                                            .
-                                        </Typography>
-                                        <Typography
-                                            sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
-                                        >
-                                            {moment(postTime).format('MMMM Do YYYY')}
+                                            {moment(postTime).format('MMM DD YY')}
                                         </Typography>
                                     </Box>
                                     <Box>
@@ -140,8 +135,8 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                 </IconButton>
                             </Box>
                             {displayComment && (
-                                <Box>
-                                    <Grid item>
+                                <Box >
+                                    <Grid item padding="1rem 1rem 0 1rem" borderBottom="1px solid #ccc">
                                         <Box padding=".5rem 0">
                                             <Input
                                                 onChange={(e) => setCommentText(e.target.value)}

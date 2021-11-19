@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const UPDATE_USER_PROFILE = gql`
-  mutation updateUserProfile(
+  mutation updateProfile(
     $id: ID!
     $email: String!
     $handle: String!
@@ -14,8 +14,6 @@ export const UPDATE_USER_PROFILE = gql`
     $country: String
     $status: MoodStatus
     $isActive: Boolean!
-    $created_at: Date!
-    $updated_at: Date!
   ) {
     updateUserProfile(
       id: $id
@@ -30,10 +28,19 @@ export const UPDATE_USER_PROFILE = gql`
       country: $country
       status: $status
       isActive: $isActive
-      created_at: $created_at
-      updated_at: $updated_at
     ) {
-      user 
+      id
+      email
+      handle
+      avatar
+      gender
+      birth_date
+      bio
+      city
+      state
+      country
+      status
+      isActive
     }
   }
 `;

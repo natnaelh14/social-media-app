@@ -99,7 +99,7 @@ const LeftSidebar = () => {
             </ListItem>
           </NavLink>
           <NavLink
-            to={`/home/cryptocurrency`}
+            to={`/home/crypto`}
             style={{
               textDecoration: "none",
               color: "inherit",

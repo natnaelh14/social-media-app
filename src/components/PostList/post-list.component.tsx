@@ -17,26 +17,26 @@ const PostList: React.FC = () => {
     text: string,
     created_at: Date
   }> = posts
-    let postsData = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
+  let postsData = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
 
   return (
+    <div style={{ width: '66%', margin: '10px' }}>
+      <Fade in={true} timeout={1000}>
+        <div style={{ border: '1px solid #cdcdcd', padding: '20px', margin: '50px' }}>
+          <AddPost />
+          <Box>
+            {loading && (
+              <CircularProgress size={20} color="primary" />
+            )}
+          </Box>
+          <Box>
+            {postsData &&
+              postsData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
+          </Box>
+        </div>
+      </Fade>
+    </div>
 
-    <Fade in={true} timeout={1000}>
-      <div style={{ border: '1px solid #cdcdcd', padding: '20px', margin: '50px' }}>
-        <AddPost />
-        <Box>
-          {loading && (
-            <CircularProgress size={20} color="primary" />
-          )}
-        </Box>
-
-        <Box>
-          {postsData &&
-            postsData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
-        </Box>
-
-      </div>
-    </Fade>
   )
 }
 

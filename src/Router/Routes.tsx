@@ -21,6 +21,7 @@ import { gql } from "@apollo/client";
 import { client } from '../index';
 import { QUERY_USER } from '../utils/queries';
 import GuestProfile from "../components/GuestProfile/guest_profile.component";
+import CryptoPage from '../pages/crypto_page';
 
 type MyProps = {
   setCurrentUser: any;
@@ -135,6 +136,9 @@ class Routes extends Component<MyProps, {}> {
             </Route>
             <Route exact path="/home/explore">
               {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}
+            </Route>
+            <Route exact path="/home/crypto">
+              {this.props.currentUser ? <CryptoPage /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/notifications">
               {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}

@@ -46,7 +46,7 @@ const Profile = () => {
     };
 
     return (
-        <>
+        <div style={{ width: '66%', margin: '10px' }}>
             {loading && (
                 <CircularProgress color="success" />
             )}
@@ -184,7 +184,7 @@ const Profile = () => {
                 />
             )}
 
-        </>
+        </div>
     );
 }
 

@@ -29,7 +29,7 @@ const PostList: React.FC = () => {
               <CircularProgress size={20} color="primary" />
             )}
           </Box>
-          <Box>
+          <Box height="90vh" sx={{ overflowY: "scroll" }}>
             {postsData &&
               postsData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
           </Box>

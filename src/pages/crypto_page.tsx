@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
@@ -7,8 +7,20 @@ import { Grid, Typography, Fade, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import TwitterPost from '../components/TwitterPost/twitter_post.component';
 import CryptoDoughnut from '../components/CryptoDoughnut/crypto_doughnut.component';
+import AddModifyCrypto from '../components/AddModifyCrypto/add_modify_crypto.component';
 
 const CryptoPage = () => {
+
+    const [openModal, setOpenModal] = React.useState(false);
+
+    const handleModalOpen = () => {
+        console.log('heyyou')
+        setOpenModal(true);
+    };
+    const handleModalClose = () => {
+        setOpenModal(false);
+    };
+
     return (
         <div style={{ width: '66%', margin: '50px', boxSizing: 'border-box' }}>
             <Fade in={true} timeout={1000}>
@@ -32,6 +44,7 @@ const CryptoPage = () => {
                     <Box textAlign="right" padding="10px 20px">
                         <Button
                             size="small"
+                            onClick={handleModalOpen}
                             sx={{
                                 textTransform: "capitalize",
                                 padding: "6px 20px",
@@ -72,6 +85,13 @@ const CryptoPage = () => {
                     </Box>
                 </Box>
             </Fade>
+            {openModal && (
+                <AddModifyCrypto 
+                open={openModal}
+                handleClose={handleModalClose}
+                userId='chG0WmOFPheLzl528legA3iIpbO2'
+                />
+            )}
         </div>
 
 

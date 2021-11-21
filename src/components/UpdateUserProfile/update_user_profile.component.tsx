@@ -50,29 +50,31 @@ const UpdateUserProfile = ({
   const handleUpdateProfile = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const resumeData = new FormData();
-      resumeData.append("upload_preset", "resume");
-      resumeData.append("file", avatar[0]);
-      const resumeRes = await axios.post(
-        `https://api.cloudinary.com/v1_1/doalzf6o2/image/upload`,
-        resumeData
-      );
-      const avatarUrl = resumeRes.data.secure_url
+      if (avatar) {
+        var resumeData = new FormData();
+        resumeData.append("upload_preset", "resume");
+        resumeData.append("file", avatar[0]);
+        var resumeRes = await axios.post(
+          `https://api.cloudinary.com/v1_1/doalzf6o2/image/upload`,
+          resumeData
+        );
+        var avatarUrl = resumeRes.data.secure_url
+      }
       console.log(city, state, country, avatarUrl, gender, birthDate)
       const { data } = await updateUserProfile({
-        variables: { 
-          id: userInfo.id, 
-          handle: userInfo.handle, 
-          email: userInfo.email, 
-          avatar: avatarUrl, bio, 
-          city, 
-          state, 
-          country,  
-          gender, 
-          status: userInfo.status, 
-          birth_date: birthDate, 
-          updated_at: userInfo.updated_at, 
-          created_at: userInfo.created_at 
+        variables: {
+          id: userInfo.id,
+          handle: userInfo.handle,
+          email: userInfo.email,
+          avatar: avatarUrl ? avatarUrl : userInfo.avatar,
+          bio,
+          city,
+          state,
+          country,
+          gender,
+          status: userInfo.status,
+          birth_date: birthDate,
+          isActive: userInfo.isActive
         },
       });
       handleClose();
@@ -108,7 +110,7 @@ const UpdateUserProfile = ({
               @natnaelhaile
             </Typography>
             <form noValidate>
-            <TextField
+              <TextField
                 variant="standard"
                 margin="normal"
                 minRows={3}

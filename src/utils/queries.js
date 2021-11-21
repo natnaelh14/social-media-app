@@ -54,3 +54,15 @@ export const QUERY_USERS_LIST = gql`
     }
   }
 `;
+
+export const QUERY_CRYPTOS = gql`
+  query getCryptos($user_id: ID!) {
+    cryptoByUserId(user_id: $user_id) {
+      id
+      user_id
+      crypto_name
+      holding_amount
+      purchase_date
+    }
+  }
+`;

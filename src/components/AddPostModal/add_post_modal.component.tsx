@@ -91,8 +91,6 @@ const AddPostModal = ({
         </Button>
       </DialogActions>
     </Dialog>
-
-
   )
 };
 

@@ -71,3 +71,15 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const ADD_CRYPTO = gql`
+  mutation addCryptoMutation($cryptoName: String!, $holdingAmount: Int!, $userId: ID!) {
+    addCrypto(crypto_name: $cryptoName, holding_amount: $holdingAmount, user_id: $userId) {
+      id
+      user_id
+      crypto_name
+      holding_amount
+      purchase_date
+    }
+  }
+`;

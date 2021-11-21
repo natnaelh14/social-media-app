@@ -37,7 +37,6 @@ const Profile = () => {
 
     const [openModal, setOpenModal] = React.useState(false);
 
-
     const handleModalOpen = () => {
         setOpenModal(true);
     };

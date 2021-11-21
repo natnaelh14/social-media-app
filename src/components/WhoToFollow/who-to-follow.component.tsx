@@ -15,8 +15,8 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
   const theme = useTheme();
   return (
     <Box margin="2rem" padding='1rem'>
-      <Grid container alignItems="center">
-        <Grid item >
+      <Grid container alignItems="center" >
+        <Grid item style={{ display: 'flex', alignItems: 'center'}}>
           <NavLink to={`/home/profile/${id}`}>
             <img src={avatar} alt="logo" width="50px" />
           </NavLink>

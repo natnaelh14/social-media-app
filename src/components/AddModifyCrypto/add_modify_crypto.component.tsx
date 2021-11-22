@@ -2,10 +2,12 @@ import { Grid, Input } from "@mui/material";
 import React, { useState, useEffect } from 'react';
 import { Button, FormControl, InputLabel, OutlinedInput, InputAdornment, Dialog, DialogActions, DialogContent, Autocomplete, DialogTitle, IconButton, Typography, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import NumberFormat from 'react-number-format';
 import { Box } from "@mui/system";
 import { coinsList } from './coin';
 import { QUERY_CRYPTOS } from '../../utils/queries';
 import { useQuery, useMutation } from '@apollo/client';
+import { ADD_CRYPTO } from '../../utils/mutations';
 
 type ModalProps = {
     open: boolean,
@@ -28,33 +30,43 @@ const AddModifyCrypto = ({
         var { cryptoByUserId } = data;
     }
 
+    const [addCrypto, { }] = useMutation(ADD_CRYPTO);
+    const [addHolding, setAddHolding] = useState();
+    const [addCoin, setAddCoin] = useState("")
 
     const [cryptoData, setCryptoData] = useState([]);
 
     const handleCrypto = () => {
     }
 
+    const handleAddCrypto = async () => {
+        await addCrypto({
+            variables: {
+                cryptoName: addCoin,
+                holdingAmount: Number(addHolding),
+                userId: userId
+            }
+        });
+    }
+
     let cryptoArray: any = []
-    useEffect(() => {
-        if (cryptoByUserId) {
-            (async () => {
-                for (let i = 0; i < cryptoByUserId.length; i++) {
-                    await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${cryptoByUserId[i].crypto_name}`)
-                        .then((res: any) => {
-                            return res.json()
-                        })
-                        .then((res: any) => {
-                            return cryptoArray.push([res[0].name, res[0].current_price * cryptoByUserId[i].holding_amount])
-                        })
-                    // .then((res) => {
-                    //     setCryptoData(cryptoArray)
-                    // })
-                }
-                // setCryptoData(cryptoArray)
-                console.log('micheal', cryptoArray)
-            })()
-        }
-    }, [cryptoArray])
+    // useEffect(() => {
+    //     if (cryptoByUserId) {
+    //         (async () => {
+    //             for (let i = 0; i < cryptoByUserId.length; i++) {
+    //                 await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${cryptoByUserId[i].crypto_name}`)
+    //                     .then((res: any) => {
+    //                         return res.json()
+    //                     })
+    //                     .then((res: any) => {
+    //                         return cryptoArray.push([res[0].name, res[0].current_price * cryptoByUserId[i].holding_amount])
+    //                     })
+    //             }
+    //             setCryptoData(cryptoArray)
+    //             console.log('micheal', cryptoArray)
+    //         })()
+    //     }
+    // }, [cryptoArray])
 
     return (
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
@@ -78,13 +90,15 @@ const AddModifyCrypto = ({
                             id="free-solo-2-demo"
                             disableClearable
                             fullWidth
-                            sx={{ marginBottom: '30px' }}
+                            // sx={{ marginBottom: '30px' }}
                             options={coinsList.map((option) => option.name)}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
                                     label="Search Crypto"
                                     variant='standard'
+                                    value={addCoin}
+                                    onChange={(e) => setAddCoin(e.target.value)}
                                     InputProps={{
                                         ...params.InputProps,
                                         type: 'search',
@@ -92,16 +106,13 @@ const AddModifyCrypto = ({
                                 />
                             )}
                         />
-                        <FormControl sx={{ m: 1 }}>
-                            <OutlinedInput
-                                id="outlined-adornment-amount"
-                                value=''
-                                onChange={() => console.log('hello')}
-                                startAdornment={<InputAdornment position="start">#</InputAdornment>}
-                                label="Amount"
-                            />
-                        </FormControl>
-                        <Button variant="contained">ADD</Button>
+                        <NumberFormat
+                            customInput={TextField}
+                            onValueChange={(values: any) => setAddHolding(values.value)}
+                            value={addHolding}
+                            variant="standard"
+                        />
+                        <Button onClick={handleAddCrypto} variant="contained">ADD</Button>
                     </Box>
                     <Box borderBottom="1px solid #ccc" mb='2rem'>
                         <Typography

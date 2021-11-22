@@ -127,7 +127,7 @@ const LeftSidebar = () => {
             </ListItem>
           </NavLink>
           <NavLink
-            to={`/home/friendrequests`}
+            to={`/home/requests`}
             style={{
               textDecoration: "none",
               color: "inherit",

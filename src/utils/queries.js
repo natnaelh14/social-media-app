@@ -66,3 +66,13 @@ export const QUERY_CRYPTOS = gql`
     }
   }
 `;
+
+export const QUERY_FRIEND_REQUESTS = gql`
+  query getFriendRequests($id: ID!) {
+    friendRequests(id: $id) {
+      id
+      avatar
+      handle
+    }
+  }
+`;

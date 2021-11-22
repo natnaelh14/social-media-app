@@ -49,7 +49,7 @@ const CryptoCurrency = ({ name }: nameProps) => {
     return (
         <>
             {coinData && (
-                <Box sx={{ height: 400 }}>
+                <Box >
                     <Grid item padding="1rem 1rem 1rem 1rem" border="1px solid #ccc">
                         <CryptoChart coinName={coinData.name} coinImage={coinData.image} coinRank={coinData.market_cap_rank} coinMarketCap={coinData.market_cap} coinCurrentPrice={coinData.current_price} coinATH={coinData.ath} />
                         <CoinGraph coinDates={coinDateData} coinPrices={coinPriceData} />

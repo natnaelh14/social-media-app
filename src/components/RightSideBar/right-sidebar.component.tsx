@@ -70,9 +70,6 @@ const RightSidebar = () => {
           <Typography variant="h6" textAlign='center' sx={{ fontWeight: "bold" }}>
             Who to follow
           </Typography>
-          {/* {loading && (
-            <CircularProgress color="success" />
-          )} */}
           {(searchText && usersArray) && (
             usersArray.map((user) => <WhoToFollow key={user.id} id={user.id} handle={user.handle} avatar={user.avatar} isActive={user.isActive} />)
           )}

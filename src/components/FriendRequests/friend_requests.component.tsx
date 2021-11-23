@@ -6,6 +6,12 @@ import { QUERY_FRIEND_REQUESTS } from '../../utils/queries';
 import { useAppSelector } from "../../app/hooks";
 import { userProps } from '../../index.types';
 
+type UserProps = {
+    id: string,
+    handle: string,
+    avatar: string
+}
+
 const FriendRequests = () => {
 
     const [friendRequestsData, setFriendRequestsData] = useState([]);
@@ -19,24 +25,24 @@ const FriendRequests = () => {
             },
         });
     }
-    if(data) {
+    if (data) {
         var { friendRequests } = data;
     }
 
     useEffect(() => {
         if (friendRequests) {
             setFriendRequestsData(friendRequests)
-            console.log('kevin', friendRequests)
+            console.log('kevin', friendRequestsData)
         }
-    }, [friendRequests])
+    }, [friendRequestsData])
 
     return (
         <div style={{ width: '66%', margin: '10px' }}>
             <Fade in={true} timeout={1000}>
                 <div style={{ border: '1px solid #cdcdcd', padding: '20px', margin: '50px' }}>
                     {friendRequestsData && (
-                        friendRequestsData.map((user: any) => {
-                            <FriendRequestBox userId={user.id} userHandle={user.handle} userAvatar={user.avatar} />
+                        friendRequestsData.map((user: UserProps) => {
+                            <FriendRequestBox key={user.id} userId={user.id} userHandle={user.handle} userAvatar={user.avatar} />
                         })
                     )}
                 </div>

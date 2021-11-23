@@ -14,7 +14,6 @@ const CryptoPage = () => {
     const [openModal, setOpenModal] = React.useState(false);
 
     const handleModalOpen = () => {
-        console.log('heyyou')
         setOpenModal(true);
     };
     const handleModalClose = () => {

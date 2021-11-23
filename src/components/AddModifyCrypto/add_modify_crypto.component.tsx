@@ -50,23 +50,24 @@ const AddModifyCrypto = ({
     }
 
     let cryptoArray: any = []
-    // useEffect(() => {
-    //     if (cryptoByUserId) {
-    //         (async () => {
-    //             for (let i = 0; i < cryptoByUserId.length; i++) {
-    //                 await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${cryptoByUserId[i].crypto_name}`)
-    //                     .then((res: any) => {
-    //                         return res.json()
-    //                     })
-    //                     .then((res: any) => {
-    //                         return cryptoArray.push([res[0].name, res[0].current_price * cryptoByUserId[i].holding_amount])
-    //                     })
-    //             }
-    //             setCryptoData(cryptoArray)
-    //             console.log('micheal', cryptoArray)
-    //         })()
-    //     }
-    // }, [cryptoArray])
+    useEffect(() => {
+        if (cryptoByUserId) {
+            (async () => {
+                for (let i = 0; i < cryptoByUserId.length; i++) {
+                    await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${cryptoByUserId[i].crypto_name}`)
+                        .then((res: any) => {
+                            return res.json()
+                        })
+                        .then((res: any) => {
+                            return [res[0].name, res[0].current_price * cryptoByUserId[i].holding_amount]
+                        })
+                        .then((res) => setCryptoData(prev => ({...prev, res })))
+                }
+                // setCryptoData(cryptoArray)
+                console.log('micheal', cryptoByUserId)
+            })()
+        }
+    }, [])
 
     return (
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">

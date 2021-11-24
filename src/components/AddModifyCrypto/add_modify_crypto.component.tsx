@@ -1,6 +1,6 @@
 import { Grid, Input } from "@mui/material";
 import React, { useState, useEffect } from 'react';
-import { Button, FormControl, InputLabel, OutlinedInput, InputAdornment, Dialog, DialogActions, DialogContent, Autocomplete, DialogTitle, IconButton, Typography, TextField } from "@mui/material";
+import { Button, FormControl, OutlinedInput, InputAdornment, Dialog, DialogActions, DialogContent, Autocomplete, DialogTitle, IconButton, Typography, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import NumberFormat from 'react-number-format';
 import { Box } from "@mui/system";
@@ -33,7 +33,6 @@ const AddModifyCrypto = ({
     const [addCrypto, { }] = useMutation(ADD_CRYPTO);
     const [addHolding, setAddHolding] = useState();
     const [addCoin, setAddCoin] = useState("")
-
     const [cryptoData, setCryptoData] = useState([]);
 
     const handleCrypto = () => {
@@ -42,7 +41,7 @@ const AddModifyCrypto = ({
     const handleAddCrypto = async () => {
         await addCrypto({
             variables: {
-                cryptoName: addCoin,
+                cryptoName: addCoin.toLowerCase(),
                 holdingAmount: Number(addHolding),
                 userId: userId
             }
@@ -59,15 +58,15 @@ const AddModifyCrypto = ({
                             return res.json()
                         })
                         .then((res: any) => {
-                            return [res[0].name, res[0].current_price * cryptoByUserId[i].holding_amount]
+                            cryptoArray.push([res[0].name, cryptoByUserId[i].holding_amount, res[0].current_price * cryptoByUserId[i].holding_amount])
                         })
-                        .then((res) => setCryptoData(prev => ({...prev, res })))
+                    
                 }
-                // setCryptoData(cryptoArray)
-                console.log('micheal', cryptoByUserId)
+                setCryptoData(cryptoArray)
+                console.log('result', cryptoArray)
             })()
         }
-    }, [])
+    }, [cryptoByUserId])
 
     return (
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
@@ -146,6 +145,7 @@ const AddModifyCrypto = ({
                                             label="Amount"
                                         />
                                     </FormControl>
+                                    <Typography>{`= ${val[2]}`}</Typography>
                                 </Box>
                             </Box>
                         })

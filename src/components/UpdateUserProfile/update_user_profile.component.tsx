@@ -60,8 +60,7 @@ const UpdateUserProfile = ({
         );
         var avatarUrl = resumeRes.data.secure_url
       }
-      console.log(city, state, country, avatarUrl, gender, birthDate)
-      const { data } = await updateUserProfile({
+                                                                             const { data } = await updateUserProfile({
         variables: {
           id: userInfo.id,
           handle: userInfo.handle,

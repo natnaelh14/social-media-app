@@ -30,11 +30,9 @@ const FriendRequests = () => {
     }
 
     useEffect(() => {
-        if (friendRequests) {
             setFriendRequestsData(friendRequests)
             console.log('kevin', friendRequestsData)
-        }
-    }, [friendRequestsData])
+    }, [friendRequests])
 
     return (
         <div style={{ width: '66%', margin: '10px' }}>

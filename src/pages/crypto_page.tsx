@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
@@ -8,8 +8,33 @@ import { Box } from "@mui/system";
 import TwitterPost from '../components/TwitterPost/twitter_post.component';
 import CryptoDoughnut from '../components/CryptoDoughnut/crypto_doughnut.component';
 import AddModifyCrypto from '../components/AddModifyCrypto/add_modify_crypto.component';
+import { userProps } from '../index.types';
+import { useAppSelector } from '../app/hooks';
+import { useQuery } from '@apollo/client';
+import { QUERY_CRYPTOS } from '../utils/queries';
 
 const CryptoPage = () => {
+
+    const currentUser = useAppSelector(state => state.currentUser)
+    const { loading, user } = currentUser
+    const userInfo: userProps = user
+
+    const { data } = useQuery(QUERY_CRYPTOS, {
+        variables: {
+            user_id: userInfo.id
+        }
+    })
+    // if(data) {
+    //     var { cryptoByUserId } = data;
+    // }
+    
+
+    useEffect(() => {
+        if(data) {
+            var { cryptoByUserId } = data;
+            console.log('jim', cryptoByUserId)
+        } 
+    }, [data])
 
     const [openModal, setOpenModal] = React.useState(false);
 
@@ -32,6 +57,9 @@ const CryptoPage = () => {
                                     NextIcon={<SkipNextIcon />}
                                     PrevIcon={<SkipPreviousIcon />}
                                 >
+                                    {/* {cryptoByUserId && (
+                                        <CryptoCurrency name={cryptoByUserId.crypto_name} />
+                                    )} */}
                                     <CryptoCurrency name='bitcoin' />
                                     <CryptoCurrency name='ethereum' />
                                     <CryptoCurrency name='ripple' />
@@ -85,10 +113,10 @@ const CryptoPage = () => {
                 </Box>
             </Fade>
             {openModal && (
-                <AddModifyCrypto 
-                open={openModal}
-                handleClose={handleModalClose}
-                userId='chG0WmOFPheLzl528legA3iIpbO2'
+                <AddModifyCrypto
+                    open={openModal}
+                    handleClose={handleModalClose}
+                    userId='chG0WmOFPheLzl528legA3iIpbO2'
                 />
             )}
         </div>

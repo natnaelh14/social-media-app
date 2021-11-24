@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, MouseEvent } from "react";
 import { Button, Grid, Input, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Box } from "@mui/system";
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
@@ -26,6 +26,11 @@ const AddPost = () => {
     })
     setPostText("");
   }
+
+  // const handleChangeMood = async (e: Event & { target: { value: string} }) => {
+  //   setMood(e.target.value)
+  //   console.log(e.target.value)
+  // }
 
   return (
     <Box padding="1rem 1rem 0 1rem" borderBottom="1px solid #ccc">
@@ -58,7 +63,7 @@ const AddPost = () => {
                   id="demo-simple-select"
                   value={mood || ""}
                   variant="standard"
-                  onChange={() => { console.log('hellow') }}
+                  onChange={(e) => setMood(e.target.value)}
                 >
                   <MenuItem value='HAPPY'>HAPPY 😀</MenuItem>
                   <MenuItem value='SAD'>SAD 😔</MenuItem>

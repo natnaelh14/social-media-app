@@ -11,7 +11,7 @@ export const setCurrentUser = (user) => async(dispatch) => {
     type: USER_INFO_SUCCESS,
     payload: user,
   });
-  } catch (e) {
+  } catch (error) {
     dispatch({
       type: USER_INFO_FAIL,
       payload:

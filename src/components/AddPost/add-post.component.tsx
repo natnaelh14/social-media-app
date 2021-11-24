@@ -18,13 +18,22 @@ const AddPost = () => {
   const [addPost, { data }] = useMutation(ADD_POST);
 
   const handleAddPost = async () => {
-    await addPost({
-      variables: {
-        user_id: userInfo.id,
-        text: postText
+    try {
+      const res = await addPost({
+        variables: {
+          user_id: userInfo.id,
+          text: postText
+        }
+      })
+      if(res) {
+        setPostText("");
+        
       }
-    })
-    setPostText("");
+      
+    } catch (e) {
+
+    }
+
   }
 
   // const handleChangeMood = async (e: Event & { target: { value: string} }) => {
@@ -57,7 +66,7 @@ const AddPost = () => {
             borderTop="1px solid #ccc"
           >
             <Box textAlign="left">
-              <FormControl style={{minWidth: 120}} >
+              <FormControl style={{ minWidth: 120 }} >
                 <InputLabel id="demo-simple-select-label">Mood</InputLabel>
                 <Select
                   id="demo-simple-select"

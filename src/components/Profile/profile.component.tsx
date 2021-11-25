@@ -13,6 +13,7 @@ import Post from "../Post/Post.component";
 import UpdateUserProfile from "../UpdateUserProfile/update_user_profile.component";
 import { QUERY_FOLLOWERS, QUERY_FOLLOWINGS } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
+import FollowModal from "../FollowModal/follow_modal.component";
 
 const Profile = () => {
 
@@ -31,7 +32,7 @@ const Profile = () => {
     let postsData = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
 
     const { loading: followerLoading, data: followerData } = useQuery(QUERY_FOLLOWERS, {
-        variables: { 
+        variables: {
             id: userInfo.id
         }
     });
@@ -46,18 +47,24 @@ const Profile = () => {
         var { followings } = followingData;
     }
 
-    const [openModal, setOpenModal] = React.useState(false);
+    const [openUpdateModal, setOpenUpdateModal] = React.useState(false);
+    const [openFollowingModal, setOpenFollowingModal] = React.useState(false);
+    const [openFollowerModal, setOpenFollowerModal] = React.useState(false);
 
-    const handleModalOpen = () => {
-        setOpenModal(true);
-    };
+
+
+    // const handleModalOpen = () => {
+    //     setOpenModal(true);
+    // };
     const handleModalClose = () => {
-        setOpenModal(false);
+        setOpenUpdateModal(false)
+        setOpenFollowingModal(false)
+        setOpenFollowerModal(false)
     };
 
     return (
         <div style={{ width: '66%', margin: '10px' }}>
-            {(loading && followerLoading &&  followingLoading ) && (
+            {(loading && followerLoading && followingLoading) && (
                 <CircularProgress color="success" />
             )}
             {(userInfo && followerData && followingData) && (
@@ -104,7 +111,7 @@ const Profile = () => {
                                 </Box>
                                 <Box textAlign="right" padding="10px 20px">
                                     <Button
-                                        onClick={handleModalOpen}
+                                        onClick={() => setOpenUpdateModal(!openUpdateModal)}
                                         size="small"
                                         sx={{
                                             textTransform: "capitalize",
@@ -150,18 +157,41 @@ const Profile = () => {
                                         </Box>
                                     </Box>
                                     <Box display="flex" marginTop='1rem'>
-                                        <Typography color="#555" marginRight="1rem">
-                                            <strong style={{ color: "black" }}>
-                                                {followings.length}
-                                            </strong>
-                                            Following
-                                        </Typography>
-                                        <Typography color="#555" marginRight="1rem">
-                                            <strong style={{ color: "black" }}>
-                                                {followers.length}
-                                            </strong>
-                                            Followers
-                                        </Typography>
+                                        <Box
+                                            onClick={() => setOpenFollowingModal(!openFollowingModal)}
+                                            sx={{
+                                                "&:hover": {
+
+                                                    textDecoration: "underline",
+                                                    cursor: "pointer",
+                                                    fontWeight: "bold"
+                                                },
+                                            }}
+                                        >
+                                            <Typography color="#555" marginRight="1rem">
+                                                <strong style={{ color: "black" }}>
+                                                    {`${followings.length} `}
+                                                </strong>
+                                                Following
+                                            </Typography>
+                                        </Box>
+                                        <Box
+                                            onClick={() => setOpenFollowerModal(!openFollowerModal)}
+                                            sx={{
+                                                "&:hover": {
+                                                    textDecoration: "underline",
+                                                    cursor: "pointer",
+                                                    fontWeight: "bold"
+                                                },
+                                            }}
+                                        >
+                                            <Typography color="#555" marginRight="1rem">
+                                                <strong style={{ color: "black" }}>
+                                                    {`${followers.length} `}
+                                                </strong>
+                                                Followers
+                                            </Typography>
+                                        </Box>
                                     </Box>
                                     <Box display="flex" marginTop='1rem'>
                                         <Typography color="#555" marginRight="1rem">Member Since {Moment(userInfo.created_at).format('YYYY')}</Typography>
@@ -187,13 +217,30 @@ const Profile = () => {
                     </div>
                 </Fade>
             )}
-            {openModal && (
+            {openUpdateModal && (
                 <UpdateUserProfile
-                    open={openModal}
+                    open={openUpdateModal}
                     handleClose={handleModalClose}
                 />
             )}
-
+            {openFollowingModal && (
+                <FollowModal
+                    open={openFollowingModal}
+                    handleClose={handleModalClose}
+                    follow={followings}
+                    title="Following"
+                    action='Following'
+                />
+            )}
+            {openFollowerModal && (
+                <FollowModal
+                    open={openFollowerModal}
+                    handleClose={handleModalClose}
+                    follow={followers}
+                    title='Followers'
+                    action='Remove'
+                />
+            )}
         </div>
     );
 }

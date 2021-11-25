@@ -3,12 +3,15 @@ import React, { useState, MouseEvent } from "react";
 import { Button, Grid, Input, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Box } from "@mui/system";
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { ADD_POST } from "../../utils/mutations";
 import { userProps } from '../../index.types';
+import { QUERY_POSTS } from '../../utils/queries';
+import { listPosts } from '../../redux/actions/postActions';
 
 const AddPost = () => {
 
+  const dispatch = useAppDispatch()
   const currentUser = useAppSelector((state) => state.currentUser);
   const { user } = currentUser
   const userInfo: userProps = user
@@ -27,7 +30,12 @@ const AddPost = () => {
       })
       if(res) {
         setPostText("");
-        
+        const { loading, error, data: { posts } } = await useQuery(QUERY_POSTS, {
+          variables: {
+              id: userInfo.id
+          },
+      });
+      dispatch(listPosts(posts))
       }
       
     } catch (e) {

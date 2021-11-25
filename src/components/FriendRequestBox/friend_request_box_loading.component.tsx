@@ -2,14 +2,10 @@ import React, { useState } from 'react';
 import { Grid, Typography, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
-type RequestsProps = {
-    userId: string,
-    userHandle: string,
-    userAvatar: string
-}
-
-const FriendRequestBox = ({ userId, userHandle, userAvatar }: RequestsProps) => {
+const FriendRequestBoxLoading = () => {
 
     return (
         <>
@@ -26,7 +22,12 @@ const FriendRequestBox = ({ userId, userHandle, userAvatar }: RequestsProps) => 
                 <Grid container flexWrap="nowrap">
                     <Grid item sx={{ paddingRight: "1rem" }}>
                         <Link to={`/home/profile`}>
-                            <img src={userAvatar} alt="logo" width="50px" />
+                            <Skeleton
+                                circle
+                                height={50}
+                                width={50}
+                                containerClassName="avatar-skeleton"
+                            />
                         </Link>
                     </Grid>
                     <Box>
@@ -39,21 +40,21 @@ const FriendRequestBox = ({ userId, userHandle, userAvatar }: RequestsProps) => 
                             <Grid item>
                                 <Box>
                                     <Typography sx={{ fontSize: "15px", color: "#555" }}>
-                                        {`${userHandle} is requesting to follow you.`}
+                                        <Skeleton count={1} width={400} />
                                     </Typography>
                                 </Box>
                             </Grid>
                         </Grid>
-                            <Box
-                                display="flex"
-                                justifyContent="space-between"
-                                marginRight="5rem"
-                                marginTop=".8rem"
-                            >
-                                <Button sx={{ marginRight: "1rem" }} color='primary' variant="outlined" size="small">APPROVE</Button>
-                                <Button sx={{ marginRight: "1rem" }} color='error' variant="outlined" size="small">DECLINE</Button>
-                                <Button sx={{ marginRight: "1rem" }} color='error' variant="outlined" size="small">BLOCK</Button>
-                            </Box>
+                        <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            marginRight="5rem"
+                            marginTop=".8rem"
+                        >
+                            <Skeleton
+                                width={100}
+                            />
+                        </Box>
                     </Box>
                 </Grid>
             </Box>
@@ -61,4 +62,4 @@ const FriendRequestBox = ({ userId, userHandle, userAvatar }: RequestsProps) => 
     )
 }
 
-export default FriendRequestBox
+export default FriendRequestBoxLoading

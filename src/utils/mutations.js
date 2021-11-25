@@ -73,13 +73,40 @@ export const ADD_COMMENT = gql`
 `;
 
 export const ADD_CRYPTO = gql`
-  mutation addCryptoMutation($cryptoName: String!, $holdingAmount: Int!, $userId: ID!) {
-    addCrypto(crypto_name: $cryptoName, holding_amount: $holdingAmount, user_id: $userId) {
+  mutation addCryptoMutation(
+    $cryptoName: String!
+    $holdingAmount: Int!
+    $userId: ID!
+  ) {
+    addCrypto(
+      crypto_name: $cryptoName
+      holding_amount: $holdingAmount
+      user_id: $userId
+    ) {
       id
       user_id
       crypto_name
       holding_amount
       purchase_date
+    }
+  }
+`;
+
+export const UPDATE_FRIEND_REQUEST = gql`
+  mutation RespondFollowRequestMutation(
+    $sender_id: String!
+    $receiver_id: String!
+    $status: Status!
+  ) {
+    respondFollowRequest(
+      sender_id: $sender_id
+      receiver_id: $receiver_id
+      status: $status
+    ) {
+      id
+      sender_id
+      receiver_id
+      status
     }
   }
 `;

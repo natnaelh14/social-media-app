@@ -5,8 +5,6 @@ import { Fade } from "@mui/material";
 import { useAppSelector } from '../../app/hooks';
 import { CircularProgress, Box } from "@mui/material";
 const Moment = require('moment');
-import PostListLoading from '../PostLoading/post-list_loading.component';
-
 
 const PostList: React.FC = () => {
 

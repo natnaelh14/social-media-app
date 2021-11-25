@@ -14,6 +14,7 @@ import { QUERY_USER } from '../../utils/queries';
 import { DELETE_POST, ADD_COMMENT } from '../../utils/mutations'
 import { useQuery, useMutation } from '@apollo/client';
 import CommentList from "../CommentList/comment_list.component";
+import PostLoading from "./post_loading.component";
 
 type postProps = {
     postId: number,
@@ -25,15 +26,14 @@ type postProps = {
 const Post = ({ postId, text, userId, postTime }: postProps) => {
 
     const { loading, error, data } = useQuery(QUERY_USER, {
-        variables: { 
+        variables: {
             id: userId
-         },
-      });
+        },
+    });
     const { userProfile } = data;
 
     const [deletePost, { }] = useMutation(DELETE_POST);
     const [addComment, { }] = useMutation(ADD_COMMENT);
-
     const [displayComment, setDisplayComment] = useState(false);
     const [commentText, setCommentText] = useState("");
 
@@ -56,124 +56,125 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
 
     return (
         <>
-        {loading && (
-            <CircularProgress color="success" />
-        )}
-        {userProfile && (
-            <Box
-                padding="1rem"
-                sx={{
-                    "&:hover": {
-                        backgroundColor: "#eee",
-                    },
-                }}
-            >
-                <Grid container flexWrap="nowrap">
-                    <Grid item sx={{ paddingRight: "1rem" }}>
-                        <Link to={`/home/profile/${userProfile.id}`}>
-                            <img src={userProfile.avatar} alt="logo" width="50px" />
-                        </Link>
-                    </Grid>
-                    <Grid item >
-                        <Box>
-                            <Grid
-                                container
-                                justifyContent="space-between"
-                                alignItems="center"
-                                flexWrap="nowrap"
-                            >
-                                <Grid item>
-                                    <Box display="flex">
-                                        <Typography
-                                            sx={{ fontSize: "16px", fontWeight: 500, mr: "10px" }}
-                                        >
-                                            {userProfile.handle}
-                                        </Typography>
-                                        <Typography
-                                            sx={{ fontSize: "15px", mr: "10px", color: "#555" }}
-                                        >
-                                            @{userProfile.handle.trim().toLowerCase()}
-                                        </Typography>
-                                        <Typography
-                                            sx={{ fontSize: "15px", mr: "10px", color: "#555" }}
-                                        >
-                                            {moment(postTime).format('MMM DD YY')}
-                                        </Typography>
-                                    </Box>
-                                    <Box>
-                                        <Typography sx={{ fontSize: "15px", color: "#555" }}>
-                                            {text}
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                            <Box
-                                display="flex"
-                                justifyContent="space-between"
-                                marginRight="5rem"
-                                marginTop=".8rem"
-                            >
-                                <IconButton
-                                    onClick={() => setDisplayComment(!displayComment)}
-                                    size="small"
+            {(!postId || !text || !userId || !postTime || loading || error || !data || !userProfile) ? (
+                <PostLoading />
+            ) : (
+                <Box
+                    padding="1rem"
+                    sx={{
+                        "&:hover": {
+                            backgroundColor: "#eee",
+                        },
+                    }}
+                >
+                    <Grid container flexWrap="nowrap">
+                        <Grid item sx={{ paddingRight: "1rem" }}>
+                            <Link to={`/home/profile/${userProfile.id}`}>
+                                <img src={userProfile.avatar} alt="logo" width="50px" />
+                            </Link>
+                        </Grid>
+                        <Grid item >
+                            <Box>
+                                <Grid
+                                    container
+                                    justifyContent="space-between"
+                                    alignItems="center"
+                                    flexWrap="nowrap"
                                 >
-                                    <ChatBubbleOutlineIcon fontSize="small" />
-                                </IconButton>
-                                <IconButton onClick={() => console.log('hello world')} size="small">
-                                    <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
-                                    <FavoriteBorderIcon fontSize="small" />
-                                </IconButton>
-                                <IconButton size="small">
-                                    <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
-                                    <ThumbDownAltOutlinedIcon fontSize="small" />
-                                </IconButton>
-                                <IconButton size="small">
-                                    <IosShareIcon fontSize="small" />
-                                </IconButton>
-                                <IconButton size="small">
-                                    <DeleteIcon fontSize="small" />
-                                </IconButton>
-                            </Box>
-                            {displayComment && (
-                                <Box >
-                                    <Grid item padding="1rem 1rem 0 1rem" borderBottom="1px solid #ccc">
-                                        <Box padding=".5rem 0">
-                                            <Input
-                                                onChange={(e) => setCommentText(e.target.value)}
-                                                value={commentText}
-                                                multiline
-                                                rows="2"
-                                                disableUnderline
-                                                type="text"
-                                                placeholder="Post your comment"
-                                                sx={{ width: "100%" }}
-                                            />
-                                        </Box>
-                                        <Box textAlign="right" paddingBottom=".5rem">
-                                            <Button
-                                                onClick={handleAddComment}
-                                                variant="contained"
-                                                disabled={commentText.length === 0}
-                                                color="primary"
-                                                size="small"
-                                                sx={{
-                                                    fontSize: "12px",
-                                                }}
+                                    <Grid item>
+                                        <Box display="flex">
+                                            <Typography
+                                                sx={{ fontSize: "16px", fontWeight: 500, mr: "10px" }}
                                             >
-                                                Comment
-                                            </Button>
+                                                {userProfile.handle}
+                                            </Typography>
+                                            <Typography
+                                                sx={{ fontSize: "15px", mr: "10px", color: "#555" }}
+                                            >
+                                                @{userProfile.handle.trim().toLowerCase()}
+                                            </Typography>
+                                            <Typography
+                                                sx={{ fontSize: "15px", mr: "10px", color: "#555" }}
+                                            >
+                                                {moment(postTime).format('MMM DD YY')}
+                                            </Typography>
+                                        </Box>
+                                        <Box>
+                                            <Typography sx={{ fontSize: "15px", color: "#555" }}>
+                                                {text}
+                                            </Typography>
                                         </Box>
                                     </Grid>
-                                    <Box textAlign="center" marginTop="1rem">
-                                        <CommentList postId={postId} />
-                                    </Box>
-                                </Box>)}
-                        </Box>
+                                </Grid>
+                                <Box
+                                    display="flex"
+                                    justifyContent="space-between"
+                                    marginRight="5rem"
+                                    marginTop=".8rem"
+                                >
+                                    <IconButton
+                                        onClick={() => setDisplayComment(!displayComment)}
+                                        size="small"
+                                    >
+                                        <ChatBubbleOutlineIcon fontSize="small" />
+                                    </IconButton>
+                                    <IconButton onClick={() => console.log('hello world')} size="small">
+                                        <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
+                                        <FavoriteBorderIcon fontSize="small" />
+                                    </IconButton>
+                                    <IconButton size="small">
+                                        <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
+                                        <ThumbDownAltOutlinedIcon fontSize="small" />
+                                    </IconButton>
+                                    <IconButton size="small">
+                                        <IosShareIcon fontSize="small" />
+                                    </IconButton>
+                                    <IconButton size="small">
+                                        <DeleteIcon fontSize="small" />
+                                    </IconButton>
+                                </Box>
+                                {displayComment && (
+                                    <Box >
+                                        <Grid item padding="1rem 1rem 0 1rem" borderBottom="1px solid #ccc">
+                                            <Box padding=".5rem 0">
+                                                <Input
+                                                    onChange={(e) => setCommentText(e.target.value)}
+                                                    value={commentText}
+                                                    multiline
+                                                    rows="2"
+                                                    disableUnderline
+                                                    type="text"
+                                                    placeholder="Post your comment"
+                                                    sx={{ width: "100%" }}
+                                                />
+                                            </Box>
+                                            <Box textAlign="right" paddingBottom=".5rem">
+                                                <Button
+                                                    onClick={handleAddComment}
+                                                    variant="contained"
+                                                    disabled={commentText.length === 0}
+                                                    color="primary"
+                                                    size="small"
+                                                    sx={{
+                                                        fontSize: "12px",
+                                                    }}
+                                                >
+                                                    Comment
+                                                </Button>
+                                            </Box>
+                                        </Grid>
+                                        <Box textAlign="center" marginTop="1rem">
+                                            <CommentList postId={postId} />
+                                        </Box>
+                                    </Box>)}
+                            </Box>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Box>
-        )}
-            
+                </Box>
+            )}
+
+
+
         </>
     )
 }

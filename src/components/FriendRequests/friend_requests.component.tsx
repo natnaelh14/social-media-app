@@ -5,7 +5,6 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_FRIEND_REQUESTS } from '../../utils/queries';
 import { useAppSelector } from "../../app/hooks";
 import FriendRequestBoxLoading from '../FriendRequestBox/friend_request_box_loading.component';
-
 type userProps = {
     id: string,
     handle: string,
@@ -13,7 +12,6 @@ type userProps = {
 }
 
 const FriendRequests = () => {
-
     const currentUser = useAppSelector(state => state.currentUser)
     const { user, loading: userLoading }: {
         user: userProps,
@@ -29,14 +27,14 @@ const FriendRequests = () => {
     if (data) {
         var friendRequestsData = data.friendRequests
     }
-
-    console.log('friend', friendRequestsData)
     return (
         <div style={{ width: '66%', margin: '10px' }}>
             <Fade in={true} timeout={1000}>
                 <div style={{ border: '1px solid #cdcdcd', height: "90vh", padding: '20px', margin: '50px' }}>
                     {(loading || !data || userLoading || error) && (
                         <>
+                            <FriendRequestBoxLoading />
+                            <FriendRequestBoxLoading />
                             <FriendRequestBoxLoading />
                             <FriendRequestBoxLoading />
                             <FriendRequestBoxLoading />

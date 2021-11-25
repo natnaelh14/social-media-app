@@ -4,7 +4,8 @@ import AddPost from '../AddPost/add-post.component';
 import { Fade } from "@mui/material";
 import { useAppSelector } from '../../app/hooks';
 import { CircularProgress, Box } from "@mui/material";
-const Moment = require('moment')
+const Moment = require('moment');
+import PostListLoading from '../PostLoading/post-list_loading.component';
 
 
 const PostList: React.FC = () => {
@@ -21,22 +22,19 @@ const PostList: React.FC = () => {
 
   return (
     <div style={{ width: '66%', margin: '10px' }}>
-      <Fade in={true} timeout={1000}>
+      {/* <Fade in={true} timeout={1000}> */}
         <div style={{ border: '1px solid #cdcdcd', padding: '20px', margin: '50px' }}>
-          <AddPost />
-          <Box>
-            {loading && (
-              <CircularProgress size={20} color="primary" />
-            )}
-          </Box>
-          <Box height="90vh" sx={{ overflowY: "scroll" }}>
-            {postsData &&
-              postsData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
-          </Box>
+          {postsData && (
+            <>
+              <AddPost />
+              <Box height="90vh" sx={{ overflowY: "scroll" }}>
+                {postsData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
+              </Box>
+            </>
+          )}
         </div>
-      </Fade>
+      {/* </Fade> */}
     </div>
-
   )
 }
 

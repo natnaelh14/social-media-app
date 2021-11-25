@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 import { Box } from "@mui/system";
-import {
-    Button,
-    CircularProgress,
-    Grid,
-    IconButton,
-    Typography,
-} from "@mui/material";
+import { Button, CircularProgress, Grid, IconButton, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DateRangeIcon from "@mui/icons-material/DateRange";
@@ -17,9 +11,10 @@ import { useAppSelector } from "../../app/hooks";
 import { userProps } from '../../index.types';
 import Post from "../Post/Post.component";
 import UpdateUserProfile from "../UpdateUserProfile/update_user_profile.component";
+import { QUERY_FOLLOWERS, QUERY_FOLLOWINGS } from '../../utils/queries';
+import { useQuery } from '@apollo/client';
 
 const Profile = () => {
-
 
     const currentUser = useAppSelector(state => state.currentUser)
     const { loading, user } = currentUser
@@ -35,6 +30,22 @@ const Profile = () => {
     }> = posts
     let postsData = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
 
+    const { loading: followerLoading, data: followerData } = useQuery(QUERY_FOLLOWERS, {
+        variables: { 
+            id: userInfo.id
+        }
+    });
+    const { loading: followingLoading, data: followingData } = useQuery(QUERY_FOLLOWINGS, {
+        variables: {
+            id: userInfo.id
+        }
+    });
+
+    if (followerData && followingData) {
+        var { followers } = followerData;
+        var { followings } = followingData;
+    }
+
     const [openModal, setOpenModal] = React.useState(false);
 
     const handleModalOpen = () => {
@@ -46,10 +57,10 @@ const Profile = () => {
 
     return (
         <div style={{ width: '66%', margin: '10px' }}>
-            {loading && (
+            {(loading && followerLoading &&  followingLoading ) && (
                 <CircularProgress color="success" />
             )}
-            {userInfo && (
+            {(userInfo && followerData && followingData) && (
                 <Fade in={true} timeout={1000}>
                     <div style={{ margin: '50px' }}>
                         <Box>
@@ -141,13 +152,13 @@ const Profile = () => {
                                     <Box display="flex" marginTop='1rem'>
                                         <Typography color="#555" marginRight="1rem">
                                             <strong style={{ color: "black" }}>
-                                                100
+                                                {followings.length}
                                             </strong>
                                             Following
                                         </Typography>
                                         <Typography color="#555" marginRight="1rem">
                                             <strong style={{ color: "black" }}>
-                                                100
+                                                {followers.length}
                                             </strong>
                                             Followers
                                         </Typography>

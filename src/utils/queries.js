@@ -76,3 +76,24 @@ export const QUERY_FRIEND_REQUESTS = gql`
     }
   }
 `;
+
+
+export const QUERY_FOLLOWERS = gql`
+  query getFollowers($id: ID!) {
+    followers(id: $id) {
+      id
+      handle
+      avatar
+    }
+  }
+`;
+
+export const QUERY_FOLLOWINGS = gql`
+  query getFollowings($id: ID!) {
+    followings(id: $id) {
+      id
+      handle
+      avatar
+    }
+  }
+`;

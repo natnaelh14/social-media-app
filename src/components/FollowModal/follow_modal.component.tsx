@@ -4,7 +4,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Box } from "@mui/system";
 import FollowBox from './follow_box.component';
 
-
 type ModalProps = {
     open: boolean,
     handleClose: () => void,
@@ -12,7 +11,6 @@ type ModalProps = {
         id: string,
         handle: string,
         avatar: string,
-        
     }>,
     title: string,
     action: string
@@ -25,7 +23,6 @@ const FollowModal = ({
     title,
     action
 }: ModalProps) => {
-
     return (
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
             <DialogTitle>

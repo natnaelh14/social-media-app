@@ -23,9 +23,9 @@ type commentProps = {
 const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps) => {
 
   const { loading, error, data } = useQuery(QUERY_USER, {
-    variables: { 
-        id: userId
-     },
+    variables: {
+      id: userId
+    },
   });
 
   const { userProfile } = data;
@@ -43,62 +43,62 @@ const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps)
         <Grid item sx={{ paddingRight: "1rem" }}>
           <img src={userProfile.avatar} alt="lgoog" width="50px" />
         </Grid>
-        <Grid item>
-          <Box>
-            <Grid
-              container
-              justifyContent="space-between"
-              alignItems="center"
-              flexWrap="nowrap"
-            >
-              <Grid item>
-                <Box display="flex">
-                  <Typography
-                    sx={{ fontSize: "16px", fontWeight: 500, mr: "6px" }}
-                  >
-                    {userProfile.handle}
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: "12px", mr: "8px", color: "#555" }}
-                  >
-                    @{userProfile.handle.toLowerCase().trim()}
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: "15px", mr: "8px", color: "#555" }}
-                  >
-                    {Moment(commentTime).format('MMM DD YY')}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography sx={{ fontSize: "15px", color: "#555", textAlign: "left" }}>
-                    {text}
-                  </Typography>
-                </Box>
-              </Grid>
+        <Box width="100%"
+        >
+          <Grid
+            container
+            justifyContent="space-between"
+            alignItems="center"
+            flexWrap="nowrap"
+          >
+            <Grid item>
+              <Box display="flex">
+                <Typography
+                  sx={{ fontSize: "16px", fontWeight: 500, mr: "6px" }}
+                >
+                  {userProfile.handle}
+                </Typography>
+                <Typography
+                  sx={{ fontSize: "12px", mr: "8px", color: "#555" }}
+                >
+                  @{userProfile.handle.toLowerCase().trim()}
+                </Typography>
+                <Typography
+                  sx={{ fontSize: "15px", mr: "8px", color: "#555" }}
+                >
+                  {Moment(commentTime).format('MMM DD YY')}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography sx={{ fontSize: "15px", color: "#555", textAlign: "left" }}>
+                  {text}
+                </Typography>
+              </Box>
             </Grid>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              marginRight="5rem"
-              marginTop=".8rem"
-            >
-              <IconButton size="small">
-                <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
-                <FavoriteBorderIcon fontSize="small" />
-              </IconButton>
-              <IconButton size="small">
-                <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
-                <ThumbDownAltOutlinedIcon fontSize="small" />
-              </IconButton>
-              <IconButton size="small">
-                <IosShareIcon fontSize="small" />
-              </IconButton>
-              <IconButton size="small">
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-            </Box>
+          </Grid>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            marginRight="5rem"
+            marginTop=".8rem"
+            width="100%"
+          >
+            <IconButton size="small">
+              <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
+              <FavoriteBorderIcon fontSize="small" />
+            </IconButton>
+            <IconButton size="small">
+              <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
+              <ThumbDownAltOutlinedIcon fontSize="small" />
+            </IconButton>
+            <IconButton size="small">
+              <IosShareIcon fontSize="small" />
+            </IconButton>
+            <IconButton size="small">
+              <DeleteIcon fontSize="small" />
+            </IconButton>
           </Box>
-        </Grid>
+        </Box>
       </Grid>
     </Box>
   )

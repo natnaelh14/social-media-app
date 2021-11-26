@@ -110,3 +110,19 @@ export const UPDATE_FRIEND_REQUEST = gql`
     }
   }
 `;
+
+export const REMOVE_FOLLOWING = gql`
+  mutation removeFollowingMutation($follower_user_id: String!, $followed_user_id: String!) {
+    removeFollowing(follower_user_id: $follower_user_id, followed_user_id: $followed_user_id) {
+      id
+    }
+  }
+`;
+
+export const REMOVE_FOLLOWER = gql`
+  mutation removeFollowerMutation($follower_user_id: String!, $followed_user_id: String!) {
+    removeFollower(follower_user_id: $follower_user_id, followed_user_id: $followed_user_id) {
+      id
+    }
+  }
+`;

@@ -26,24 +26,22 @@ const GuestProfile = () => {
     }> = []
     if (data) {
         var { userProfile } = data;
-        var { loading: postLoading, error: postError, data: postData } = useQuery(QUERY_POSTS, {
-            variables: {
-                user_id: userProfile.id
-            },
-        });
+    }
+    var { loading: postLoading, error: postError, data: postData } = useQuery(QUERY_POSTS, {
+        variables: {
+            user_id: userProfile.id
+        },
+    });
+    if (postData) {
         var { posts } = postData;
+    }
         var postArray: Array<{
             id: number,
             user_id: string,
             text: string,
             created_at: Date
         }> = posts
-        // [...posts].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
-    }
-
-    useEffect(() => {
-        console.log("Run something")
-    }, [])
+    // [...posts].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
 
     return (
         <>

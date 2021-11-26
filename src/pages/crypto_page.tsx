@@ -5,13 +5,13 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import CryptoCurrency from '../components/Cryprocurrency/cryptocurrency.component';
 import { Grid, Typography, Fade, Button } from "@mui/material";
 import { Box } from "@mui/system";
-import TwitterPost from '../components/TwitterPost/twitter_post.component';
 import CryptoDoughnut from '../components/CryptoDoughnut/crypto_doughnut.component';
 import AddModifyCrypto from '../components/AddModifyCrypto/add_modify_crypto.component';
 import { userProps } from '../index.types';
 import { useAppSelector } from '../app/hooks';
 import { useQuery } from '@apollo/client';
 import { QUERY_CRYPTOS } from '../utils/queries';
+import TwitterPostList from '../components/TwitterPostList/twitter_post_list.component';
 
 const CryptoPage = () => {
 
@@ -27,13 +27,13 @@ const CryptoPage = () => {
     // if(data) {
     //     var { cryptoByUserId } = data;
     // }
-    
+
 
     useEffect(() => {
-        if(data) {
+        if (data) {
             var { cryptoByUserId } = data;
             console.log('jim', cryptoByUserId)
-        } 
+        }
     }, [data])
 
     const [openModal, setOpenModal] = React.useState(false);
@@ -100,15 +100,9 @@ const CryptoPage = () => {
                         </Typography>
                     </Box>
                     <Box height="90vh" sx={{ overflowY: "scroll" }}>
-                        <TwitterPost />
-                        <TwitterPost />
-                        <TwitterPost />
-                        <TwitterPost />
-                        <TwitterPost />
-                        <TwitterPost />
-                        <TwitterPost />
-                        <TwitterPost />
-                        <TwitterPost />
+                        <TwitterPostList cryptoName={'bitcoin'} />
+                        <TwitterPostList cryptoName={'ethereum'} />
+                        <TwitterPostList cryptoName={'ripple'} />
                     </Box>
                 </Box>
             </Fade>

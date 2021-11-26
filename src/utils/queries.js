@@ -97,3 +97,9 @@ export const QUERY_FOLLOWINGS = gql`
     }
   }
 `;
+
+export const QUERY_TWEETS = gql`
+  query getTwitterSearch($keyword: String!) {
+    twitterSearch(keyword: $keyword)
+  }
+`;

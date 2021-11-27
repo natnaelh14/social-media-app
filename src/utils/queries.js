@@ -103,3 +103,26 @@ export const QUERY_TWEETS = gql`
     twitterSearch(keyword: $keyword)
   }
 `;
+
+export const QUERY_MESSENGERS = gql`
+  query getMessengers($id: ID!) {
+    messengers(id: $id) {
+      id
+      handle
+      avatar
+    }
+  }
+`;
+
+export const QUERY_MESSAGES = gql`
+  query getMessages($sender_id: String!, $receiver_id: String!) {
+    messages(sender_id: $sender_id, receiver_id: $receiver_id) {
+      id
+      text
+      sender_id
+      receiver_id
+      isSeen
+      sent_at
+    }
+  }
+`;

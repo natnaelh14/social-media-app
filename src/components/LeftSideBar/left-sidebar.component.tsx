@@ -1,22 +1,15 @@
 import React, { useEffect } from "react";
-import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
 import TagIcon from "@mui/icons-material/Tag";
+import {Button, Box, Grid, IconButton, Input, Menu, MenuItem, useTheme, Hidden} from "@mui/material";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
-import {
-  Button,
-  Grid,
-  Hidden,
-  Input,
-} from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ChatIcon from '@mui/icons-material/Chat';
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
@@ -28,7 +21,7 @@ import { useAppSelector } from "../../app/hooks";
 import AddPostModal from "../AddPostModal/add_post_modal.component";
 
 const LeftSidebar = () => {
-  
+
   const [openModal, setOpenModal] = React.useState(false);
 
   const handleModalOpen = () => {
@@ -40,7 +33,7 @@ const LeftSidebar = () => {
 
   return (
     <>
-      <Box sx={{ height: "100vh", maxWidth: "100%" }}>
+      <Box sx = {{minWidth:'40px'}} >
         <List>
           <NavLink
             to="/home/feed"
@@ -54,7 +47,7 @@ const LeftSidebar = () => {
               button
               sx={{
                 borderRadius: "28px",
-                margin: ".5rem 0",
+                // margin: ".5rem 0",
               }}
             >
               <ListItemIcon>
@@ -82,7 +75,7 @@ const LeftSidebar = () => {
               button
               sx={{
                 borderRadius: "28px",
-                margin: ".5rem 0",
+                // margin: ".5rem 0",
               }}
             >
               <ListItemIcon>
@@ -138,7 +131,7 @@ const LeftSidebar = () => {
               button
               sx={{
                 borderRadius: "28px",
-                margin: ".5rem 0",
+                // margin: ".5rem 0",
               }}
             >
               <ListItemIcon>
@@ -166,7 +159,7 @@ const LeftSidebar = () => {
               button
               sx={{
                 borderRadius: "28px",
-                margin: ".5rem 0",
+                // margin: ".5rem 0",
               }}
             >
               <ListItemIcon>
@@ -195,7 +188,7 @@ const LeftSidebar = () => {
               button
               sx={{
                 borderRadius: "28px",
-                margin: ".5rem 0",
+                // margin: ".5rem 0",
               }}
             >
               <ListItemIcon>
@@ -213,7 +206,7 @@ const LeftSidebar = () => {
           </NavLink>
 
           <NavLink
-            to={`/home/add-post`}
+            to={`/home/chat`}
             style={{
               textDecoration: "none",
               color: "inherit",
@@ -224,7 +217,7 @@ const LeftSidebar = () => {
               button
               sx={{
                 borderRadius: "28px",
-                margin: ".5rem 0",
+                // margin: ".5rem 0",
               }}
             >
               <ListItemIcon>
@@ -254,7 +247,7 @@ const LeftSidebar = () => {
               button
               sx={{
                 borderRadius: "28px",
-                margin: ".5rem 0",
+                // margin: ".5rem 0",
               }}
             >
               <ListItemIcon>
@@ -270,21 +263,35 @@ const LeftSidebar = () => {
               </Hidden>
             </ListItem>
           </NavLink>
-          <Button
-           onClick={handleModalOpen}
-            variant="contained"
-            fullWidth
-            sx={{
-              borderRadius: "28px",
-              padding: "10px",
-              background: "black",
-              "&:hover": {
-                background: "#333",
-              },
-            }}
-          >
-            POST
-          </Button>
+          <Hidden lgDown>
+            <Button
+              onClick={handleModalOpen}
+              variant="contained"
+              fullWidth
+              sx={{
+                borderRadius: "28px",
+                padding: "10px",
+                background: "black",
+                "&:hover": {
+                  background: "#333",
+                },
+              }}
+            >
+              POST
+            </Button>
+          </Hidden>
+          <Hidden lgUp>
+            <IconButton
+              onClick={handleModalOpen}
+              sx={{
+                borderRadius: "28px",
+                marginLeft: '8px'
+                // padding: "10px",
+              }}
+            >
+              <AddCircleOutlineIcon />
+            </IconButton>
+          </Hidden>
         </List>
       </Box>
       {openModal && (

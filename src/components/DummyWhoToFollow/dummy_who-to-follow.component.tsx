@@ -6,9 +6,9 @@ import React from "react";
 export default function DummyWhoToFollow() {
   const theme = useTheme();
   return (
-    <Box margin="2rem" padding='1rem'>
+    <Box margin="1rem 0">
       <Grid container alignItems="center">
-        <Grid item >
+        <Grid item sx={{ paddingRight: "12px" }}>
           <img src="https://res.cloudinary.com/doalzf6o2/image/upload/v1637122383/photo-03_dzsekt.png" width="50px" alt="logo" />
         </Grid>
         <Grid item>
@@ -17,32 +17,23 @@ export default function DummyWhoToFollow() {
               <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>
                 Jane Doe
               </Typography>
-              <Box >
-                <Typography sx={{ fontSize: "14px", mr: "6px", color: "#555" }}>
-                  @janedoe
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "12px",
-                    background: "#ccc",
-                    borderRadius: theme.shape.borderRadius,
-                    color: "#777",
-                    marginTop: "10px",
-                    marginBottom: "10px",
-                    paddingRight: '1px',
-                    paddingLeft: '1px'
-                  }}
-                >
-                  follows you
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
+              <Typography
+                sx={{
+                  fontSize: "12px",
+                  background: "#ccc",
+                  borderRadius: theme.shape.borderRadius,
+                  padding: "0 6px",
+                  color: "#777",
+                }}
+              >
+                follows you
+              </Typography>
               <Button
                 size="small"
                 sx={{
                   borderRadius: theme.shape.borderRadius,
                   textTransform: "capitalize",
+                  mt: "4px",
                   background: "black",
                   "&:hover": {
                     background: "#333",

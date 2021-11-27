@@ -28,9 +28,9 @@ const FriendRequests = () => {
         var friendRequestsData = data.friendRequests
     }
     return (
-        <div style={{ width: '66%', margin: '10px' }}>
+        <div style={{ width: '66%', margin: '20px' }}>
             <Fade in={true} timeout={1000}>
-                <div style={{ border: '1px solid #cdcdcd', height: "90vh", padding: '20px', margin: '50px' }}>
+                <div style={{ border: '1px solid #cdcdcd', height: "90vh", padding: '20px'}}>
                     {(loading || !data || userLoading || error) && (
                         <>
                             <FriendRequestBoxLoading />

@@ -5,6 +5,7 @@ import { Fade } from "@mui/material";
 import { useAppSelector } from '../../app/hooks';
 import { CircularProgress, Box } from "@mui/material";
 const Moment = require('moment');
+import { PostListContainer } from './post_list.styles'
 
 const PostList: React.FC = () => {
 
@@ -19,9 +20,9 @@ const PostList: React.FC = () => {
   let postsData = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
 
   return (
-    <div style={{ width: '66%', margin: '10px' }}>
+    <PostListContainer>
       {/* <Fade in={true} timeout={1000}> */}
-        <div style={{ border: '1px solid #cdcdcd', padding: '20px', margin: '50px' }}>
+        <div style={{ border: '1px solid #cdcdcd', padding: '20px' }}>
           {postsData && (
             <>
               <AddPost />
@@ -32,7 +33,7 @@ const PostList: React.FC = () => {
           )}
         </div>
       {/* </Fade> */}
-    </div>
+    </PostListContainer>
   )
 }
 

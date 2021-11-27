@@ -63,13 +63,13 @@ const Profile = () => {
     };
 
     return (
-        <div style={{ width: '66%', margin: '10px' }}>
+        <div style={{ width: '66%', margin: '20px' }}>
             {(loading && followerLoading && followingLoading) && (
                 <CircularProgress color="success" />
             )}
             {(userInfo && followerData && followingData) && (
                 <Fade in={true} timeout={1000}>
-                    <div style={{ margin: '50px' }}>
+                    <div style={{ padding: '20px' }}>
                         <Box>
                             <Box borderBottom="1px solid #ccc" padding="8px 20px">
                                 <Grid container alignItems="center">

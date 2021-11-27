@@ -24,6 +24,7 @@ import ChatPage from '../pages/chat_page';
 import ExplorePage from '../pages/explore_page';
 import NotificationPage from '../pages/notification_page';
 import MessagePage from '../pages/message_page';
+import Messages from "../components/Messages/messages.component";
 import FriendRequests from '../components/FriendRequests/friend_requests.component';
 
 type MyProps = {
@@ -134,8 +135,14 @@ class Routes extends Component<MyProps, {}> {
             <Route exact path="/home/messages">
               {this.props.currentUser ? <MessagePage /> : <Redirect to="/signin" />}
             </Route>
+            <Route exact path="/home/messages/:messagesId">
+              {this.props.currentUser ? <Messages /> : <Redirect to="/signin" />}
+            </Route>
             <Route exact path="/home/profile">
               {this.props.currentUser ? <Profile /> : <Redirect to="/signin" />}
+            </Route>
+            <Route exact path="/home/profile/:profileId">
+              {this.props.currentUser ? <GuestProfile /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/explore">
               {this.props.currentUser ? <ExplorePage /> : <Redirect to="/signin" />}
@@ -148,9 +155,6 @@ class Routes extends Component<MyProps, {}> {
             </Route>
             <Route exact path="/home/chat">
               {this.props.currentUser ? <ChatPage /> : <Redirect to="/signin" />}
-            </Route>
-            <Route exact path="/home/profile/:profileId">
-              {this.props.currentUser ? <GuestProfile /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/add-post">
               {this.props.currentUser ? <AddPost /> : <Redirect to="/signin" />}

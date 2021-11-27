@@ -14,12 +14,10 @@ type userProps = {
 const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
   const theme = useTheme();
   return (
-    <Box margin="2rem" padding='1rem'>
-      <Grid container alignItems="center" >
-        <Grid item style={{ display: 'flex', alignItems: 'center'}}>
-          <NavLink to={`/home/profile/${id}`}>
-            <img src={avatar} alt="logo" width="50px" />
-          </NavLink>
+    <Box margin="1rem 0">
+      <Grid container alignItems="center">
+        <Grid item sx={{ paddingRight: "12px" }}>
+          <img src={avatar} width="50px" alt="logo" />
         </Grid>
         <Grid item>
           <Grid container alignItems="center">
@@ -27,32 +25,23 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
               <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>
                 {handle}
               </Typography>
-              <Box >
-                <Typography sx={{ fontSize: "14px", mr: "6px", color: "#555" }}>
-                  @janedoe
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "12px",
-                    background: "#ccc",
-                    borderRadius: theme.shape.borderRadius,
-                    color: "#777",
-                    marginTop: "10px",
-                    marginBottom: "10px",
-                    paddingRight: '1px',
-                    paddingLeft: '1px'
-                  }}
-                >
-                  follows you
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
+              <Typography
+                sx={{
+                  fontSize: "12px",
+                  background: "#ccc",
+                  borderRadius: theme.shape.borderRadius,
+                  padding: "0 6px",
+                  color: "#777",
+                }}
+              >
+                follows you
+              </Typography>
               <Button
                 size="small"
                 sx={{
                   borderRadius: theme.shape.borderRadius,
                   textTransform: "capitalize",
+                  mt: "4px",
                   background: "black",
                   "&:hover": {
                     background: "#333",
@@ -68,6 +57,6 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
       </Grid>
     </Box>
   );
-};
+}
 
-export default WhoToFollow;
+export default WhoToFollow

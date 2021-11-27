@@ -20,6 +20,10 @@ import { client } from '../index';
 import { QUERY_USER } from '../utils/queries';
 import GuestProfile from "../components/GuestProfile/guest_profile.component";
 import CryptoPage from '../pages/crypto_page';
+import ChatPage from '../pages/chat_page';
+import ExplorePage from '../pages/explore_page';
+import NotificationPage from '../pages/notification_page';
+import MessagePage from '../pages/message_page';
 import FriendRequests from '../components/FriendRequests/friend_requests.component';
 
 type MyProps = {
@@ -84,7 +88,7 @@ class Routes extends Component<MyProps, {}> {
         }
         const userRef: any = await createUserProfileDocument(userAuth);
         //From this, we are going to get back the first state from our data.
-        userRef.onSnapshot(async(snapShot: any) => {
+        userRef.onSnapshot(async (snapShot: any) => {
           //We actually don't get any data, until we use the data method.
           const { data: { posts: postsData } } = await client.query({
             query: QUERY_POSTS,
@@ -99,7 +103,7 @@ class Routes extends Component<MyProps, {}> {
               id: userAuth.uid
             }
           })
-          setCurrentUser({ id: snapShot.id, ...snapShot.data(), ...userProfile});
+          setCurrentUser({ id: snapShot.id, ...snapShot.data(), ...userProfile });
         });
 
       }
@@ -128,19 +132,22 @@ class Routes extends Component<MyProps, {}> {
               {this.props.currentUser ? <LeftSidebar /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/messages">
-              {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? <MessagePage /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/profile">
               {this.props.currentUser ? <Profile /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/explore">
-              {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? <ExplorePage /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/crypto">
               {this.props.currentUser ? <CryptoPage /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/notifications">
-              {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? <NotificationPage /> : <Redirect to="/signin" />}
+            </Route>
+            <Route exact path="/home/chat">
+              {this.props.currentUser ? <ChatPage /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/profile/:profileId">
               {this.props.currentUser ? <GuestProfile /> : <Redirect to="/signin" />}

@@ -20,6 +20,7 @@ const FriendRequestBox = ({ userId, userHandle, userAvatar }: RequestsProps) => 
     const userInfo: userProps = user
 
     const [respondFollowRequest, { }] = useMutation(UPDATE_FRIEND_REQUEST);
+    const [showButton, setShowButton] = useState(true);
 
     const handleFriendRequest = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -31,6 +32,7 @@ const FriendRequestBox = ({ userId, userHandle, userAvatar }: RequestsProps) => 
                 status: Button.value
             }
         });
+        setShowButton(false)
     }
 
     return (
@@ -66,34 +68,37 @@ const FriendRequestBox = ({ userId, userHandle, userAvatar }: RequestsProps) => 
                                 </Box>
                             </Grid>
                         </Grid>
-                        <Box
-                            display="flex"
-                            justifyContent="space-between"
-                            marginRight="5rem"
-                            marginTop=".8rem"
-                        >
-                            <Button
-                                sx={{ marginRight: "1rem" }}
-                                color='primary'
-                                variant="outlined"
-                                value='CONFIRMED'
-                                onClick={handleFriendRequest}
-                                size="small">APPROVE</Button>
-                            <Button
-                                sx={{ marginRight: "1rem" }}
-                                color='error'
-                                variant="outlined"
-                                value='REJECTED'
-                                onClick={handleFriendRequest}
-                                size="small">DECLINE</Button>
-                            <Button
-                                sx={{ marginRight: "1rem" }}
-                                color='error'
-                                variant="outlined"
-                                value='BLOCKED'
-                                onClick={handleFriendRequest}
-                                size="small">BLOCK</Button>
-                        </Box>
+                        {showButton && (
+                            <Box
+                                display="flex"
+                                justifyContent="space-between"
+                                marginRight="5rem"
+                                marginTop=".8rem"
+                            >
+                                <Button
+                                    sx={{ marginRight: "1rem" }}
+                                    color='primary'
+                                    variant="outlined"
+                                    value='CONFIRMED'
+                                    onClick={handleFriendRequest}
+                                    size="small">APPROVE</Button>
+                                <Button
+                                    sx={{ marginRight: "1rem" }}
+                                    color='error'
+                                    variant="outlined"
+                                    value='REJECTED'
+                                    onClick={handleFriendRequest}
+                                    size="small">DECLINE</Button>
+                                <Button
+                                    sx={{ marginRight: "1rem" }}
+                                    color='error'
+                                    variant="outlined"
+                                    value='BLOCKED'
+                                    onClick={handleFriendRequest}
+                                    size="small">BLOCK</Button>
+                            </Box>
+                        )}
+
                     </Box>
                 </Grid>
             </Box>

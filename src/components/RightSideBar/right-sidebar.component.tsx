@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Search } from "@mui/icons-material";
-import { Input, Typography, CircularProgress } from "@mui/material";
+import { Input, Typography, CircularProgress, Hidden } from "@mui/material";
 import { Box } from "@mui/system";
 import WhoToFollow from "../WhoToFollow/who-to-follow.component";
 import DummyWhoToFollow from '../DummyWhoToFollow/dummy_who-to-follow.component';
@@ -25,65 +25,71 @@ const RightSidebar = () => {
 
 
   return (
-    <Box sx={{ height: "100vh" }}>
-      <Box paddingTop="10px">
-        <Box
-          width="100%"
-          borderRadius="28px"
-          border="1px solid #eee"
-          sx={{
-            background: "#eee",
-            "&:hover": {
-              background: "white",
-            },
-          }}
-        >
-          <Input
-            type="text"
-            inputProps={{
-              style: { padding: "10px" },
+    <Hidden lgDown>
+      <Box sx={{ height: "100vh" }}>
+        <Box paddingTop="10px">
+          <Box
+            width="100%"
+            borderRadius="28px"
+            border="1px solid #eee"
+            sx={{
+              background: "#eee",
+              "&:hover": {
+                background: "white",
+              },
             }}
-            disableUnderline
-            fullWidth
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            placeholder="Search User"
-            startAdornment={
-              <Search
-                sx={{
-                  paddingLeft: "30px",
-                  color: "#777",
-                }}
-              />
-            }
-          />
-        </Box>
-        <Box
-          sx={{
-            background: "#eee",
-            borderRadius: "28px",
-            padding: "10px 20px",
-            margin: "1rem 0",
-            minHeight: '600px'
-          }}
-        >
-          <Typography variant="h6" textAlign='center' sx={{ fontWeight: "bold" }}>
-            Who to follow
-          </Typography>
-          {(searchText && usersArray) && (
-            usersArray.map((user) => <WhoToFollow key={user.id} id={user.id} handle={user.handle} avatar={user.avatar} isActive={user.isActive} />)
-          )}
-          {(!searchText) && (
-            <>
-              <DummyWhoToFollow />
-              <DummyWhoToFollow />
-              <DummyWhoToFollow />
-              <DummyWhoToFollow />
-            </>
-          )}
+          >
+            <Input
+              type="text"
+              inputProps={{
+                style: { padding: "10px" },
+              }}
+              disableUnderline
+              fullWidth
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              placeholder="Search User"
+              startAdornment={
+                <Search
+                  sx={{
+                    paddingLeft: "30px",
+                    color: "#777",
+                  }}
+                />
+              }
+            />
+          </Box>
+          <Box
+            sx={{
+              background: "#eee",
+              borderRadius: "28px",
+              padding: "10px 20px",
+              margin: "1rem 0",
+              minHeight: '600px'
+            }}
+          >
+            <Typography variant="h6" textAlign='center' sx={{ fontWeight: "bold" }}>
+              Who to follow
+            </Typography>
+            {(searchText && usersArray) && (
+              usersArray.map((user) => <WhoToFollow key={user.id} id={user.id} handle={user.handle} avatar={user.avatar} isActive={user.isActive} />)
+            )}
+            {(!searchText) && (
+              <>
+                <DummyWhoToFollow />
+                <DummyWhoToFollow />
+                <DummyWhoToFollow />
+                <DummyWhoToFollow />
+                <DummyWhoToFollow />
+                <DummyWhoToFollow />
+                <DummyWhoToFollow />
+              </>
+            )}
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Hidden>
+
   );
 }
 

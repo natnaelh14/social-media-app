@@ -1,4 +1,3 @@
-import { Grid, Input } from "@mui/material";
 import React, { useState, useEffect } from 'react';
 import { Button, FormControl, OutlinedInput, InputAdornment, Dialog, DialogActions, DialogContent, Autocomplete, DialogTitle, IconButton, Typography, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -39,28 +38,37 @@ const AddModifyCrypto = ({
     }
 
     const handleAddCrypto = async () => {
-        await addCrypto({
-            variables: {
-                cryptoName: addCoin.toLowerCase(),
-                holdingAmount: Number(addHolding),
-                userId: userId
-            }
-        });
+        try {
+            await addCrypto({
+                variables: {
+                    cryptoName: addCoin.toLowerCase(),
+                    holdingAmount: Number(addHolding),
+                    userId: userId
+                }
+            });
+        } catch (e) {
+            throw new Error('Unable to Add CryptoCurrency')
+        }
+
     }
 
     let cryptoArray: any = []
     useEffect(() => {
         if (cryptoByUserId) {
             (async () => {
+                console.log('result', cryptoByUserId)
                 for (let i = 0; i < cryptoByUserId.length; i++) {
                     await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${cryptoByUserId[i].crypto_name}`)
                         .then((res: any) => {
-                            return res.json()
+                            // console.log('maga', res.json()) 
+                            return res.json();
                         })
-                        .then((res: any) => {
-                            cryptoArray.push([res[0].name, cryptoByUserId[i].holding_amount, res[0].current_price * cryptoByUserId[i].holding_amount])
+                        .then((res: Array<{
+                            current_price: number,
+                        }>) => {
+                            cryptoArray.push([cryptoByUserId[i].crypto_name, cryptoByUserId[i].holding_amount, res[0].current_price * cryptoByUserId[i].holding_amount])
                         })
-                    
+
                 }
                 setCryptoData(cryptoArray)
                 console.log('result', cryptoArray)

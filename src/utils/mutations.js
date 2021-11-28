@@ -155,3 +155,11 @@ export const ADD_MESSAGE = gql`
     }
   }
 `;
+
+export const DELETE_MESSAGE = gql`
+  mutation deleteMessageMutation($id: ID!) {
+    deleteMessage(id: $id) {
+      id
+    }
+  }
+`;

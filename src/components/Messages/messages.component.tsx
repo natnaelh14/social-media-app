@@ -85,7 +85,7 @@ const Messages = () => {
               <Box sx={{ overflowY: "scroll" }}>
                 {messages && (
                   messages.map((msg: any, index: any) => {
-                    return <SingleMessage key={index} senderId={msg.sender_id} sentAt={msg.sent_at} text={msg.text} />
+                    return <SingleMessage key={msg.id} msgId={msg.id} senderId={msg.sender_id} sentAt={msg.sent_at} text={msg.text} />
                   })
                 )}
 

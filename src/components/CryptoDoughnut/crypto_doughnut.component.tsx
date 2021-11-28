@@ -53,7 +53,7 @@ const CryptoDoughnut = () => {
                 type="doughnut"
                 palette="Soft Pastel"
                 dataSource={cryptoData}
-                style={{width: "700px", height: "400px"}}
+                // style={{width: "700px", height: "400px"}}
             >
                 <Title text="Crypto Holding">
                     <Subtitle text={`US$ ${cryptoTotal.toLocaleString()}`} />

@@ -19,14 +19,9 @@ const MessageBox = ({ msgId, msgHandle, msgAvatar, currentUser }: MessageProps) 
   const { loading, error, data } = useQuery(QUERY_MESSAGES, {
     variables: { sender_id: currentUser, receiver_id: msgId },
   });
-
   if (data) {
     var { messages } = data;
   }
-
-  // useEffect(() => {
-  //   console.log('doug', data)
-  // }, [data])
 
   return (
     <>
@@ -49,26 +44,36 @@ const MessageBox = ({ msgId, msgHandle, msgAvatar, currentUser }: MessageProps) 
             <Grid item sx={{ paddingRight: "1rem" }}>
               <Avatar alt="logo" src={msgAvatar} />
             </Grid>
-            <Box>
+            <Box width='100%' >
               <Grid
                 container
               // justifyContent="space-between"
               // alignItems="center"
               // flexWrap="nowrap"
+              // width='100%'
               >
-                <Grid width='auto'
+                <Grid width='100%'
                 >
-                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-around" }}>
+                  <Box sx={{  width: '100%', display: 'flex', flexDirection: 'row', justifyContent: "space-around" }}>
                     <Typography sx={{ fontSize: "15px", color: "#555" }}>
                       {msgHandle}
                     </Typography>
-                    <Typography sx={{ margin: 'auto', fontSize: "15px", color: "#555" }}>
+                    <Typography sx={{ marginLeft: 'auto', fontSize: "15px", color: "#555" }}>
                       Seen
                     </Typography>
                   </Box>
                   <Box>
                     {messages && (
-                      <Typography sx={{ fontSize: "15px", color: "#555" }}>
+                      <Typography 
+                        sx={{
+                          fontSize: "15px", 
+                          color: "#555",
+                          display: '-webkit-box',
+                          overflow: 'hidden',
+                          WebkitBoxOrient: 'vertical',
+                          WebkitLineClamp: 1,
+                      }}
+                        >
                         {messages[messages.length - 1].text}
                       </Typography>
                     )}

@@ -10,47 +10,52 @@ import { useParams } from 'react-router-dom';
 import { QUERY_USER, QUERY_POSTS } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
 const Moment = require('moment')
+import { userProps } from "../../index.types";
 
 const GuestProfile = () => {
     const { profileId } = useParams<{ profileId: string | undefined }>();
-    const { loading, error, data } = useQuery(QUERY_USER, {
-        variables: {
-            id: profileId
-        },
-    });
+    if (profileId) {
+        var { loading, error, data } = useQuery(QUERY_USER, {
+            variables: {
+                id: profileId
+            },
+        });
+    }
+    if (data) {
+        var { userProfile }: { userProfile: userProps } = data;
+    }
     var postArray: Array<{
         id: number,
         user_id: string,
         text: string,
         created_at: Date
     }> = []
-    if (data) {
-        var { userProfile } = data;
+    if (userProfile) {
+        var { loading: postLoading, error: postError, data: postData } = useQuery(QUERY_POSTS, {
+            variables: {
+                user_id: userProfile.id
+            },
+        });
     }
-    var { loading: postLoading, error: postError, data: postData } = useQuery(QUERY_POSTS, {
-        variables: {
-            user_id: userProfile.id
-        },
-    });
     if (postData) {
         var { posts } = postData;
-    }
         var postArray: Array<{
             id: number,
             user_id: string,
             text: string,
             created_at: Date
         }> = posts
+    }
     // [...posts].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
 
     return (
-        <>
+        <div style={{ width: '66%', margin: '20px' }}>
             {loading && (
                 <CircularProgress color="success" />
             )}
-            {userProfile && (
+            {(userProfile && postData) && (
                 <Fade in={true} timeout={1000}>
-                    <div style={{ margin: '50px' }}>
+                    <div style={{ padding: '20px' }}>
                         <Box>
                             <Box borderBottom="1px solid #ccc" padding="8px 20px">
                                 <Grid container alignItems="center">
@@ -171,7 +176,10 @@ const GuestProfile = () => {
                                     <CircularProgress color="success" />
                                 )}
                                 {postArray &&
-                                    postArray.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)
+                                    postArray.map((post) => {
+                                        return <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />
+                                    }
+                                    )
                                 }
                             </Box>
                         </Box>
@@ -187,7 +195,7 @@ const GuestProfile = () => {
                     <UpdateUserProfile />
                 </Modal>
             )} */}
-        </>
+        </div>
     );
 }
 

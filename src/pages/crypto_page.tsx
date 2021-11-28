@@ -24,17 +24,14 @@ const CryptoPage = () => {
             user_id: userInfo.id
         }
     })
-    // if(data) {
-    //     var { cryptoByUserId } = data;
-    // }
+    if (data) {
+        var { cryptoByUserId } = data;
+        // console.log('jim', cryptoByUserId)
+    }
 
-
-    useEffect(() => {
-        if (data) {
-            var { cryptoByUserId } = data;
-            console.log('jim', cryptoByUserId)
-        }
-    }, [data])
+    // useEffect(() => {
+    //         console.log('jim', cryptoByUserId)
+    // }, [data])
 
     const [openModal, setOpenModal] = React.useState(false);
 
@@ -46,9 +43,9 @@ const CryptoPage = () => {
     };
 
     return (
-        <div style={{  width: '66%', margin: '20px' }}>
+        <div style={{ width: '66%', margin: '20px' }}>
             <Fade in={true} timeout={1000}>
-                <Box sx= {{ border: '1px solid #cdcdcd', padding: '20px'}} >
+                <Box sx={{ border: '1px solid #cdcdcd', padding: '20px' }} >
                     <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                         <Box>
                             <Grid item padding="1rem 1rem 1rem 1rem" width='350px' height='500px' border="5px solid #ccc">
@@ -66,7 +63,9 @@ const CryptoPage = () => {
                                 </Carousel>
                             </Grid>
                         </Box>
-                        <CryptoDoughnut />
+                        <Box>
+                            <CryptoDoughnut />
+                        </Box>
                     </div>
                     <Box textAlign="right" padding="10px 20px">
                         <Button

@@ -111,7 +111,7 @@ const SingleMessage = ({ msgId, senderId, sentAt, text }: MsgProps) => {
                           handleDeletePost();
                         }}
                       >
-                        Delete Message
+                        Delete
                       </MenuItem>
                     </Menu>
                   </Grid>

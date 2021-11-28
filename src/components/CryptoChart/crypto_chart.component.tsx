@@ -1,4 +1,5 @@
 import React from 'react';
+import { Typography } from "@mui/material";
 
 
 type cryptoProps = {
@@ -14,10 +15,10 @@ const CryptoChart = ({ coinName, coinImage, coinRank, coinMarketCap, coinCurrent
   <>
     <div className='header'>
       <h1 className='title'>{coinName} <img height='50px' width='50px' src={coinImage} /></h1>
-      <p>Market Cap: ${coinMarketCap.toLocaleString()}</p>
-      <p>Current Price: ${coinCurrentPrice.toLocaleString()}</p>
-      <p>Coin All Time High: ${coinATH.toLocaleString()}</p>
-      <p>Coin Rank: {coinRank}</p>
+      <Typography sx={{ fontSize: '16px' }}><b>Market Cap:</b> ${coinMarketCap.toLocaleString()}</Typography>
+      <Typography sx={{ fontSize: '16px' }}><b>Current Price:</b> ${coinCurrentPrice.toLocaleString()}</Typography>
+      <Typography sx={{ fontSize: '16px' }}><b>Coin All Time High:</b> ${coinATH.toLocaleString()}</Typography>
+      <Typography sx={{ fontSize: '16px' }}><b>Coin Rank:</b> {coinRank}</Typography>
     </div>
   </>
 );

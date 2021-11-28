@@ -94,7 +94,8 @@ const Profile = () => {
                                 <Box position="relative">
                                     <img
                                         width="100%"
-                                        src="https://res.cloudinary.com/doalzf6o2/image/upload/v1636321862/587_cfth76.jpg"
+                                        height='300px'
+                                        src="https://res.cloudinary.com/doalzf6o2/image/upload/v1638070514/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall_ukmct5.jpg"
                                         alt="background"
                                     />
                                     <Box

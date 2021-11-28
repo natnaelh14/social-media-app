@@ -77,21 +77,21 @@ const FriendRequestBox = ({ userId, userHandle, userAvatar }: RequestsProps) => 
                                 marginTop=".8rem"
                             >
                                 <Button
-                                    sx={{ marginRight: "1rem" }}
+                                    sx={{ borderRadius: 8, marginRight: "1rem" }}
                                     color='primary'
                                     variant="outlined"
                                     value='CONFIRMED'
                                     onClick={handleFriendRequest}
                                     size="small">APPROVE</Button>
                                 <Button
-                                    sx={{ marginRight: "1rem" }}
+                                    sx={{ borderRadius: 8, marginRight: "1rem" }}
                                     color='error'
                                     variant="outlined"
                                     value='REJECTED'
                                     onClick={handleFriendRequest}
                                     size="small">DECLINE</Button>
                                 <Button
-                                    sx={{ marginRight: "1rem" }}
+                                    sx={{ borderRadius: 8, marginRight: "1rem" }}
                                     color='error'
                                     variant="outlined"
                                     value='BLOCKED'

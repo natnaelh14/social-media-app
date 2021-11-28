@@ -80,9 +80,10 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                 justifyContent="space-between"
                                 alignItems="center"
                                 flexWrap="nowrap"
+
                             >
-                                <Grid item>
-                                    <Box display="flex">
+                                <Grid width='100%' item>
+                                    <Box  display="flex">
                                         <Typography
                                             sx={{ fontSize: "16px", fontWeight: 500, mr: "10px" }}
                                         >
@@ -94,7 +95,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                             @{userProfile.handle.trim().toLowerCase()}
                                         </Typography>
                                         <Typography
-                                            sx={{ fontSize: "15px", mr: "10px", color: "#555" }}
+                                            sx={{ fontSize: "15px", ml: "auto", color: "#555" }}
                                         >
                                             {moment(postTime).format('MMM DD YY')}
                                         </Typography>

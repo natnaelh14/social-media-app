@@ -112,17 +112,46 @@ export const UPDATE_FRIEND_REQUEST = gql`
 `;
 
 export const REMOVE_FOLLOWING = gql`
-  mutation removeFollowingMutation($follower_user_id: String!, $followed_user_id: String!) {
-    removeFollowing(follower_user_id: $follower_user_id, followed_user_id: $followed_user_id) {
+  mutation removeFollowingMutation(
+    $follower_user_id: String!
+    $followed_user_id: String!
+  ) {
+    removeFollowing(
+      follower_user_id: $follower_user_id
+      followed_user_id: $followed_user_id
+    ) {
       id
     }
   }
 `;
 
 export const REMOVE_FOLLOWER = gql`
-  mutation removeFollowerMutation($follower_user_id: String!, $followed_user_id: String!) {
-    removeFollower(follower_user_id: $follower_user_id, followed_user_id: $followed_user_id) {
+  mutation removeFollowerMutation(
+    $follower_user_id: String!
+    $followed_user_id: String!
+  ) {
+    removeFollower(
+      follower_user_id: $follower_user_id
+      followed_user_id: $followed_user_id
+    ) {
       id
+    }
+  }
+`;
+
+export const ADD_MESSAGE = gql`
+  mutation addMessageMutation(
+    $text: String!
+    $sender_id: String!
+    $receiver_id: String!
+  ) {
+    addMessage(text: $text, sender_id: $sender_id, receiver_id: $receiver_id) {
+      id
+      text
+      isSeen
+      sender_id
+      receiver_id
+      sent_at
     }
   }
 `;

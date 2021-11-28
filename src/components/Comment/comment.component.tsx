@@ -51,7 +51,7 @@ const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps)
             alignItems="center"
             flexWrap="nowrap"
           >
-            <Grid item>
+            <Grid width='100%' item>
               <Box display="flex">
                 <Typography
                   sx={{ fontSize: "16px", fontWeight: 500, mr: "6px" }}
@@ -64,7 +64,7 @@ const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps)
                   @{userProfile.handle.toLowerCase().trim()}
                 </Typography>
                 <Typography
-                  sx={{ fontSize: "15px", mr: "8px", color: "#555" }}
+                  sx={{ fontSize: "15px", ml: "auto", color: "#555" }}
                 >
                   {Moment(commentTime).format('MMM DD YY')}
                 </Typography>

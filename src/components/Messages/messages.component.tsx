@@ -11,9 +11,12 @@ import { useParams } from 'react-router-dom';
 import { userProps } from '../../index.types';
 import { useAppSelector } from '../../app/hooks';
 import { QUERY_USER } from '../../utils/queries';
-import SingleMessage from '../SingleMessage/single_message.component'
+import SingleMessage from './SingleMessage/single_message.component'
 import SendIcon from '@material-ui/icons/Send';
 import { ADD_MESSAGE } from '../../utils/mutations';
+import SingleMessageLoading from "./SingleMessage/single_message_loading.component";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Messages = () => {
   const { messagesId } = useParams<{ messagesId: string | undefined }>();
@@ -59,13 +62,10 @@ const Messages = () => {
   }
 
   return (
-    <>
-      {(messageLoading || messageError || !messagesId || currentUserLoading) && (
-        <div>Message is loading</div>
-      )}
-      {userProfile && (
-        <div style={{ width: '66%', margin: '20px' }}>
-          <Fade in={true} timeout={1000}>
+    <div style={{ width: '66%', margin: '20px' }}>
+      <Fade in={true} timeout={1000}>
+        <div>
+          {userProfile && (
             <div style={{ padding: '20px' }}>
               <Box borderBottom="1px solid #ccc" padding="8px 20px">
                 <Grid item sx={{ mr: "10px" }}>
@@ -77,18 +77,39 @@ const Messages = () => {
                 </Grid>
                 <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
                   <Box>
-                    <img height="75px" width="75px" src={userProfile.avatar} alt="profile" />
-                    <Typography>{userProfile.handle}</Typography>
+                    {(userProfile.avatar || !currentUserLoading) ? (
+                      <img height="75px" width="75px" src={userProfile.avatar} alt="profile" />
+                    ) : (
+                      <Skeleton
+                        circle
+                        height={100}
+                        width={100}
+                        containerClassName="avatar-skeleton"
+                      />
+                    )}
+                    {(!userProfile.avatar || currentUserLoading) ? (
+                      <Skeleton
+                        width={100}
+                      />
+                    ) : (
+                      <Typography>{userProfile.handle}</Typography>
+                    )}
                   </Box>
                 </Grid>
               </Box>
               <Box sx={{ overflowY: "scroll" }}>
+                {(messageLoading || messageError || !messagesId) && (
+                  <>
+                    <SingleMessageLoading />
+                    <SingleMessageLoading />
+                    <SingleMessageLoading />
+                  </>
+                )}
                 {messages && (
                   messages.map((msg: any, index: any) => {
                     return <SingleMessage key={msg.id} msgId={msg.id} senderId={msg.sender_id} sentAt={msg.sent_at} text={msg.text} />
                   })
                 )}
-
               </Box>
               <Box sx={{ width: '100%', marginTop: '30px' }}>
                 <TextField
@@ -104,11 +125,11 @@ const Messages = () => {
                 </div>
               </Box>
             </div>
-          </Fade>
+          )}
         </div>
-      )}
 
-    </>
+      </Fade>
+    </div>
   )
 }
 

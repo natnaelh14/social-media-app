@@ -6,13 +6,14 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Link as RouteLink } from "react-router-dom";
 const Moment = require('moment')
 import { Fade } from "@mui/material";
-import { QUERY_USER } from '../../utils/queries';
-import { DELETE_MESSAGE } from '../../utils/mutations';
+import { QUERY_USER } from '../../../utils/queries';
+import { DELETE_MESSAGE } from '../../../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-import { userProps } from '../../index.types';
-import { useAppSelector } from '../../app/hooks';
+import { userProps } from '../../../index.types';
+import { useAppSelector } from '../../../app/hooks';
 import Avatar from '@material-ui/core/Avatar';
+import SingleMessageLoading from './single_message_loading.component';
 
 type MsgProps = {
   msgId: string,
@@ -54,9 +55,9 @@ const SingleMessage = ({ msgId, senderId, sentAt, text }: MsgProps) => {
 
   return (
     <>
-      {(loading || error || !userProfile.avatar) && (
-        <div>Single Message Loading...</div>
-      )}
+      {/* {(loading || error || !userProfile.avatar) && (
+        <SingleMessageLoading />
+      )} */}
       {userProfile && (
         <Box
           padding="1rem"
@@ -73,7 +74,7 @@ const SingleMessage = ({ msgId, senderId, sentAt, text }: MsgProps) => {
             <Grid item sx={{ paddingRight: "1rem" }}>
               <Avatar alt="logo" src={userProfile.avatar} />
             </Grid>
-            <Box>
+            <Box width='100%' >
               <Grid
                 width='100%'
               >

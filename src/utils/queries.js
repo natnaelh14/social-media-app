@@ -67,6 +67,16 @@ export const QUERY_CRYPTOS = gql`
   }
 `;
 
+export const QUERY_SEARCH_API = gql`
+  query getCryptoSearchAPI($name: String!) {
+    cryptoSearchAPI(name: $name) {
+      name
+      current_price
+      image
+    }
+  }
+`;
+
 export const QUERY_FRIEND_REQUESTS = gql`
   query getFriendRequests($id: ID!) {
     friendRequests(id: $id) {

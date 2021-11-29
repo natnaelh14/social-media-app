@@ -92,6 +92,24 @@ export const ADD_CRYPTO = gql`
   }
 `;
 
+export const UPDATE_CRYPTO = gql`
+  mutation updateCryptoMutation(
+    $holding_amount: Int!
+    $id: ID!
+  ) {
+    updateCrypto(
+      holding_amount: $holding_amount
+      id: $id
+    ) {
+      id
+      user_id
+      crypto_name
+      holding_amount
+      purchase_date
+    }
+  }
+`;
+
 export const UPDATE_FRIEND_REQUEST = gql`
   mutation RespondFollowRequestMutation(
     $sender_id: String!

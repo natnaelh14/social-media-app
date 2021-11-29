@@ -50,12 +50,6 @@ const Profile = () => {
     const [openUpdateModal, setOpenUpdateModal] = React.useState(false);
     const [openFollowingModal, setOpenFollowingModal] = React.useState(false);
     const [openFollowerModal, setOpenFollowerModal] = React.useState(false);
-
-
-
-    // const handleModalOpen = () => {
-    //     setOpenModal(true);
-    // };
     const handleModalClose = () => {
         setOpenUpdateModal(false)
         setOpenFollowingModal(false)
@@ -85,7 +79,7 @@ const Profile = () => {
                                             {userInfo.handle}
                                         </Typography>
                                         <Typography sx={{ fontSize: "12px", color: "#555" }}>
-                                            120 posts
+                                            {postsData ? postsData.length : 0} posts
                                         </Typography>{" "}
                                     </Grid>
                                 </Grid>

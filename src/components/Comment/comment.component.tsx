@@ -9,8 +9,9 @@ import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IosShareIcon from "@mui/icons-material/IosShare";
 const Moment = require('moment');
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../../utils/queries';
+import { DELETE_COMMENT } from '../../utils/mutations';
 
 type commentProps = {
   commentId: number,
@@ -27,8 +28,19 @@ const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps)
       id: userId
     },
   });
-
   const { userProfile } = data;
+
+  const [deleteComment, {}] = useMutation(DELETE_COMMENT);
+
+  const handleDeleteComment = async() => {
+    try {
+      await deleteComment({
+        variables: { id: commentId }
+      })
+    } catch (e) {
+      throw new Error('Unable to delete comment')
+    }
+  }
 
   return (
     <Box
@@ -94,7 +106,7 @@ const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps)
             <IconButton size="small">
               <IosShareIcon fontSize="small" />
             </IconButton>
-            <IconButton size="small">
+            <IconButton size="small" onClick={handleDeleteComment} >
               <DeleteIcon fontSize="small" />
             </IconButton>
           </Box>

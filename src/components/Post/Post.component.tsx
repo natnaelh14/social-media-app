@@ -83,7 +83,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
 
                             >
                                 <Grid width='100%' item>
-                                    <Box  display="flex">
+                                    <Box display="flex">
                                         <Typography
                                             sx={{ fontSize: "16px", fontWeight: 500, mr: "10px" }}
                                         >
@@ -131,7 +131,10 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                 <IconButton size="small">
                                     <IosShareIcon fontSize="small" />
                                 </IconButton>
-                                <IconButton size="small">
+                                <IconButton
+                                    size="small"
+                                    onClick={handleDeletePost}
+                                >
                                     <DeleteIcon fontSize="small" />
                                 </IconButton>
                             </Box>

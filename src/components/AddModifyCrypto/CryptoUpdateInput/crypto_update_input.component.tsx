@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FormControl, OutlinedInput, InputAdornment, Typography, IconButton } from "@mui/material";
 const CoinImage = require('./coin.png')
 import { Box } from "@mui/system";
-import { QUERY_SEARCH_API } from '../../utils/queries';
-import { UPDATE_CRYPTO, DELETE_CRYPTO } from '../../utils/mutations';
+import { QUERY_SEARCH_API } from '../../../utils/queries';
+import { UPDATE_CRYPTO, DELETE_CRYPTO } from '../../../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';

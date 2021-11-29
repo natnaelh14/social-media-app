@@ -7,13 +7,13 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Link as RouteLink } from "react-router-dom";
 const Moment = require('moment')
 import { Fade } from "@mui/material";
-import { useAppSelector } from "../../app/hooks";
-import { userProps } from '../../index.types';
-import Post from "../Post/Post.component";
-import UpdateUserProfile from "../UpdateUserProfile/update_user_profile.component";
-import { QUERY_FOLLOWERS, QUERY_FOLLOWINGS } from '../../utils/queries';
+import { useAppSelector } from "../app/hooks";
+import { userProps } from '../index.types';
+import Post from "../components/Post/Post.component";
+import UpdateUserProfile from "../components/UpdateUserProfile/update_user_profile.component";
+import { QUERY_FOLLOWERS, QUERY_FOLLOWINGS } from '../utils/queries';
 import { useQuery } from '@apollo/client';
-import FollowModal from "../FollowModal/follow_modal.component";
+import FollowModal from "../components/FollowModal/follow_modal.component";
 
 const Profile = () => {
 

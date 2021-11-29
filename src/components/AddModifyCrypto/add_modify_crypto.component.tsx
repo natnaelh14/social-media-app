@@ -7,7 +7,7 @@ import { coinsList } from './coin';
 import { QUERY_CRYPTOS } from '../../utils/queries';
 import { useQuery, useMutation } from '@apollo/client';
 import { ADD_CRYPTO } from '../../utils/mutations';
-import CryptoUpdateInput from '../CryptoUpdateInput/crypto_update_input.component';
+import CryptoUpdateInput from './CryptoUpdateInput/crypto_update_input.component';
 
 type ModalProps = {
     open: boolean,

@@ -55,7 +55,7 @@ const CryptoDoughnut = () => {
                 dataSource={cryptoData}
                 // style={{width: "700px", height: "400px"}}
             >
-                <Title text="Crypto Holding">
+                <Title text="CRYPTO HOLDING">
                     <Subtitle text={`US$ ${cryptoTotal.toLocaleString()}`} />
                 </Title>
                 <Series argumentField="region">

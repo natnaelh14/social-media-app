@@ -48,7 +48,7 @@ const CryptoPage = () => {
                 <Box sx={{ border: '1px solid #cdcdcd', padding: '20px' }} >
                     <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                         <Box>
-                            <Grid item padding="1rem 1rem 1rem 1rem" width='350px' height='500px' border="5px solid #ccc">
+                            <Grid item padding="1rem 1rem 1rem 1rem" width='350px' height='450px' border="5px solid #ccc">
                                 <Carousel
                                     fullHeightHover={false}
                                     NextIcon={<SkipNextIcon />}

@@ -93,19 +93,21 @@ export const ADD_CRYPTO = gql`
 `;
 
 export const UPDATE_CRYPTO = gql`
-  mutation updateCryptoMutation(
-    $holding_amount: Int!
-    $id: ID!
-  ) {
-    updateCrypto(
-      holding_amount: $holding_amount
-      id: $id
-    ) {
+  mutation updateCryptoMutation($holding_amount: Int!, $id: ID!) {
+    updateCrypto(holding_amount: $holding_amount, id: $id) {
       id
       user_id
       crypto_name
       holding_amount
       purchase_date
+    }
+  }
+`;
+
+export const DELETE_CRYPTO = gql`
+  mutation deleteCryptoMutation($id: ID!) {
+    deleteCrypto(id: $id) {
+      id
     }
   }
 `;

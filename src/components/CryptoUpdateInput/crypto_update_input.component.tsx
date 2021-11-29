@@ -3,9 +3,10 @@ import { FormControl, OutlinedInput, InputAdornment, Typography, IconButton } fr
 const CoinImage = require('./coin.png')
 import { Box } from "@mui/system";
 import { QUERY_SEARCH_API } from '../../utils/queries';
-import { UPDATE_CRYPTO } from '../../utils/mutations';
+import { UPDATE_CRYPTO, DELETE_CRYPTO } from '../../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type cryptoProps = {
     name: string,
@@ -15,7 +16,7 @@ type cryptoProps = {
 
 const CryptoUpdateInput = ({ name, holding, cryptoId }: cryptoProps) => {
 
-    const [updateCrypto, {}] = useMutation(UPDATE_CRYPTO);
+    const [updateCrypto, { }] = useMutation(UPDATE_CRYPTO);
     const [holdingValue, setHoldingValue] = useState<number>(holding)
 
     const { loading: loadingAPI, error: errorAPI, data: dataAPI } = useQuery(QUERY_SEARCH_API, {
@@ -31,21 +32,32 @@ const CryptoUpdateInput = ({ name, holding, cryptoId }: cryptoProps) => {
         var image = cryptoSearchAPI.image;
     }
 
-    const handleCryptoUpdate = async() => {
+    const handleCryptoUpdate = async () => {
         if (holdingValue !== holding || holdingValue > 0) {
             try {
-            await updateCrypto({
-            variables: {
-                id: cryptoId,
-                holding_amount: holdingValue
-            }
-        })
-            } catch(e) {
+                await updateCrypto({
+                    variables: {
+                        id: cryptoId,
+                        holding_amount: holdingValue
+                    }
+                })
+            } catch (e) {
                 throw new Error('Unable to update CryptoCurrency')
             }
-
         } else {
             return;
+        }
+    }
+    const [deleteCrypto, { }] = useMutation(DELETE_CRYPTO)
+    const handleCryptoDelete = async() => {
+        try {
+            deleteCrypto({
+                variables: {
+                    id: cryptoId
+                },
+            })
+        } catch (e) {
+            throw new Error('Unable to delete CryptoCurrency')
         }
     }
 
@@ -73,9 +85,14 @@ const CryptoUpdateInput = ({ name, holding, cryptoId }: cryptoProps) => {
                         </FormControl>
                         <Typography ml='0.5rem' display='flex' alignItems='center' > = ${(holding * currentPrice).toLocaleString()}</Typography>
                     </Box>
-                    <IconButton onClick={handleCryptoUpdate} sx={{ marginLeft: 'auto' }} >
-                        <SaveIcon />
-                    </IconButton>
+                    <Box display='flex' sx={{ flexDirection: 'row', marginLeft: 'auto' }} >
+                        <IconButton onClick={handleCryptoUpdate}>
+                            <SaveIcon />
+                        </IconButton>
+                        <IconButton onClick={handleCryptoDelete}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </Box>
                 </Box>
             </Box>
         </>

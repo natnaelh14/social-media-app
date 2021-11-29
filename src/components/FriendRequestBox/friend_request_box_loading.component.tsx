@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Button } from "@mui/material";
 import { Box } from "@mui/system";
-import { Link } from "react-router-dom";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -21,14 +20,12 @@ const FriendRequestBoxLoading = () => {
             >
                 <Grid container flexWrap="nowrap">
                     <Grid item sx={{ paddingRight: "1rem" }}>
-                        <Link to={`/home/profile`}>
-                            <Skeleton
-                                circle
-                                height={50}
-                                width={50}
-                                containerClassName="avatar-skeleton"
-                            />
-                        </Link>
+                        <Skeleton
+                            circle
+                            height={50}
+                            width={50}
+                            containerClassName="avatar-skeleton"
+                        />
                     </Grid>
                     <Box>
                         <Grid

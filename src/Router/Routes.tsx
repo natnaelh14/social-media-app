@@ -8,7 +8,6 @@ import LeftSidebar from "../components/LeftSideBar/left-sidebar.component";
 import RightSidebar from "../components/RightSideBar/right-sidebar.component";
 import { BrowserRouter as Switch, Route, Router, Redirect } from "react-router-dom";
 import PostList from "../components/PostList/post-list.component";
-import Profile from "../components/Profile/profile.component";
 import AddPost from "../components/AddPost/add-post.component";
 import { FeedContainer } from "./Router.styles";
 import { setCurrentUser } from '../redux/actions/userActions';
@@ -19,6 +18,7 @@ import { gql } from "@apollo/client";
 import { client } from '../index';
 import { QUERY_USER } from '../utils/queries';
 import GuestProfile from "../components/GuestProfile/guest_profile.component";
+import ProfilePage from "../pages/profile_page";
 import CryptoPage from '../pages/crypto_page';
 import ChatPage from '../pages/chat_page';
 import ExplorePage from '../pages/explore_page';
@@ -139,7 +139,7 @@ class Routes extends Component<MyProps, {}> {
               {this.props.currentUser ? <Messages /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/profile">
-              {this.props.currentUser ? <Profile /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? <ProfilePage /> : <Redirect to="/signin" />}
             </Route>
             <Route exact path="/home/profile/:profileId">
               {this.props.currentUser ? <GuestProfile /> : <Redirect to="/signin" />}

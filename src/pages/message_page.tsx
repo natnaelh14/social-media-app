@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client';
 import { QUERY_MESSENGERS, QUERY_MESSAGES } from '../utils/queries';
 import { userProps } from '../index.types';
 import { useAppSelector } from '../app/hooks';
+import MessageBoxLoading from '../components/MessageBox/message_box_loading.component';
 
 const MessagePage = () => {
 
@@ -25,16 +26,24 @@ const MessagePage = () => {
         <div style={{ border: '1px solid #cdcdcd', height: "90vh", padding: '20px' }}>
           <Typography variant='h5' textAlign='center' >Messages</Typography>
           <Box
-                paddingBottom=".5rem"
-                paddingTop=".5rem"
-                marginTop='0.5rem'
-                borderTop="1px solid #ccc"
-              >
-          {messengers && (
-            messengers.map((msg: any) => {
-              return <MessageBox key={msg.id} currentUser={userInfo.id} msgId={msg.id} msgHandle={msg.handle} msgAvatar={msg.avatar} />
-            })
-          )}
+            paddingBottom=".5rem"
+            paddingTop=".5rem"
+            marginTop='0.5rem'
+            borderTop="1px solid #ccc"
+          >
+            {(loading || userLoading || error) && (
+              <>
+                <MessageBoxLoading />
+                <MessageBoxLoading />
+                <MessageBoxLoading />
+                <MessageBoxLoading />
+              </>
+            )}
+            {messengers && (
+              messengers.map((msg: any) => {
+                return <MessageBox key={msg.id} currentUser={userInfo.id} msgId={msg.id} msgHandle={msg.handle} msgAvatar={msg.avatar} />
+              })
+            )}
           </Box>
         </div>
       </Fade>

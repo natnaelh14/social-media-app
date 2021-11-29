@@ -72,6 +72,14 @@ export const ADD_COMMENT = gql`
   }
 `;
 
+export const DELETE_COMMENT = gql`
+  mutation deletePostMutation($id: ID!) {
+    deleteComment(id: $id) {
+      id
+    }
+  }
+`;
+
 export const ADD_CRYPTO = gql`
   mutation addCryptoMutation(
     $cryptoName: String!

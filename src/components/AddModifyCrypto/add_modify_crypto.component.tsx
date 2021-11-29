@@ -56,7 +56,7 @@ const AddModifyCrypto = ({
     return (
         <>
             {cryptoByUserId && (
-                <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+                <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
                     <DialogTitle>
                         <Typography textAlign='center' style={{ fontSize: '20px' }}>ADD/MODIFY CRYPTO</Typography>
                         <Box textAlign="right" borderBottom="1px solid #ccc">

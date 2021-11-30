@@ -5,19 +5,15 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
 import TagIcon from "@mui/icons-material/Tag";
-import {Button, Box, Grid, IconButton, Input, Menu, MenuItem, useTheme, Hidden} from "@mui/material";
+import {Button, Box, IconButton, Hidden} from "@mui/material";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import ChatIcon from '@mui/icons-material/Chat';
-import ListAltIcon from "@mui/icons-material/ListAlt";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { NavLink } from "react-router-dom";
-import { userProps } from "../../index.types";
-import { useAppSelector } from "../../app/hooks";
 import AddPostModal from "../AddPostModal/add_post_modal.component";
 
 const LeftSidebar = () => {
@@ -63,7 +59,7 @@ const LeftSidebar = () => {
               </Hidden>
             </ListItem>
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to={`/home/explore`}
             style={{
               textDecoration: "none",
@@ -90,7 +86,7 @@ const LeftSidebar = () => {
                 />
               </Hidden>
             </ListItem>
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to={`/home/crypto`}
             style={{
@@ -147,7 +143,7 @@ const LeftSidebar = () => {
               </Hidden>
             </ListItem>
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to={`/home/notifications`}
             style={{
               textDecoration: "none",
@@ -174,7 +170,7 @@ const LeftSidebar = () => {
                 />
               </Hidden>
             </ListItem>
-          </NavLink>
+          </NavLink> */}
 
           <NavLink
             to={`/home/messages`}
@@ -205,7 +201,7 @@ const LeftSidebar = () => {
             </ListItem>
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             to={`/home/chat`}
             style={{
               textDecoration: "none",
@@ -232,8 +228,7 @@ const LeftSidebar = () => {
                 />
               </Hidden>
             </ListItem>
-
-          </NavLink>
+          </NavLink> */}
 
           <NavLink
             to={`/home/profile`}

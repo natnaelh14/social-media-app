@@ -73,7 +73,7 @@ const CryptoUpdateInput = ({ name, holding, cryptoId }: cryptoProps) => {
                     <img src={image ? image : CoinImage} height='25' width='25' alt='crypto-image' />
                     <Typography ml='0.5rem'>{name.toUpperCase()}</Typography>
                     <Box sx={{ position: 'absolute', left: '50%', display: 'flex', flexDirection: 'row' }}>
-                        <FormControl sx={{ m: 0.25, maxWidth: 100 }}>
+                        <FormControl sx={{ m: 0.25, maxWidth: 150 }}>
                             <OutlinedInput
                                 id="outlined-adornment-amount"
                                 value={holdingValue}

@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import PieChart, { Legend, Series, Tooltip, Format, Label, Connector, Title, Subtitle, Size } from 'devextreme-react/pie-chart';
+import { QUERY_CRYPTOS } from '../../utils/queries';
+import { useQuery } from '@apollo/client';
 
-const CryptoDoughnut = () => {
+const CryptoDoughnut: React.FC<{currentUser:string}> = ({currentUser}) => {
 
-    const currencyList = [
-        {
-            coin: 'ethereum',
-            total: 10
-        },
-        {
-            coin: 'bitcoin',
-            total: 2
-        },
-        {
-            coin: 'ripple',
-            total: 100000
-        }];
-    
+    const { loading, data } = useQuery(QUERY_CRYPTOS, {
+        variables: {
+            user_id: currentUser
+        }
+    })
+    if (data) {
+        var { cryptoByUserId } = data;
+    }
 
-    const [cryptoData, setCryptoData] =useState();
+    const [cryptoData, setCryptoData] = useState();
     const [cryptoTotal, setCryptoTotal] = useState(0);
 
     const customizeTooltip = (arg: any) => {
@@ -31,14 +27,14 @@ const CryptoDoughnut = () => {
         (async () => {
             let cryptoArray: any = []
             let total = 0
-            for (let i = 0; i < currencyList.length; i++) {
-                await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${currencyList[i].coin}`)
+            for (let i = 0; i < cryptoByUserId.length; i++) {
+                await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${cryptoByUserId[i].crypto_name}`)
                     .then((res: any) => {
                         return res.json()
                     })
                     .then((res) => {
-                        cryptoArray.push({ region: res[0].name, val: res[0].current_price * currencyList[i].total })
-                        total += res[0].current_price * currencyList[i].total
+                        cryptoArray.push({ region: res[0].name, val: res[0].current_price * cryptoByUserId[i].holding_amount })
+                        total += res[0].current_price * cryptoByUserId[i].holding_amount
                     })
             }
             setCryptoData(cryptoArray)
@@ -53,7 +49,7 @@ const CryptoDoughnut = () => {
                 type="doughnut"
                 palette="Soft Pastel"
                 dataSource={cryptoData}
-                // style={{width: "700px", height: "400px"}}
+            // style={{width: "700px", height: "400px"}}
             >
                 <Title text="CRYPTO HOLDING">
                     <Subtitle text={`US$ ${cryptoTotal.toLocaleString()}`} />

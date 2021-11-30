@@ -19,18 +19,18 @@ const CryptoPage = () => {
     const { loading, user } = currentUser
     const userInfo: userProps = user
 
-    const { data } = useQuery(QUERY_CRYPTOS, {
+    const { loading: cryptoLoading, data } = useQuery(QUERY_CRYPTOS, {
         variables: {
             user_id: userInfo.id
         }
     })
     if (data) {
         var { cryptoByUserId } = data;
-        // console.log('jim', cryptoByUserId)
+        // console.log('jim', cryptoByUserId.crypto_name)
     }
 
     // useEffect(() => {
-    //         console.log('jim', cryptoByUserId)
+    //     console.log('jim', cryptoByUserId)
     // }, [data])
 
     const [openModal, setOpenModal] = React.useState(false);
@@ -46,63 +46,68 @@ const CryptoPage = () => {
         <div style={{ width: '66%', margin: '20px' }}>
             <Fade in={true} timeout={1000}>
                 <Box sx={{ border: '1px solid #cdcdcd', padding: '20px' }} >
-                    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                        <Box>
-                            <Grid item padding="1rem 1rem 1rem 1rem" width='350px' height='450px' border="5px solid #ccc">
-                                <Carousel
-                                    fullHeightHover={false}
-                                    NextIcon={<SkipNextIcon />}
-                                    PrevIcon={<SkipPreviousIcon />}
-                                >
-                                    {/* {cryptoByUserId && (
-                                        <CryptoCurrency name={cryptoByUserId.crypto_name} />
-                                    )} */}
-                                    <CryptoCurrency name='bitcoin' />
-                                    <CryptoCurrency name='ethereum' />
-                                    <CryptoCurrency name='ripple' />
-                                </Carousel>
-                            </Grid>
-                        </Box>
-                        <Box>
-                            <CryptoDoughnut />
-                        </Box>
-                    </div>
-                    <Box textAlign="right" padding="10px 20px">
-                        <Button
-                            size="small"
-                            onClick={handleModalOpen}
-                            sx={{
-                                textTransform: "capitalize",
-                                padding: "6px 20px",
-                                background: "black",
-                                "&:hover": {
-                                    background: "#333",
-                                },
-                            }}
-                            variant="contained"
+                    {(loading && cryptoLoading) ? (
+                        <div>Crypto is Loading</div>
+                    ) : (
+                        <>
+                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                                <Box>
+                                    <Grid item padding="1rem 1rem 1rem 1rem" width='350px' height='450px' border="5px solid #ccc">
+                                        <Carousel
+                                            fullHeightHover={false}
+                                            NextIcon={<SkipNextIcon />}
+                                            PrevIcon={<SkipPreviousIcon />}
+                                        >
+                                            {cryptoByUserId && (
+                                                cryptoByUserId.map((crypto: any) => {
+                                                    return <CryptoCurrency key={crypto.id} name={crypto.crypto_name} />
+                                                })
+                                            )}
+                                        </Carousel>
+                                    </Grid>
+                                </Box>
+                                <Box>
+                                    <CryptoDoughnut currentUser={userInfo.id} />                                </Box>
+                            </div>
+                            <Box textAlign="right" padding="10px 20px">
+                                <Button
+                                    size="small"
+                                    onClick={handleModalOpen}
+                                    sx={{
+                                        textTransform: "capitalize",
+                                        padding: "6px 20px",
+                                        background: "black",
+                                        "&:hover": {
+                                            background: "#333",
+                                        },
+                                    }}
+                                    variant="contained"
 
-                        >
-                            Add/Modify Crypto
-                        </Button>
-                    </Box>
-                    <Box borderBottom="1px solid #ccc">
-                        <Typography
-                            display="inline-block"
-                            variant="caption"
-                            fontSize="20px"
-                            marginX="1rem"
-                            padding="6px 0"
-                            fontWeight="500"
-                            borderBottom={`4px solid black`}
-                        >
-                            Twitter Feed
-                        </Typography>
-                    </Box>
-                    <Box height="90vh" sx={{ overflowY: "scroll" }}>
-                        <TwitterPostList cryptoName={'bitcoin'} />
-                        <TwitterPostList cryptoName={'ethereum'} />
-                        <TwitterPostList cryptoName={'ripple'} />
-                    </Box>
+                                >
+                                    Add/Modify Crypto
+                                </Button>
+                            </Box>
+                            <Box borderBottom="1px solid #ccc">
+                                <Typography
+                                    display="inline-block"
+                                    variant="caption"
+                                    fontSize="20px"
+                                    marginX="1rem"
+                                    padding="6px 0"
+                                    fontWeight="500"
+                                    borderBottom={`4px solid black`}
+                                >
+                                    Twitter Feed
+                                </Typography>
+                            </Box>
+                            <Box height="90vh" sx={{ overflowY: "scroll" }}>
+                                <TwitterPostList cryptoName={'bitcoin'} />
+                                <TwitterPostList cryptoName={'ethereum'} />
+                                <TwitterPostList cryptoName={'ripple'} />
+                            </Box>
+                        </>
+                    )}
+
                 </Box>
             </Fade>
             {openModal && (

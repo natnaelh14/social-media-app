@@ -47,7 +47,6 @@ const CryptoCurrency = ({ name }: nameProps) => {
                     return response.json()
                 })
                 .then((res: any) => {
-                    setCoinMarketData(res)
                     fetch(`https://api.coinpaprika.com/v1/coins/${res[0].symbol}-${name}`)
                         .then((response) => {
                             return response.json();
@@ -55,6 +54,7 @@ const CryptoCurrency = ({ name }: nameProps) => {
                         .then((response: any) => {
                             setModalData(response)
                         })
+                    setCoinMarketData(res)
                 })
             await fetch(`https://api.coingecko.com/api/v3/coins/${name}/market_chart?vs_currency=usd&days=30&interval=daily`)
                 .then((response) => {
@@ -78,7 +78,7 @@ const CryptoCurrency = ({ name }: nameProps) => {
                     setCoinData(res[0])
                 })
         })()
-    }, [])
+    }, [name])
 
     return (
         <>

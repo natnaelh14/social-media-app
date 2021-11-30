@@ -10,8 +10,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IosShareIcon from "@mui/icons-material/IosShare";
 const Moment = require('moment');
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_USER } from '../../utils/queries';
-import { DELETE_COMMENT } from '../../utils/mutations';
+import { QUERY_USER, QUERY_REACTIONS_BY_COMMENT, QUERY_REACTIONS_BY_USER_COMMENT } from '../../utils/queries';
+import { DELETE_COMMENT, ADD_REACTION_COMMENT, DELETE_REACTION_COMMENT } from '../../utils/mutations';
+import { useAppSelector } from '../../app/hooks';
+import { userProps } from '../../index.types';
 
 type commentProps = {
   commentId: number,
@@ -29,16 +31,75 @@ const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps)
     },
   });
   const { userProfile } = data;
+  const { data: likeData } = useQuery(QUERY_REACTIONS_BY_COMMENT, {
+    variables: {
+      reaction_type: 'LIKE',
+      comment_id: commentId
+    },
+  });
+  if (likeData) {
+    var { reactionsByComment: likeList } = likeData;
+  }
+  const { data: dislikeData } = useQuery(QUERY_REACTIONS_BY_COMMENT, {
+    variables: {
+      reaction_type: 'DISLIKE',
+      comment_id: commentId
+    },
+  });
+  if (dislikeData) {
+    var { reactionsByComment: dislikeList } = dislikeData;
+  }
+  const currentUser = useAppSelector(state => state.currentUser)
+  const { user } = currentUser
+  const userInfo: userProps = user
+  const { data: userPostData } = useQuery(QUERY_REACTIONS_BY_USER_COMMENT, {
+    variables: {
+      user_id: userInfo.id,
+      comment_id: commentId
+    },
+  });
+  if (userPostData) {
+    var { reactionsByUserAndComment } = userPostData;
+  }
 
-  const [deleteComment, {}] = useMutation(DELETE_COMMENT);
-
-  const handleDeleteComment = async() => {
+  const [deleteComment, { }] = useMutation(DELETE_COMMENT);
+  const handleDeleteComment = async () => {
     try {
       await deleteComment({
         variables: { id: commentId }
       })
     } catch (e) {
       throw new Error('Unable to delete comment')
+    }
+  }
+
+  const [addReactionOnComment, { }] = useMutation(ADD_REACTION_COMMENT);
+  const [deleteReactionOnComment, { }] = useMutation(DELETE_REACTION_COMMENT);
+  const handleAddReaction = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const Button: HTMLButtonElement = e.currentTarget;
+    try {
+      addReactionOnComment({
+        variables: {
+          user_id: userId,
+          comment_id: commentId,
+          reaction_type: Button.value
+        }
+      })
+    } catch (e) {
+      throw new Error('Unable to Add a Reaction')
+    }
+  }
+  const handleDeleteReaction = (e: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      deleteReactionOnComment({
+        variables: {
+          user_id: userId,
+          comment_id: commentId
+        }
+      })
+    } catch (e) {
+      throw new Error('Unable to Delete a Reaction')
     }
   }
 
@@ -86,6 +147,16 @@ const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps)
                   {text}
                 </Typography>
               </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                <Typography sx={{ fontSize: "15px", color: "#555", marginRight: '1rem' }}>
+                  {likeList ? likeList.length : 0}
+                  <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
+                </Typography>
+                <Typography sx={{ fontSize: "15px", color: "#555" }}>
+                  {dislikeList ? dislikeList.length : 0}
+                  <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
+                </Typography>
+              </Box>
             </Grid>
           </Grid>
           <Box
@@ -95,17 +166,29 @@ const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps)
             marginTop=".8rem"
             width="100%"
           >
-            <IconButton size="small">
-              <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
-              <FavoriteBorderIcon fontSize="small" />
-            </IconButton>
-            <IconButton size="small">
-              <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
-              <ThumbDownAltOutlinedIcon fontSize="small" />
-            </IconButton>
-            <IconButton size="small">
-              <IosShareIcon fontSize="small" />
-            </IconButton>
+            {(reactionsByUserAndComment && reactionsByUserAndComment.reaction_type === 'LIKE') ? (
+              <IconButton size="small" onClick={handleDeleteReaction} >
+                <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
+              </IconButton>
+            ) : (
+              <IconButton value='LIKE' size="small" onClick={handleAddReaction} >
+                <FavoriteBorderIcon fontSize="small" />
+              </IconButton>
+            )}
+            {(reactionsByUserAndComment && reactionsByUserAndComment.reaction_type === 'DISLIKE') ? (
+              <IconButton size="small" onClick={handleDeleteReaction} >
+                <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
+              </IconButton>
+            ) : (
+              <IconButton value='DISLIKE' size="small" onClick={handleAddReaction} >
+                <ThumbDownAltOutlinedIcon fontSize="small" />
+              </IconButton>
+            )}
+            {!(userId === userInfo.id) && (
+              <IconButton size="small">
+                <IosShareIcon fontSize="small" />
+              </IconButton>
+            )}
             <IconButton size="small" onClick={handleDeleteComment} >
               <DeleteIcon fontSize="small" />
             </IconButton>

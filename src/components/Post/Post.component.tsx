@@ -94,7 +94,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
         const Button: HTMLButtonElement = e.currentTarget;
         try {
             addReactionOnPost({
-                variables: { 
+                variables: {
                     user_id: userId,
                     post_id: postId,
                     reaction_type: Button.value
@@ -107,7 +107,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
     const handleDeleteReaction = (e: React.MouseEvent<HTMLButtonElement>) => {
         try {
             deleteReactionOnPost({
-                variables: { 
+                variables: {
                     user_id: userId,
                     post_id: postId
                 }
@@ -206,13 +206,15 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                         <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
                                     </IconButton>
                                 ) : (
-                                    <IconButton  value='DISLIKE' size="small" onClick={handleAddReaction} >
+                                    <IconButton value='DISLIKE' size="small" onClick={handleAddReaction} >
                                         <ThumbDownAltOutlinedIcon fontSize="small" />
                                     </IconButton>
                                 )}
-                                <IconButton size="small">
-                                    <IosShareIcon fontSize="small" />
-                                </IconButton>
+                                {!(userId === userInfo.id) && (
+                                    <IconButton size="small">
+                                        <IosShareIcon fontSize="small" />
+                                    </IconButton>
+                                )}
                                 <IconButton
                                     size="small"
                                     onClick={handleDeletePost}

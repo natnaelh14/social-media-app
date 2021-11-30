@@ -208,3 +208,20 @@ export const DELETE_REACTION_POST = gql`
     }
   }
 `;
+export const ADD_REACTION_COMMENT = gql`
+  mutation addReactionOnCommentMutation($reaction_type: String!, $user_id: ID!, $comment_id: ID!) {
+    addReactionOnComment(reaction_type: $reaction_type, user_id: $user_id, comment_id: $comment_id) {
+      id
+      reaction_type
+      comment_id
+      user_id
+    }
+  }
+`;
+export const DELETE_REACTION_COMMENT = gql`
+  mutation deleteReactionOnCommentMutation($user_id: ID!, $comment_id: ID!) {
+    deleteReactionOnComment(user_id: $user_id, comment_id: $comment_id) {
+      id
+    }
+  }
+`;

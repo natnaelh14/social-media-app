@@ -160,8 +160,17 @@ export const QUERY_REACTIONS_BY_COMMENT = gql`
 `;
 
 export const QUERY_REACTIONS_BY_USER_POST = gql`
-  query getReactionsByPost($user_id: ID!, $post_id: ID!) {
+  query getReactionsByUserAndPost($user_id: ID!, $post_id: ID!) {
     reactionsByUserAndPost(user_id: $user_id, post_id: $post_id) {
+      id
+      reaction_type
+    }
+  }
+`;
+
+export const QUERY_REACTIONS_BY_USER_COMMENT = gql`
+  query getReactionsByUserAndComment($user_id: ID!, $comment_id: ID!) {
+    reactionsByUserAndComment(user_id: $user_id, comment_id: $comment_id) {
       id
       reaction_type
     }

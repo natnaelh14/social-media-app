@@ -136,3 +136,34 @@ export const QUERY_MESSAGES = gql`
     }
   }
 `;
+
+export const QUERY_REACTIONS_BY_POST = gql`
+  query getReactionsByPost($reaction_type: String!, $post_id: ID!) {
+    reactionsByPost(reaction_type: $reaction_type, post_id: $post_id) {
+      id
+      reaction_type
+      post_id
+      user_id
+    }
+  }
+`;
+
+export const QUERY_REACTIONS_BY_COMMENT = gql`
+  query getReactionsByComment($reaction_type: String!, $comment_id: ID!) {
+    reactionsByComment(reaction_type: $reaction_type, comment_id: $comment_id) {
+      id
+      reaction_type
+      comment_id
+      user_id
+    }
+  }
+`;
+
+export const QUERY_REACTIONS_BY_USER_POST = gql`
+  query getReactionsByPost($user_id: ID!, $post_id: ID!) {
+    reactionsByUserAndPost(user_id: $user_id, post_id: $post_id) {
+      id
+      reaction_type
+    }
+  }
+`;

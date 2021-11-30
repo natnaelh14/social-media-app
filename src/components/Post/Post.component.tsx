@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Grid, IconButton, Typography, Input, Button, CircularProgress } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Grid, IconButton, Typography, Input, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -10,7 +10,10 @@ import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import moment from 'moment';
 import { Link } from "react-router-dom";
-import { QUERY_USER } from '../../utils/queries';
+import { useAppSelector } from "../../app/hooks";
+import { userProps } from '../../index.types';
+import { QUERY_USER, QUERY_REACTIONS_BY_POST, QUERY_REACTIONS_BY_USER_POST } from '../../utils/queries';
+import { ADD_REACTION_POST, DELETE_REACTION_POST } from '../../utils/mutations';
 import { DELETE_POST, ADD_COMMENT } from '../../utils/mutations'
 import { useQuery, useMutation } from '@apollo/client';
 import CommentList from "../CommentList/comment_list.component";
@@ -24,24 +27,55 @@ type postProps = {
 };
 
 const Post = ({ postId, text, userId, postTime }: postProps) => {
-
     const { loading, error, data } = useQuery(QUERY_USER, {
         variables: {
             id: userId
         },
     });
     const { userProfile } = data;
+    const { data: likeData } = useQuery(QUERY_REACTIONS_BY_POST, {
+        variables: {
+            reaction_type: 'LIKE',
+            post_id: postId
+        },
+    });
+    if (likeData) {
+        var { reactionsByPost: likeList } = likeData;
+    }
+    const { data: dislikeData } = useQuery(QUERY_REACTIONS_BY_POST, {
+        variables: {
+            reaction_type: 'DISLIKE',
+            post_id: postId
+        },
+    });
+    if (dislikeData) {
+        var { reactionsByPost: dislikeList } = dislikeData;
+    }
+
+    const currentUser = useAppSelector(state => state.currentUser)
+    const { user } = currentUser
+    const userInfo: userProps = user
+    const { data: userPostData } = useQuery(QUERY_REACTIONS_BY_USER_POST, {
+        variables: {
+            user_id: userInfo.id,
+            post_id: postId
+        },
+    });
+    if (userPostData) {
+        var { reactionsByUserAndPost } = userPostData;
+    }
 
     const [deletePost, { }] = useMutation(DELETE_POST);
     const [addComment, { }] = useMutation(ADD_COMMENT);
     const [displayComment, setDisplayComment] = useState(false);
     const [commentText, setCommentText] = useState("");
 
+
+
     const handleDeletePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         await deletePost({ variables: { id: postId } });
     }
-
     const handleAddComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         await addComment({
@@ -53,7 +87,35 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
         });
         setCommentText("");
     }
-
+    const [addReactionOnPost, { }] = useMutation(ADD_REACTION_POST);
+    const [deleteReactionOnPost, { }] = useMutation(DELETE_REACTION_POST);
+    const handleAddReaction = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const Button: HTMLButtonElement = e.currentTarget;
+        try {
+            addReactionOnPost({
+                variables: { 
+                    user_id: userId,
+                    post_id: postId,
+                    reaction_type: Button.value
+                }
+            })
+        } catch (e) {
+            throw new Error('Unable to Add a Reaction')
+        }
+    }
+    const handleDeleteReaction = (e: React.MouseEvent<HTMLButtonElement>) => {
+        try {
+            deleteReactionOnPost({
+                variables: { 
+                    user_id: userId,
+                    post_id: postId
+                }
+            })
+        } catch (e) {
+            throw new Error('Unable to Delete a Reaction')
+        }
+    }
     return (
         <>
             {(!postId || !text || !userId || !postTime || loading || error || !data || !userProfile) ? (
@@ -105,6 +167,16 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                             {text}
                                         </Typography>
                                     </Box>
+                                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                        <Typography sx={{ fontSize: "15px", color: "#555", marginRight: '1rem' }}>
+                                            {likeList ? likeList.length : 0}
+                                            <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
+                                        </Typography>
+                                        <Typography sx={{ fontSize: "15px", color: "#555" }}>
+                                            {dislikeList ? dislikeList.length : 0}
+                                            <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
+                                        </Typography>
+                                    </Box>
                                 </Grid>
                             </Grid>
                             <Box
@@ -120,14 +192,24 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                 >
                                     <ChatBubbleOutlineIcon fontSize="small" />
                                 </IconButton>
-                                <IconButton onClick={() => console.log('hello world')} size="small">
-                                    <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
-                                    <FavoriteBorderIcon fontSize="small" />
-                                </IconButton>
-                                <IconButton size="small">
-                                    <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
-                                    <ThumbDownAltOutlinedIcon fontSize="small" />
-                                </IconButton>
+                                {(reactionsByUserAndPost && reactionsByUserAndPost.reaction_type === 'LIKE') ? (
+                                    <IconButton onClick={handleDeleteReaction} size="small">
+                                        <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
+                                    </IconButton>
+                                ) : (
+                                    <IconButton value='LIKE' size="small" onClick={handleAddReaction} >
+                                        <FavoriteBorderIcon fontSize="small" />
+                                    </IconButton>
+                                )}
+                                {(reactionsByUserAndPost && reactionsByUserAndPost.reaction_type === 'DISLIKE') ? (
+                                    <IconButton size="small" onClick={handleDeleteReaction}>
+                                        <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
+                                    </IconButton>
+                                ) : (
+                                    <IconButton  value='DISLIKE' size="small" onClick={handleAddReaction} >
+                                        <ThumbDownAltOutlinedIcon fontSize="small" />
+                                    </IconButton>
+                                )}
                                 <IconButton size="small">
                                     <IosShareIcon fontSize="small" />
                                 </IconButton>

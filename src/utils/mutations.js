@@ -191,3 +191,20 @@ export const DELETE_MESSAGE = gql`
     }
   }
 `;
+export const ADD_REACTION_POST = gql`
+  mutation addReactionOnPostMutation($reaction_type: String!, $user_id: ID!, $post_id: ID!) {
+    addReactionOnPost(reaction_type: $reaction_type, user_id: $user_id, post_id: $post_id) {
+      id
+      reaction_type
+      post_id
+      user_id
+    }
+  }
+`;
+export const DELETE_REACTION_POST = gql`
+  mutation deleteReactionOnPostMutation($user_id: ID!, $post_id: ID!) {
+    deleteReactionOnPost(user_id: $user_id, post_id: $post_id) {
+      id
+    }
+  }
+`;

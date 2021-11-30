@@ -28,7 +28,7 @@ const CommentList = ({ postId }: postListProps) => {
     return (
         <>
             {error && (
-                <div>oops, there is no comment</div>
+                <div>No Comment</div>
             )}
             {loading && (
                 <div>It is loading</div>

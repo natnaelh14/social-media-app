@@ -1,13 +1,14 @@
 
 import React, { useState, MouseEvent } from "react";
-import { Button, Grid, Input, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, Grid, Input, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { Box } from "@mui/system";
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { useQuery, useMutation } from '@apollo/client';
-import { ADD_POST } from "../../utils/mutations";
+import { ADD_POST, UPDATE_USER_PROFILE } from "../../utils/mutations";
 import { userProps } from '../../index.types';
 import { QUERY_POSTS } from '../../utils/queries';
 import { listPosts } from '../../redux/actions/postActions';
+import { setCurrentUser } from '../../redux/actions/userActions';
 import AddPostLoading from './add_post_loading.component';
 
 const AddPost = () => {
@@ -18,8 +19,9 @@ const AddPost = () => {
   const userInfo: userProps = user
 
   const [postText, setPostText] = useState("");
-  const [mood, setMood] = useState<string>(userInfo.status)
-  const [addPost, { data }] = useMutation(ADD_POST);
+  const [mood, setMood] = useState<string>(userInfo?.status)
+  const [addPost, { }] = useMutation(ADD_POST);
+  const [updateProfile, { }] = useMutation(UPDATE_USER_PROFILE)
 
   const handleAddPost = async () => {
     try {
@@ -44,11 +46,20 @@ const AddPost = () => {
 
   }
 
-  // const handleChangeMood = async (e: Event & { target: { value: string} }) => {
-  //   setMood(e.target.value)
-  //   console.log(e.target.value)
-  // }
-  let test = true
+  const handleChangeMood = async (event: SelectChangeEvent<any>) => {
+    event.preventDefault();
+    try {
+      const updatedUser = await updateProfile({
+        variables: {
+          ...userInfo,
+          status: event.target.value
+        }
+      })
+      // await dispatch(setCurrentUser(updatedUser))
+    } catch (e) {
+      throw new Error('Unable to Update Profile')
+    }
+  }
 
   return (
     <>
@@ -85,7 +96,7 @@ const AddPost = () => {
                       id="demo-simple-select"
                       value={mood || ""}
                       variant="standard"
-                      onChange={(e) => setMood(e.target.value)}
+                      onChange={handleChangeMood}
                     >
                       <MenuItem value='HAPPY'>HAPPY 😀</MenuItem>
                       <MenuItem value='SAD'>SAD 😔</MenuItem>

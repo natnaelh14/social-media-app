@@ -21,7 +21,7 @@ const MessagePage = () => {
   }
 
   return (
-    <div style={{ width: '66%', margin: '20px' }}>
+    <div style={{ width: '75%', margin: '20px' }}>
       <Fade in={true} timeout={1000}>
         <div style={{ border: '1px solid #cdcdcd', height: "90vh", padding: '20px' }}>
           <Typography variant='h5' textAlign='center' >Messages</Typography>

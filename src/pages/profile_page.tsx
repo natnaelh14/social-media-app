@@ -14,6 +14,7 @@ import UpdateUserProfile from "../components/UpdateUserProfile/update_user_profi
 import { QUERY_FOLLOWERS, QUERY_FOLLOWINGS } from '../utils/queries';
 import { useQuery } from '@apollo/client';
 import FollowModal from "../components/FollowModal/follow_modal.component";
+import cover from '../img/cover.jpeg';
 
 const Profile = () => {
 
@@ -57,7 +58,7 @@ const Profile = () => {
     };
 
     return (
-        <div style={{ width: '66%', margin: '20px' }}>
+        <div style={{ width: '75%', margin: '20px' }}>
             {(loading && followerLoading && followingLoading) && (
                 <CircularProgress color="success" />
             )}
@@ -89,7 +90,7 @@ const Profile = () => {
                                     <img
                                         width="100%"
                                         height='300px'
-                                        src="https://res.cloudinary.com/doalzf6o2/image/upload/v1638070514/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall_ukmct5.jpg"
+                                        src={cover}
                                         alt="background"
                                     />
                                     <Box

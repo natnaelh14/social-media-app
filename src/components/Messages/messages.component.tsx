@@ -34,6 +34,7 @@ const Messages = () => {
   if (user && messagesId) {
     var userInfo: userProps = user
     var { loading: messageLoading, error: messageError, data } = useQuery(QUERY_MESSAGES, {
+      notifyOnNetworkStatusChange: true,
       variables: { sender_id: userInfo.id, receiver_id: messagesId }
     });
   }
@@ -62,7 +63,7 @@ const Messages = () => {
   }
 
   return (
-    <div style={{ width: '66%', margin: '20px' }}>
+    <div style={{ width: '75%', margin: '20px' }}>
       <Fade in={true} timeout={1000}>
         <div>
           {userProfile && (

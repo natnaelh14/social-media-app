@@ -119,6 +119,22 @@ export const DELETE_CRYPTO = gql`
     }
   }
 `;
+export const FRIEND_REQUEST = gql`
+  mutation followRequestMutation(
+    $sender_id: String!
+    $receiver_id: String!
+  ) {
+    followRequest(
+      sender_id: $sender_id
+      receiver_id: $receiver_id
+    ) {
+      id
+      sender_id
+      receiver_id
+      status
+    }
+  }
+`;
 
 export const UPDATE_FRIEND_REQUEST = gql`
   mutation RespondFollowRequestMutation(

@@ -7,12 +7,14 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Link as RouteLink } from "react-router-dom";
 import Post from "../Post/Post.component";
 import { useParams } from 'react-router-dom';
-import { QUERY_USER, QUERY_POSTS, QUERY_CHECK_FRIENDSHIP, QUERY_FOLLOWERS, QUERY_FOLLOWINGS } from '../../utils/queries';
-import { useQuery } from '@apollo/client';
+import { QUERY_USER, QUERY_POSTS, QUERY_CHECK_FRIENDSHIP, QUERY_FOLLOWERS, QUERY_FOLLOWINGS, QUERY_FRIEND_REQUEST } from '../../utils/queries';
+import { REMOVE_FOLLOWING, FRIEND_REQUEST } from '../../utils/mutations';
+import { useQuery, useMutation } from '@apollo/client';
 const Moment = require('moment')
 import { userProps } from "../../index.types";
 import CryptoDoughnut from "../CryptoDoughnut/crypto_doughnut.component";
 import { useAppSelector } from '../../app/hooks';
+import { GuestDataContainer } from './guest_profile.styles'
 
 const GuestProfile = () => {
     const { profileId } = useParams<{ profileId: string | undefined }>();
@@ -50,147 +52,201 @@ const GuestProfile = () => {
                 followed: profileId
             }
         })
+        var { data: checkFriendRequestData } = useQuery(QUERY_FRIEND_REQUEST, {
+            variables: {
+                sender_id: userInfo.id,
+                receiver_id: profileId
+            }
+        })
+    }
+
+    const [removeFollowing, { }] = useMutation(REMOVE_FOLLOWING)
+    const handleRemoveFollowing = async () => {
+        try {
+            await removeFollowing({
+                variables: {
+                    follower_user_id: userInfo.id,
+                    followed_user_id: profileId
+                }
+            })
+        } catch (e) {
+            return e;
+        }
+    }
+    const [followRequest, { }] = useMutation(FRIEND_REQUEST)
+    const handleFollowRequest = async () => {
+        try {
+            await followRequest({
+                variables: {
+                    sender_id: userInfo.id,
+                    receiver_id: profileId
+                }
+            })
+        } catch (e) {
+            return e;
+        }
     }
 
     return (
-        <div style={{ width: '66%', margin: '20px' }}>
+        <div style={{ width: '75%', margin: '20px' }}>
             {(loading || error) && (
                 <CircularProgress color="success" />
             )}
             {(userData?.userProfile) && (
                 <Fade in={true} timeout={1000}>
                     <div style={{ padding: '20px' }}>
-                        <>
-                            <Box borderBottom="1px solid #ccc" padding="8px 20px">
-                                <Grid container alignItems="center">
-                                    <Grid item sx={{ mr: "10px" }}>
-                                        <RouteLink to="/">
-                                            <IconButton>
-                                                <ArrowBackIcon />
-                                            </IconButton>
-                                        </RouteLink>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography variant="h6">
-                                            {userData?.userProfile?.handle}
-                                        </Typography>
-                                        <Typography sx={{ fontSize: "12px", color: "#555" }}>
-                                            {postsData?.posts ? postsData?.posts.length : 0} posts
-                                        </Typography>{" "}
-                                    </Grid>
+                        <Box borderBottom="1px solid #ccc" padding="8px 20px">
+                            <Grid container alignItems="center">
+                                <Grid item sx={{ mr: "10px" }}>
+                                    <RouteLink to="/">
+                                        <IconButton>
+                                            <ArrowBackIcon />
+                                        </IconButton>
+                                    </RouteLink>
                                 </Grid>
-                            </Box>
-                            <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                <Box pr='1.5rem'>
-                                    <Box padding="10px 20px" display="flex" alignItems="center" sx={{ flexDirection: 'column' }}>
-                                        <img width="100px" src={userData?.userProfile?.avatar} alt="profile" />
-                                        {checkFriendData?.checkFriendship ? (
-                                            <Button
-                                                onClick={() => console.log('Hello THere')}
-                                                size="small"
-                                                sx={{
-                                                    textTransform: "capitalize",
-                                                    padding: "6px 20px",
-                                                    marginTop: '5px',
-                                                    background: "black",
-                                                    "&:hover": {
-                                                        background: "#333",
-                                                    },
-                                                }}
-                                                variant="contained"
-                                            >
-                                                Follow
-                                            </Button>
-                                        ) : (
-                                            <Button
-                                                onClick={() => console.log('Hello THere')}
-                                                size="small"
-                                                sx={{
-                                                    textTransform: "capitalize",
-                                                    padding: "6px 20px",
-                                                    marginTop: '5px',
-                                                    background: "black",
-                                                    "&:hover": {
-                                                        background: "#333",
-                                                    },
-                                                }}
-                                                variant="contained"
-                                            >
-                                                Unfollow
-                                            </Button>
-                                        )}
-                                        <Typography textAlign='center' variant="h6" sx={{ fontWeight: "500" }}>
-                                            {userData?.userProfile?.handle}
-                                        </Typography>
-                                        <Typography textAlign='center' sx={{ fontSize: "14px", color: "#555" }}>
-                                            @{userData?.userProfile?.handle.trim().toLowerCase()}
-                                        </Typography>
-                                        <Box display="flex">
-                                            <LocationOnIcon htmlColor="#555" />
-                                            <Typography sx={{ ml: "6px", color: "#555" }}>
-                                                {userData?.userProfile?.city}, {userData?.userProfile?.state}, {userData?.userProfile?.country}
-                                            </Typography>
-                                        </Box>
-                                        <Box display="flex">
-                                            <DateRangeIcon htmlColor="#555" />
-                                            <Typography sx={{ ml: "6px", color: "#555" }}>
-                                                {Moment(userData?.userProfile?.birth_date).format('MMMM Do YYYY')}
-                                            </Typography>
-                                        </Box>
-                                    </Box>
-                                    <Box padding="0px 0px">
-                                        <Typography fontSize="16px" color="#333" padding="10px 0">
-                                            {userData?.userProfile?.bio}
-                                        </Typography>
-
-                                        <Box display="flex" marginTop='1rem'>
-                                            <Typography color="#555" marginRight="1rem">
-                                                <strong style={{ color: "black" }}>
-                                                    {`${followingData?.followings.length} `}
-                                                </strong>
-                                                Following
-                                            </Typography>
-                                            <Typography color="#555" marginRight="1rem">
-                                                <strong style={{ color: "black" }}>
-                                                    {`${followerData?.followers.length} `}
-                                                </strong>
-                                                Followers
-                                            </Typography>
-                                        </Box>
-                                        <Box display="flex" marginTop='1rem'>
-                                            <Typography color="#555" marginRight="1rem">Member Since {Moment(userData?.userProfile?.created_at).format('YYYY')}</Typography>
-                                        </Box>
-                                    </Box>
-
-                                </Box>
-                                <Box>
-                                    {userData?.userProfile?.id && (
-                                        <CryptoDoughnut currentUser={userData?.userProfile?.id} />
-                                    )}
-                                </Box>
-                            </div>
-                            <Box sx={{ overflowY: "scroll" }} >
-                                <Box borderBottom="1px solid #ccc">
-                                    <Typography
-                                        display="inline-block"
-                                        variant="caption"
-                                        fontSize="16px"
-                                        marginX="1rem"
-                                        padding="6px 0"
-                                        fontWeight="500"
-                                        borderBottom={`4px solid black`}
-                                    >
-                                        Posts
+                                <Grid item>
+                                    <Typography variant="h6">
+                                        {userData?.userProfile?.handle}
                                     </Typography>
-                                </Box >
-                                {postsData?.posts &&
-                                    postsData?.posts.map((post: any) => {
-                                        return <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />
-                                    }
-                                    )
-                                }
+                                    <Typography sx={{ fontSize: "12px", color: "#555" }}>
+                                        {postsData?.posts ? postsData?.posts.length : 0} posts
+                                    </Typography>{" "}
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        <GuestDataContainer>
+                            <Box pr='1.5rem'>
+                                <Box padding="10px 20px" display="flex" alignItems="center" sx={{ flexDirection: 'column' }}>
+                                    <img width="100px" src={userData?.userProfile?.avatar} alt="profile" />
+                                    {checkFriendData?.checkFriendship && (
+                                        <Button
+                                            onClick={handleRemoveFollowing}
+                                            size="small"
+                                            sx={{
+                                                textTransform: "capitalize",
+                                                padding: "6px 20px",
+                                                marginTop: '5px',
+                                                background: "black",
+                                                "&:hover": {
+                                                    background: "#333",
+                                                },
+                                            }}
+                                            variant="contained"
+                                        >
+                                            UNFOLLOW
+                                        </Button>
+                                    )}
+                                    {(checkFriendRequestData?.friendRequest?.status === "PENDING") && (
+                                        <Button
+                                            size="small"
+                                            disabled={true}
+                                            sx={{
+                                                textTransform: "capitalize",
+                                                padding: "6px 20px",
+                                                marginTop: '5px',
+                                                background: "black",
+                                                "&:hover": {
+                                                    background: "#333",
+                                                },
+                                            }}
+                                            variant="contained"
+                                        >
+                                            PENDING
+                                        </Button>
+                                    )}
+                                    {(checkFriendRequestData?.friendRequest?.status === "BLOCKED") && (
+                                        <div></div>
+                                    )}
+                                    {(!(checkFriendData?.checkFriendship) && !(checkFriendRequestData?.friendRequest)) && (
+                                        <Button
+                                            size="small"
+                                            onClick={handleFollowRequest}
+                                            sx={{
+                                                textTransform: "capitalize",
+                                                padding: "6px 20px",
+                                                marginTop: '5px',
+                                                background: "black",
+                                                "&:hover": {
+                                                    background: "#333",
+                                                },
+                                            }}
+                                            variant="contained"
+                                        >
+                                            FOLLOW
+                                        </Button>
+                                    )}
+
+                                    <Typography textAlign='center' variant="h6" sx={{ fontWeight: "500" }}>
+                                        {userData?.userProfile?.handle}
+                                    </Typography>
+                                    <Typography textAlign='center' sx={{ fontSize: "14px", color: "#555" }}>
+                                        @{userData?.userProfile?.handle.trim().toLowerCase()}
+                                    </Typography>
+                                    <Box display="flex">
+                                        <LocationOnIcon htmlColor="#555" />
+                                        <Typography textAlign='center' sx={{ ml: "6px", color: "#555" }}>
+                                            {userData?.userProfile?.city}, {userData?.userProfile?.state}, {userData?.userProfile?.country}
+                                        </Typography>
+                                    </Box>
+                                    <Box display="flex">
+                                        <DateRangeIcon htmlColor="#555" />
+                                        <Typography sx={{ ml: "6px", color: "#555" }}>
+                                            {Moment(userData?.userProfile?.birth_date).format('MMMM Do YYYY')}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                                <Box padding="0px 0px">
+                                    <Typography fontSize="16px" color="#333" padding="10px 0">
+                                        {userData?.userProfile?.bio}
+                                    </Typography>
+
+                                    <Box display="flex" marginTop='0.25rem'>
+                                        <Typography color="#555" marginRight="1rem">
+                                            <strong style={{ color: "black" }}>
+                                                {`${followingData?.followings.length} `}
+                                            </strong>
+                                            Following
+                                        </Typography>
+                                        <Typography color="#555" marginRight="1rem">
+                                            <strong style={{ color: "black" }}>
+                                                {`${followerData?.followers.length} `}
+                                            </strong>
+                                            Followers
+                                        </Typography>
+                                    </Box>
+                                    <Box display="flex" marginTop='0.25rem'>
+                                        <Typography color="#555" marginRight="1rem">Member Since {Moment(userData?.userProfile?.created_at).format('YYYY')}</Typography>
+                                    </Box>
+                                </Box>
+
                             </Box>
-                        </>
+                            <Box>
+                                {(userData?.userProfile?.id && checkFriendData?.checkFriendship) && (
+                                    <CryptoDoughnut currentUser={userData?.userProfile?.id} />
+                                )}
+                            </Box>
+                        </GuestDataContainer>
+                        <Box sx={{ overflowY: "scroll" }} >
+                            <Box borderBottom="1px solid #ccc">
+                                <Typography
+                                    display="inline-block"
+                                    variant="caption"
+                                    fontSize="16px"
+                                    marginX="1rem"
+                                    padding="6px 0"
+                                    fontWeight="500"
+                                    borderBottom={`4px solid black`}
+                                >
+                                    Posts
+                                </Typography>
+                            </Box >
+                            {(postsData?.posts && checkFriendData?.checkFriendship) &&
+                                postsData?.posts.map((post: any) => {
+                                    return <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />
+                                }
+                                )
+                            }
+                        </Box>
                     </div>
                 </Fade>
             )}

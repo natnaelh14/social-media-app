@@ -50,7 +50,7 @@ const SingleMessage = ({ msgId, senderId, sentAt, text }: MsgProps) => {
     setAnchorEl(e.currentTarget);
   };
   const handleClose = () => {
-      setAnchorEl(null);
+    setAnchorEl(null);
   };
 
   return (
@@ -72,7 +72,9 @@ const SingleMessage = ({ msgId, senderId, sentAt, text }: MsgProps) => {
         >
           <Grid container flexWrap="nowrap">
             <Grid item sx={{ paddingRight: "1rem" }}>
-              <Avatar alt="logo" src={userProfile.avatar} />
+              <RouteLink to={`/home/profile/${userProfile.id}`}>
+                <Avatar alt="logo" src={userProfile.avatar} />
+              </RouteLink>
             </Grid>
             <Box width='100%' >
               <Grid

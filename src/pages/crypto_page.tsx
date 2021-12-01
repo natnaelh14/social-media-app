@@ -12,8 +12,19 @@ import { useAppSelector } from '../app/hooks';
 import { useQuery } from '@apollo/client';
 import { QUERY_CRYPTOS } from '../utils/queries';
 import TwitterPostList from '../components/TwitterPostList/twitter_post_list.component';
+import { CryptoDataContainer } from './styles/crypto_page.styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+    const useStyles = makeStyles(theme => ({
+        carouselFormat: {
+            width: '500px',
+            height: '500px'
+        }
+    }))
 
 const CryptoPage = () => {
+
+    const classes = useStyles();
 
     const currentUser = useAppSelector(state => state.currentUser)
     const { loading, user } = currentUser
@@ -43,18 +54,19 @@ const CryptoPage = () => {
     };
 
     return (
-        <div style={{ width: '66%', margin: '20px' }}>
+        <div style={{ width: '75%', margin: '20px' }}>
             <Fade in={true} timeout={1000}>
                 <Box sx={{ border: '1px solid #cdcdcd', padding: '20px' }} >
                     {(loading && cryptoLoading) ? (
                         <div>Crypto is Loading</div>
                     ) : (
                         <>
-                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                            <CryptoDataContainer>
                                 <Box>
                                     <Grid item padding="1rem 1rem 1rem 1rem" width='350px' height='450px' border="5px solid #ccc">
                                         <Carousel
                                             fullHeightHover={false}
+                                            className='classes.carouselFormat'
                                             NextIcon={<SkipNextIcon />}
                                             PrevIcon={<SkipPreviousIcon />}
                                         >
@@ -67,8 +79,9 @@ const CryptoPage = () => {
                                     </Grid>
                                 </Box>
                                 <Box>
-                                    <CryptoDoughnut currentUser={userInfo.id} />                                </Box>
-                            </div>
+                                    <CryptoDoughnut currentUser={userInfo.id} />
+                                </Box>
+                            </CryptoDataContainer>
                             <Box textAlign="right" padding="10px 20px">
                                 <Button
                                     size="small"

@@ -87,6 +87,16 @@ export const QUERY_FRIEND_REQUESTS = gql`
   }
 `;
 
+export const QUERY_FRIEND_REQUEST = gql`
+  query getFriendRequest($receiver_id: String!, $sender_id: String!) {
+    friendRequest(receiver_id: $receiver_id, sender_id: $sender_id) {
+      id
+      sender_id
+      receiver_id
+      status
+    }
+  }
+`;
 
 export const QUERY_FOLLOWERS = gql`
   query getFollowers($id: ID!) {

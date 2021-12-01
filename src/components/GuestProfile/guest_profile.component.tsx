@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import { Button, CircularProgress, Grid, IconButton, Typography, Fade } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -11,9 +11,17 @@ import { QUERY_USER, QUERY_POSTS } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
 const Moment = require('moment')
 import { userProps } from "../../index.types";
+import CryptoDoughnut from "../CryptoDoughnut/crypto_doughnut.component";
 
 const GuestProfile = () => {
     const { profileId } = useParams<{ profileId: string | undefined }>();
+    // const [postArrays, setPostArrays] = useState<Array<{
+    //     id: number,
+    //     user_id: string,
+    //     text: string,
+    //     created_at: Date
+    // }>
+    // >([])
     if (profileId) {
         var { loading, error, data } = useQuery(QUERY_USER, {
             variables: {
@@ -24,39 +32,49 @@ const GuestProfile = () => {
     if (data) {
         var { userProfile }: { userProfile: userProps } = data;
     }
-    var postArray: Array<{
-        id: number,
-        user_id: string,
-        text: string,
-        created_at: Date
-    }> = []
-    if (userProfile) {
-        var { loading: postLoading, error: postError, data: postData } = useQuery(QUERY_POSTS, {
-            variables: {
-                user_id: userProfile.id
-            },
-        });
-    }
-    if (postData) {
-        var { posts } = postData;
-        var postArray: Array<{
-            id: number,
-            user_id: string,
-            text: string,
-            created_at: Date
-        }> = posts
-    }
+    // if (userProfile) {
+    //     var { loading: postLoading, error: postError, data: postData } = useQuery(QUERY_POSTS, {
+    //         variables: {
+    //             user_id: userProfile.id
+    //         },
+    //     });
+    // }
+    // if (postData) {
+    //     var { posts } = postData;
+    //     setPostArrays([...posts])
+    // }
     // [...posts].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
+    // useEffect(() => {
+    // }, [postData])
+    // var postArray: Array<{
+    //     id: number,
+    //     user_id: string,
+    //     text: string,
+    //     created_at: Date
+    // }> = []
+    // if (postData) {
+    //     var { posts } = postData;
+    //     var postArray: Array<{
+    //         id: number,
+    //         user_id: string,
+    //         text: string,
+    //         created_at: Date
+    //     }> = posts
+    // }
+
+    // useEffect(() => {
+    //     // console.log('meow', userProfile.id)
+    // }, [userProfile])
 
     return (
         <div style={{ width: '66%', margin: '20px' }}>
-            {loading && (
+            {(loading || error) && (
                 <CircularProgress color="success" />
             )}
-            {(userProfile && postData) && (
+            {(userProfile) && (
                 <Fade in={true} timeout={1000}>
                     <div style={{ padding: '20px' }}>
-                        <Box>
+                        <>
                             <Box borderBottom="1px solid #ccc" padding="8px 20px">
                                 <Grid container alignItems="center">
                                     <Grid item sx={{ mr: "10px" }}>
@@ -71,94 +89,83 @@ const GuestProfile = () => {
                                             {userProfile.handle}
                                         </Typography>
                                         <Typography sx={{ fontSize: "12px", color: "#555" }}>
-                                            120 posts
+                                            {/* {postArray ? postArray.length : 0} posts */}
+                                            0 posts
                                         </Typography>{" "}
                                     </Grid>
                                 </Grid>
                             </Box>
-                            <Box height="90vh" sx={{ overflowY: "scroll" }}>
-                                <Box position="relative">
-                                    <img
-                                        width="100%"
-                                        src="https://res.cloudinary.com/doalzf6o2/image/upload/v1636321862/587_cfth76.jpg"
-                                        alt="background"
-                                    />
-                                    <Box
-                                        sx={{
-                                            position: "absolute",
-                                            top: 120,
-                                            left: 15,
-                                            background: "#eee",
-                                            borderRadius: "50%",
-                                        }}
-                                    >
-                                        <img width="150px" src={userProfile.avatar} alt="profile" />
-                                    </Box>
-                                </Box>
-                                <Box textAlign="right" padding="10px 20px">
-                                    <Button
-                                        onClick={() => console.log('Hello THere')}
-                                        size="small"
-                                        sx={{
-                                            textTransform: "capitalize",
-                                            padding: "6px 20px",
-                                            background: "black",
-                                            "&:hover": {
-                                                background: "#333",
-                                            },
-                                        }}
-                                        variant="contained"
-                                    >
-                                        Follow
-                                    </Button>
-                                </Box>
-                                <Box padding="10px 20px">
-                                    <Typography variant="h6" sx={{ fontWeight: "500" }}>
-                                        {userProfile.handle}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: "14px", color: "#555" }}>
-                                        {/* @{userInfo.handle.trim().toLowerCase()} */}
-                                    </Typography>
-                                    <Typography fontSize="16px" color="#333" padding="10px 0">
-                                        {userProfile.bio}
-                                    </Typography>
-                                    <Box
-                                        display="flex"
-                                        alignItems="center"
-                                        padding="6px 0"
-                                        flexWrap="wrap"
-                                    >
+                            <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                <Box pr='1.5rem'>
+                                    <Box padding="10px 20px" display="flex" alignItems="center" sx={{ flexDirection: 'column' }}>
+                                        <img width="100px" src={userProfile.avatar} alt="profile" />
+                                        <Button
+                                            onClick={() => console.log('Hello THere')}
+                                            size="small"
+                                            sx={{
+                                                textTransform: "capitalize",
+                                                padding: "6px 20px",
+                                                marginTop: '5px',
+                                                background: "black",
+                                                "&:hover": {
+                                                    background: "#333",
+                                                },
+                                            }}
+                                            variant="contained"
+                                        >
+                                            Follow
+                                        </Button>
+                                        <Typography textAlign='center' variant="h6" sx={{ fontWeight: "500" }}>
+                                            {userProfile.handle}
+                                        </Typography>
+                                        <Typography textAlign='center' sx={{ fontSize: "14px", color: "#555" }}>
+                                            @{userProfile.handle.trim().toLowerCase()}
+                                        </Typography>
                                         <Box display="flex">
                                             <LocationOnIcon htmlColor="#555" />
                                             <Typography sx={{ ml: "6px", color: "#555" }}>
                                                 {userProfile.city}, {userProfile.state}, {userProfile.country}
                                             </Typography>
                                         </Box>
-                                        <Box display="flex" marginLeft="1rem">
+                                        <Box display="flex">
                                             <DateRangeIcon htmlColor="#555" />
                                             <Typography sx={{ ml: "6px", color: "#555" }}>
                                                 {Moment(userProfile.birth_date).format('MMMM Do YYYY')}
                                             </Typography>
                                         </Box>
                                     </Box>
-                                    <Box display="flex" marginTop='1rem'>
-                                        <Typography color="#555" marginRight="1rem">
-                                            <strong style={{ color: "black" }}>
-                                                100
-                                            </strong>
-                                            Following
+                                    <Box padding="0px 0px">
+                                        <Typography fontSize="16px" color="#333" padding="10px 0">
+                                            {userProfile.bio}
                                         </Typography>
-                                        <Typography color="#555" marginRight="1rem">
-                                            <strong style={{ color: "black" }}>
-                                                100
-                                            </strong>
-                                            Followers
-                                        </Typography>
+
+                                        <Box display="flex" marginTop='1rem'>
+                                            <Typography color="#555" marginRight="1rem">
+                                                <strong style={{ color: "black" }}>
+                                                    100
+                                                </strong>
+                                                Following
+                                            </Typography>
+                                            <Typography color="#555" marginRight="1rem">
+                                                <strong style={{ color: "black" }}>
+                                                    100
+                                                </strong>
+                                                Followers
+                                            </Typography>
+                                        </Box>
+                                        <Box display="flex" marginTop='1rem'>
+                                            <Typography color="#555" marginRight="1rem">Member Since {Moment(userProfile.created_at).format('YYYY')}</Typography>
+                                        </Box>
                                     </Box>
-                                    <Box display="flex" marginTop='1rem'>
-                                        <Typography color="#555" marginRight="1rem">Member Since {Moment(userProfile.created_at).format('YYYY')}</Typography>
-                                    </Box>
+
                                 </Box>
+                                <Box>
+                                    {userProfile.id && (
+                                        <CryptoDoughnut currentUser={userProfile.id} />
+                                    )}
+                                </Box>
+                            </div>
+                            <Box sx={{ overflowY: "scroll" }} >
                                 <Box borderBottom="1px solid #ccc">
                                     <Typography
                                         display="inline-block"
@@ -171,18 +178,15 @@ const GuestProfile = () => {
                                     >
                                         Posts
                                     </Typography>
-                                </Box>
-                                {postLoading && (
-                                    <CircularProgress color="success" />
-                                )}
-                                {postArray &&
+                                </Box >
+                                {/* {postArray &&
                                     postArray.map((post) => {
                                         return <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />
                                     }
                                     )
-                                }
+                                } */}
                             </Box>
-                        </Box>
+                        </>
                     </div>
                 </Fade>
             )}

@@ -108,6 +108,12 @@ export const QUERY_FOLLOWINGS = gql`
   }
 `;
 
+export const QUERY_CHECK_FRIENDSHIP = gql`
+  query getCheckFriendship($follower: String!, $followed: String!) {
+    checkFriendship(follower: $follower, followed: $followed)
+  }
+`;
+
 export const QUERY_TWEETS = gql`
   query getTwitterSearch($keyword: String!) {
     twitterSearch(keyword: $keyword)

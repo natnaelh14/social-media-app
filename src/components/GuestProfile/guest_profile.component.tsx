@@ -7,71 +7,57 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Link as RouteLink } from "react-router-dom";
 import Post from "../Post/Post.component";
 import { useParams } from 'react-router-dom';
-import { QUERY_USER, QUERY_POSTS } from '../../utils/queries';
+import { QUERY_USER, QUERY_POSTS, QUERY_CHECK_FRIENDSHIP, QUERY_FOLLOWERS, QUERY_FOLLOWINGS } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
 const Moment = require('moment')
 import { userProps } from "../../index.types";
 import CryptoDoughnut from "../CryptoDoughnut/crypto_doughnut.component";
+import { useAppSelector } from '../../app/hooks';
 
 const GuestProfile = () => {
     const { profileId } = useParams<{ profileId: string | undefined }>();
-    // const [postArrays, setPostArrays] = useState<Array<{
-    //     id: number,
-    //     user_id: string,
-    //     text: string,
-    //     created_at: Date
-    // }>
-    // >([])
+    const currentUser = useAppSelector(state => state.currentUser)
+    const { error: currentUserError, loading: currentUserLoading, user } = currentUser
+    const userInfo: userProps = user
+
     if (profileId) {
-        var { loading, error, data } = useQuery(QUERY_USER, {
+        var { loading, error, data: userData } = useQuery(QUERY_USER, {
             variables: {
                 id: profileId
             },
         });
+        var { loading: postsLoading, error: postsError, data: postsData } = useQuery(QUERY_POSTS, {
+            variables: {
+                user_id: profileId
+            },
+        });
+        var { loading: followerLoading, data: followerData } = useQuery(QUERY_FOLLOWERS, {
+            variables: {
+                id: userInfo.id
+            }
+        });
+        var { loading: followingLoading, data: followingData } = useQuery(QUERY_FOLLOWINGS, {
+            variables: {
+                id: userInfo.id
+            }
+        });
     }
-    if (data) {
-        var { userProfile }: { userProfile: userProps } = data;
-    }
-    // if (userProfile) {
-    //     var { loading: postLoading, error: postError, data: postData } = useQuery(QUERY_POSTS, {
-    //         variables: {
-    //             user_id: userProfile.id
-    //         },
-    //     });
-    // }
-    // if (postData) {
-    //     var { posts } = postData;
-    //     setPostArrays([...posts])
-    // }
-    // [...posts].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
-    // useEffect(() => {
-    // }, [postData])
-    // var postArray: Array<{
-    //     id: number,
-    //     user_id: string,
-    //     text: string,
-    //     created_at: Date
-    // }> = []
-    // if (postData) {
-    //     var { posts } = postData;
-    //     var postArray: Array<{
-    //         id: number,
-    //         user_id: string,
-    //         text: string,
-    //         created_at: Date
-    //     }> = posts
-    // }
 
-    // useEffect(() => {
-    //     // console.log('meow', userProfile.id)
-    // }, [userProfile])
+    if (profileId && userInfo) {
+        var { data: checkFriendData } = useQuery(QUERY_CHECK_FRIENDSHIP, {
+            variables: {
+                follower: userInfo.id,
+                followed: profileId
+            }
+        })
+    }
 
     return (
         <div style={{ width: '66%', margin: '20px' }}>
             {(loading || error) && (
                 <CircularProgress color="success" />
             )}
-            {(userProfile) && (
+            {(userData?.userProfile) && (
                 <Fade in={true} timeout={1000}>
                     <div style={{ padding: '20px' }}>
                         <>
@@ -86,11 +72,10 @@ const GuestProfile = () => {
                                     </Grid>
                                     <Grid item>
                                         <Typography variant="h6">
-                                            {userProfile.handle}
+                                            {userData?.userProfile?.handle}
                                         </Typography>
                                         <Typography sx={{ fontSize: "12px", color: "#555" }}>
-                                            {/* {postArray ? postArray.length : 0} posts */}
-                                            0 posts
+                                            {postsData?.posts ? postsData?.posts.length : 0} posts
                                         </Typography>{" "}
                                     </Grid>
                                 </Grid>
@@ -98,70 +83,89 @@ const GuestProfile = () => {
                             <div style={{ display: 'flex', flexDirection: 'row' }}>
                                 <Box pr='1.5rem'>
                                     <Box padding="10px 20px" display="flex" alignItems="center" sx={{ flexDirection: 'column' }}>
-                                        <img width="100px" src={userProfile.avatar} alt="profile" />
-                                        <Button
-                                            onClick={() => console.log('Hello THere')}
-                                            size="small"
-                                            sx={{
-                                                textTransform: "capitalize",
-                                                padding: "6px 20px",
-                                                marginTop: '5px',
-                                                background: "black",
-                                                "&:hover": {
-                                                    background: "#333",
-                                                },
-                                            }}
-                                            variant="contained"
-                                        >
-                                            Follow
-                                        </Button>
+                                        <img width="100px" src={userData?.userProfile?.avatar} alt="profile" />
+                                        {checkFriendData?.checkFriendship ? (
+                                            <Button
+                                                onClick={() => console.log('Hello THere')}
+                                                size="small"
+                                                sx={{
+                                                    textTransform: "capitalize",
+                                                    padding: "6px 20px",
+                                                    marginTop: '5px',
+                                                    background: "black",
+                                                    "&:hover": {
+                                                        background: "#333",
+                                                    },
+                                                }}
+                                                variant="contained"
+                                            >
+                                                Follow
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onClick={() => console.log('Hello THere')}
+                                                size="small"
+                                                sx={{
+                                                    textTransform: "capitalize",
+                                                    padding: "6px 20px",
+                                                    marginTop: '5px',
+                                                    background: "black",
+                                                    "&:hover": {
+                                                        background: "#333",
+                                                    },
+                                                }}
+                                                variant="contained"
+                                            >
+                                                Unfollow
+                                            </Button>
+                                        )}
                                         <Typography textAlign='center' variant="h6" sx={{ fontWeight: "500" }}>
-                                            {userProfile.handle}
+                                            {userData?.userProfile?.handle}
                                         </Typography>
                                         <Typography textAlign='center' sx={{ fontSize: "14px", color: "#555" }}>
-                                            @{userProfile.handle.trim().toLowerCase()}
+                                            @{userData?.userProfile?.handle.trim().toLowerCase()}
                                         </Typography>
                                         <Box display="flex">
                                             <LocationOnIcon htmlColor="#555" />
                                             <Typography sx={{ ml: "6px", color: "#555" }}>
-                                                {userProfile.city}, {userProfile.state}, {userProfile.country}
+                                                {userData?.userProfile?.city}, {userData?.userProfile?.state}, {userData?.userProfile?.country}
                                             </Typography>
                                         </Box>
                                         <Box display="flex">
                                             <DateRangeIcon htmlColor="#555" />
                                             <Typography sx={{ ml: "6px", color: "#555" }}>
-                                                {Moment(userProfile.birth_date).format('MMMM Do YYYY')}
+                                                {Moment(userData?.userProfile?.birth_date).format('MMMM Do YYYY')}
                                             </Typography>
                                         </Box>
                                     </Box>
                                     <Box padding="0px 0px">
                                         <Typography fontSize="16px" color="#333" padding="10px 0">
-                                            {userProfile.bio}
+                                            {userData?.userProfile?.bio}
                                         </Typography>
 
                                         <Box display="flex" marginTop='1rem'>
                                             <Typography color="#555" marginRight="1rem">
                                                 <strong style={{ color: "black" }}>
-                                                    100
+                                                    {`${followingData?.followings.length} `}
                                                 </strong>
                                                 Following
                                             </Typography>
                                             <Typography color="#555" marginRight="1rem">
                                                 <strong style={{ color: "black" }}>
-                                                    100
+                                                    {`${followerData?.followers.length} `}
                                                 </strong>
                                                 Followers
                                             </Typography>
                                         </Box>
                                         <Box display="flex" marginTop='1rem'>
-                                            <Typography color="#555" marginRight="1rem">Member Since {Moment(userProfile.created_at).format('YYYY')}</Typography>
+                                            <Typography color="#555" marginRight="1rem">Member Since {Moment(userData?.userProfile?.created_at).format('YYYY')}</Typography>
                                         </Box>
                                     </Box>
 
                                 </Box>
                                 <Box>
-                                    {userProfile.id && (
-                                        <CryptoDoughnut currentUser={userProfile.id} />
+                                    {userData?.userProfile?.id && (
+                                        <CryptoDoughnut currentUser={userData?.userProfile?.id} />
                                     )}
                                 </Box>
                             </div>
@@ -179,12 +183,12 @@ const GuestProfile = () => {
                                         Posts
                                     </Typography>
                                 </Box >
-                                {/* {postArray &&
-                                    postArray.map((post) => {
+                                {postsData?.posts &&
+                                    postsData?.posts.map((post: any) => {
                                         return <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />
                                     }
                                     )
-                                } */}
+                                }
                             </Box>
                         </>
                     </div>

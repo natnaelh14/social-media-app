@@ -1,5 +1,5 @@
 import { Typography, useTheme } from "@mui/material";
-import { Button, Grid, Link } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { NavLink } from "react-router-dom";
@@ -17,7 +17,9 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
     <Box margin="1rem 0">
       <Grid container alignItems="center">
         <Grid item sx={{ paddingRight: "12px" }}>
-          <img src={avatar} width="50px" alt="logo" />
+          <NavLink to={`/home/profile/${id}`}>
+            <img src={avatar} width="50px" alt="logo" />
+          </NavLink>
         </Grid>
         <Grid item>
           <Grid container alignItems="center">

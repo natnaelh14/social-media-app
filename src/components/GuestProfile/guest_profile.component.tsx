@@ -5,6 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Link as RouteLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Post from "../Post/Post.component";
 import { useParams } from 'react-router-dom';
 import { QUERY_USER, QUERY_POSTS, QUERY_CHECK_FRIENDSHIP, QUERY_FOLLOWERS, QUERY_FOLLOWINGS, QUERY_FRIEND_REQUEST } from '../../utils/queries';
@@ -17,11 +18,14 @@ import { useAppSelector } from '../../app/hooks';
 import { GuestDataContainer } from './guest_profile.styles'
 
 const GuestProfile = () => {
+    const history = useHistory();
     const { profileId } = useParams<{ profileId: string | undefined }>();
     const currentUser = useAppSelector(state => state.currentUser)
     const { error: currentUserError, loading: currentUserLoading, user } = currentUser
     const userInfo: userProps = user
-
+    if(profileId === userInfo.id) {
+        history.push("/home/profile");
+    }
     if (profileId) {
         var { loading, error, data: userData } = useQuery(QUERY_USER, {
             variables: {
@@ -46,6 +50,9 @@ const GuestProfile = () => {
     }
 
     if (profileId && userInfo) {
+        // if(profileId === userInfo.id) {
+        //     history.push("/home/profile");
+        // }
         var { data: checkFriendData } = useQuery(QUERY_CHECK_FRIENDSHIP, {
             variables: {
                 follower: userInfo.id,

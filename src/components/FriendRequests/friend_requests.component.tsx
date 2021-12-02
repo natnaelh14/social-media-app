@@ -5,6 +5,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_FRIEND_REQUESTS } from '../../utils/queries';
 import { useAppSelector } from "../../app/hooks";
 import FriendRequestBoxLoading from '../FriendRequestBox/friend_request_box_loading.component';
+import { FriendRequestsContainer } from './friend_request.styles';
 import { Box } from "@mui/system";
 type userProps = {
     id: string,
@@ -29,7 +30,7 @@ const FriendRequests = () => {
         var friendRequestsData = data.friendRequests
     }
     return (
-        <div style={{ width: '75%', margin: '20px' }}>
+        <FriendRequestsContainer>
             <Fade in={true} timeout={1000}>
                 <div style={{ border: '1px solid #cdcdcd', height: "90vh", padding: '20px' }}>
                     <Typography variant='h5' textAlign='center' >Friend Requests</Typography>
@@ -57,7 +58,7 @@ const FriendRequests = () => {
 
                 </div>
             </Fade>
-        </div>
+        </FriendRequestsContainer>
     )
 }
 

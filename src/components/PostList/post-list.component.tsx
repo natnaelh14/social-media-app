@@ -21,7 +21,7 @@ const PostList: React.FC = () => {
 
   return (
     <PostListContainer>
-      {/* <Fade in={true} timeout={1000}> */}
+      <Fade in={true} timeout={1000}>
         <div style={{ border: '1px solid #cdcdcd', padding: '20px' }}>
           {postsData && (
             <>
@@ -32,7 +32,7 @@ const PostList: React.FC = () => {
             </>
           )}
         </div>
-      {/* </Fade> */}
+      </Fade>
     </PostListContainer>
   )
 }

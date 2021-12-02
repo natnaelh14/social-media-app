@@ -41,6 +41,7 @@
     "react-loading-skeleton": "^3.0.1",
     "react-material-ui-carousel": "^3.0.4",
     "react-number-format": "^4.8.0",
+    "react-placeholder": "^4.1.0",
     "react-redux": "^7.2.6",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",

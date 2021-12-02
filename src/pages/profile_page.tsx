@@ -15,15 +15,17 @@ import { QUERY_FOLLOWERS, QUERY_FOLLOWINGS } from '../utils/queries';
 import { useQuery } from '@apollo/client';
 import FollowModal from "../components/FollowModal/follow_modal.component";
 import cover from '../img/cover.jpeg';
+import { ProfileContainer } from './styles/profile_page.styles';
+import ProfilePageLoading from './loading/profile_page.loading';
 
 const Profile = () => {
 
     const currentUser = useAppSelector(state => state.currentUser)
-    const { loading, user } = currentUser
+    const { error: currentUserError, loading: currentUserLoading, user } = currentUser
     const userInfo: userProps = user
 
     const postList = useAppSelector((state) => state.postList)
-    const { posts } = postList
+    const { error: postsError, loading: postsLoading, posts } = postList
     let postData: Array<{
         id: number,
         user_id: string,
@@ -32,12 +34,12 @@ const Profile = () => {
     }> = posts
     let postsData = [...postData].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
 
-    const { loading: followerLoading, data: followerData } = useQuery(QUERY_FOLLOWERS, {
+    const { error: followerError, loading: followerLoading, data: followerData } = useQuery(QUERY_FOLLOWERS, {
         variables: {
             id: userInfo.id
         }
     });
-    const { loading: followingLoading, data: followingData } = useQuery(QUERY_FOLLOWINGS, {
+    const { error: followingError, loading: followingLoading, data: followingData } = useQuery(QUERY_FOLLOWINGS, {
         variables: {
             id: userInfo.id
         }
@@ -57,10 +59,12 @@ const Profile = () => {
         setOpenFollowerModal(false)
     };
 
+    let pending = currentUserLoading || followerLoading || followingLoading || postsLoading || followingError || followerError || postsError || currentUserError
+
     return (
-        <div style={{ width: '75%', margin: '20px' }}>
-            {(loading && followerLoading && followingLoading) && (
-                <CircularProgress color="success" />
+        <ProfileContainer>
+            {(pending) && (
+                <ProfilePageLoading />
             )}
             {(userInfo && followerData && followingData) && (
                 <Fade in={true} timeout={1000}>
@@ -237,7 +241,7 @@ const Profile = () => {
                     action='Remove'
                 />
             )}
-        </div>
+        </ProfileContainer>
     );
 }
 

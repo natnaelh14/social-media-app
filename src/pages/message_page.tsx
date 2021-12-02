@@ -7,6 +7,7 @@ import { QUERY_MESSENGERS, QUERY_MESSAGES } from '../utils/queries';
 import { userProps } from '../index.types';
 import { useAppSelector } from '../app/hooks';
 import MessageBoxLoading from '../components/MessageBox/message_box_loading.component';
+import { MessagesContainer } from './styles/message_page.styles';
 
 const MessagePage = () => {
 
@@ -21,7 +22,7 @@ const MessagePage = () => {
   }
 
   return (
-    <div style={{ width: '75%', margin: '20px' }}>
+    <MessagesContainer>
       <Fade in={true} timeout={1000}>
         <div style={{ border: '1px solid #cdcdcd', height: "90vh", padding: '20px' }}>
           <Typography variant='h5' textAlign='center' >Messages</Typography>
@@ -47,7 +48,7 @@ const MessagePage = () => {
           </Box>
         </div>
       </Fade>
-    </div>
+    </MessagesContainer>
   )
 }
 

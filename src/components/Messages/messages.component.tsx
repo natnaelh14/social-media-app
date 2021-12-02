@@ -17,6 +17,7 @@ import { ADD_MESSAGE } from '../../utils/mutations';
 import SingleMessageLoading from "./SingleMessage/single_message_loading.component";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { MessagesContainer } from './messages.styles';
 
 const Messages = () => {
   const { messagesId } = useParams<{ messagesId: string | undefined }>();
@@ -63,7 +64,7 @@ const Messages = () => {
   }
 
   return (
-    <div style={{ width: '75%', margin: '20px' }}>
+    <MessagesContainer>
       <Fade in={true} timeout={1000}>
         <div>
           {userProfile && (
@@ -130,7 +131,7 @@ const Messages = () => {
         </div>
 
       </Fade>
-    </div>
+    </MessagesContainer>
   )
 }
 

@@ -12,12 +12,12 @@ import { useAppSelector } from '../app/hooks';
 import { useQuery } from '@apollo/client';
 import { QUERY_CRYPTOS } from '../utils/queries';
 import TwitterPostList from '../components/TwitterPostList/twitter_post_list.component';
-import { CryptoDataContainer, CryptoDoughnutContainer, CryptoCarouselContainer } from './styles/crypto_page.styles';
+import { CryptoPageContainer, CryptoDataContainer, CryptoDoughnutContainer, CryptoCarouselContainer } from './styles/crypto_page.styles';
 import { makeStyles } from '@material-ui/core/styles';
 
     const useStyles = makeStyles(theme => ({
         carouselFormat: {
-            width: '500px',
+            width: '300px',
             height: '500px'
         }
     }))
@@ -37,12 +37,7 @@ const CryptoPage = () => {
     })
     if (data) {
         var { cryptoByUserId } = data;
-        // console.log('jim', cryptoByUserId.crypto_name)
     }
-
-    // useEffect(() => {
-    //     console.log('jim', cryptoByUserId)
-    // }, [data])
 
     const [openModal, setOpenModal] = React.useState(false);
 
@@ -54,7 +49,7 @@ const CryptoPage = () => {
     };
 
     return (
-        <div style={{ width: '75%', margin: '20px' }}>
+        <CryptoPageContainer>
             <Fade in={true} timeout={1000}>
                 <Box sx={{ border: '1px solid #cdcdcd', padding: '20px' }} >
                     {(loading && cryptoLoading) ? (
@@ -66,7 +61,7 @@ const CryptoPage = () => {
                                     <Grid item padding="1rem 1rem 1rem 1rem" width='350px' height='450px' border="5px solid #ccc">
                                         <Carousel
                                             fullHeightHover={false}
-                                            className='classes.carouselFormat'
+                                            className={classes.carouselFormat}
                                             NextIcon={<SkipNextIcon />}
                                             PrevIcon={<SkipPreviousIcon />}
                                         >
@@ -130,7 +125,7 @@ const CryptoPage = () => {
                     userId='chG0WmOFPheLzl528legA3iIpbO2'
                 />
             )}
-        </div>
+        </CryptoPageContainer>
 
 
     )

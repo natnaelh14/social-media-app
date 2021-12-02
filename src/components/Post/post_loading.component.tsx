@@ -28,7 +28,7 @@ const PostLoading = () => {
                             >
                                 <Grid item>
                                     <Box display="flex">
-                                        <Skeleton count={4} width={400} />
+                                        <Skeleton count={3} width={500} />
                                     </Box>
                                 </Grid>
                             </Grid>

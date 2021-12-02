@@ -11,12 +11,12 @@ import PostList from "../components/PostList/post-list.component";
 import AddPost from "../components/AddPost/add-post.component";
 import { FeedContainer } from "./Router.styles";
 import { setCurrentUser } from '../redux/actions/userActions';
-import { listPosts } from '../redux/actions/postActions'
+import { listPosts, listPostsByFollowing } from '../redux/actions/postActions'
 import { getCurrentUser } from '../redux/user.selectors';
 import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
 import { gql } from "@apollo/client";
 import { client } from '../index';
-import { QUERY_USER } from '../utils/queries';
+import { QUERY_USER, QUERY_POSTS_BY_FOLLOWING } from '../utils/queries';
 import GuestProfile from "../components/GuestProfile/guest_profile.component";
 import ProfilePage from "../pages/profile_page";
 import CryptoPage from '../pages/crypto_page';
@@ -31,6 +31,7 @@ type MyProps = {
   setCurrentUser: any;
   listPosts: any;
   currentUser: any;
+  listPostsByFollowing: any;
 };
 
 const QUERY_POSTS = gql`
@@ -61,7 +62,7 @@ class Routes extends Component<MyProps, {}> {
   unsubscribeFromAuth: any = null;
 
   componentDidMount = () => {
-    const { listPosts, setCurrentUser } = this.props;
+    const { listPosts, listPostsByFollowing, setCurrentUser } = this.props;
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       // userAuth returns null when auth.signOut() is called
@@ -98,6 +99,13 @@ class Routes extends Component<MyProps, {}> {
             }
           })
           listPosts(postsData)
+          const { data: { postsByFollowing: postsDataByFollowing } } = await client.query({
+            query: QUERY_POSTS_BY_FOLLOWING,
+            variables: {
+              user_id: userAuth.uid
+            }
+          })
+          listPostsByFollowing(postsDataByFollowing)
           const { data: { userProfile } } = await client.query({
             query: QUERY_USER,
             variables: {
@@ -182,7 +190,8 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   setCurrentUser: (user: any) => dispatch(setCurrentUser(user)),
-  listPosts: (posts: any) => dispatch(listPosts(posts))
+  listPosts: (posts: any) => dispatch(listPosts(posts)),
+  listPostsByFollowing: (posts: any) => dispatch(listPostsByFollowing(posts))
 });
 
 export default connect(

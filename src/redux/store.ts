@@ -1,13 +1,14 @@
 import thunk from "redux-thunk";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { postListReducer } from './reducers/postReducers';
+import { postListReducer, postListByFollowingReducer } from './reducers/postReducers';
 import { currentUserReducer } from './reducers/userReducers';
 
 
 const reducer = combineReducers({
   postList: postListReducer,
-  currentUser: currentUserReducer
+  currentUser: currentUserReducer,
+  postListByFollowing: postListByFollowingReducer
 });
 
 const initialState = {};

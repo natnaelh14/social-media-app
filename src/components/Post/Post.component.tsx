@@ -32,7 +32,9 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
             id: userId
         },
     });
-    const { userProfile } = data;
+    if (data) {
+        var { userProfile } = data;
+    }
     const { data: likeData } = useQuery(QUERY_REACTIONS_BY_POST, {
         variables: {
             reaction_type: 'LIKE',

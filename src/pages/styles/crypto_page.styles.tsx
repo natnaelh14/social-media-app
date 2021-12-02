@@ -9,3 +9,17 @@ export const CryptoDataContainer = styled.div`
     justify-content: center;
   }
 `;
+
+export const CryptoDoughnutContainer = styled.div`
+@media (max-width: 1400px) {
+  display: flex;
+  justify-content: center;
+}
+`;
+
+export const CryptoCarouselContainer = styled.div`
+@media (max-width: 1400px) {
+  display: flex;
+  justify-content: center;
+}
+`;

@@ -135,6 +135,7 @@ const LeftSidebar = () => {
               </ListItemIcon>
               <Hidden lgDown>
                 <ListItemText
+                  // sx={{ minWidth: '0'}}
                   primaryTypographyProps={{
                     fontSize: "18px",
                   }}

@@ -12,7 +12,7 @@ import { useAppSelector } from '../app/hooks';
 import { useQuery } from '@apollo/client';
 import { QUERY_CRYPTOS } from '../utils/queries';
 import TwitterPostList from '../components/TwitterPostList/twitter_post_list.component';
-import { CryptoDataContainer } from './styles/crypto_page.styles';
+import { CryptoDataContainer, CryptoDoughnutContainer, CryptoCarouselContainer } from './styles/crypto_page.styles';
 import { makeStyles } from '@material-ui/core/styles';
 
     const useStyles = makeStyles(theme => ({
@@ -62,7 +62,7 @@ const CryptoPage = () => {
                     ) : (
                         <>
                             <CryptoDataContainer>
-                                <Box>
+                                <CryptoCarouselContainer>
                                     <Grid item padding="1rem 1rem 1rem 1rem" width='350px' height='450px' border="5px solid #ccc">
                                         <Carousel
                                             fullHeightHover={false}
@@ -77,10 +77,10 @@ const CryptoPage = () => {
                                             )}
                                         </Carousel>
                                     </Grid>
-                                </Box>
-                                <Box>
+                                </CryptoCarouselContainer>
+                                <CryptoDoughnutContainer>
                                     <CryptoDoughnut currentUser={userInfo.id} />
-                                </Box>
+                                </CryptoDoughnutContainer>
                             </CryptoDataContainer>
                             <Box textAlign="right" padding="10px 20px">
                                 <Button

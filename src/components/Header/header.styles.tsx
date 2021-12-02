@@ -8,6 +8,9 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 25px;
   position: relative;
+  @media (max-width: 1400px) {
+    margin-bottom: 0px;
+  }
 `;
 
 export const LogoContainer = styled(Link)`

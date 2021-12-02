@@ -15,7 +15,7 @@ const Moment = require('moment')
 import { userProps } from "../../index.types";
 import CryptoDoughnut from "../CryptoDoughnut/crypto_doughnut.component";
 import { useAppSelector } from '../../app/hooks';
-import { GuestDataContainer } from './guest_profile.styles'
+import { GuestDataContainer, CryptoCarouselContainer, GuestUserInfoContainer, UserBioContainer } from './guest_profile.styles'
 
 const GuestProfile = () => {
     const history = useHistory();
@@ -122,7 +122,7 @@ const GuestProfile = () => {
                             </Grid>
                         </Box>
                         <GuestDataContainer>
-                            <Box pr='1.5rem'>
+                            <GuestUserInfoContainer>
                                 <Box padding="10px 20px" display="flex" alignItems="center" sx={{ flexDirection: 'column' }}>
                                     <img width="100px" src={userData?.userProfile?.avatar} alt="profile" />
                                     {checkFriendData?.checkFriendship && (
@@ -202,11 +202,10 @@ const GuestProfile = () => {
                                         </Typography>
                                     </Box>
                                 </Box>
-                                <Box padding="0px 0px">
+                                <UserBioContainer>
                                     <Typography fontSize="16px" color="#333" padding="10px 0">
                                         {userData?.userProfile?.bio}
                                     </Typography>
-
                                     <Box display="flex" marginTop='0.25rem'>
                                         <Typography color="#555" marginRight="1rem">
                                             <strong style={{ color: "black" }}>
@@ -222,16 +221,15 @@ const GuestProfile = () => {
                                         </Typography>
                                     </Box>
                                     <Box display="flex" marginTop='0.25rem'>
-                                        <Typography color="#555" marginRight="1rem">Member Since {Moment(userData?.userProfile?.created_at).format('YYYY')}</Typography>
+                                        <Typography color="#555">Member Since {Moment(userData?.userProfile?.created_at).format('YYYY')}</Typography>
                                     </Box>
-                                </Box>
-
-                            </Box>
-                            <Box>
+                                </UserBioContainer>
+                            </GuestUserInfoContainer>
+                            <CryptoCarouselContainer>
                                 {(userData?.userProfile?.id && checkFriendData?.checkFriendship) && (
                                     <CryptoDoughnut currentUser={userData?.userProfile?.id} />
                                 )}
-                            </Box>
+                            </CryptoCarouselContainer>
                         </GuestDataContainer>
                         <Box sx={{ overflowY: "scroll" }} >
                             <Box borderBottom="1px solid #ccc">

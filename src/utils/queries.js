@@ -11,6 +11,17 @@ export const QUERY_POSTS = gql`
   }
 `;
 
+export const QUERY_POSTS_BY_FOLLOWING = gql`
+  query getPostsByFollowing($user_id: ID!) {
+    postsByFollowing(user_id: $user_id) {
+      id
+      user_id
+      text
+      created_at
+    }
+  }
+`;
+
 export const QUERY_COMMENTS = gql`
   query getComments($post_id: ID!) {
     comments(post_id: $post_id) {

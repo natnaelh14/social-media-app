@@ -9,8 +9,8 @@ import { PostListContainer } from './post_list.styles'
 
 const PostList: React.FC = () => {
 
-  const postList = useAppSelector((state) => state.postList)
-  const { posts, loading } = postList
+  const postListByFollowing = useAppSelector((state) => state.postListByFollowing)
+  const { posts, loading } = postListByFollowing
   let postData: Array<{
     id: number,
     user_id: string,

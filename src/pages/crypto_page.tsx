@@ -15,12 +15,12 @@ import TwitterPostList from '../components/TwitterPostList/twitter_post_list.com
 import { CryptoPageContainer, CryptoDataContainer, CryptoDoughnutContainer, CryptoCarouselContainer } from './styles/crypto_page.styles';
 import { makeStyles } from '@material-ui/core/styles';
 
-    const useStyles = makeStyles(theme => ({
-        carouselFormat: {
-            width: '300px',
-            height: '500px'
-        }
-    }))
+const useStyles = makeStyles(theme => ({
+    carouselFormat: {
+        width: '300px',
+        height: '500px'
+    }
+}))
 
 const CryptoPage = () => {
 
@@ -87,12 +87,12 @@ const CryptoPage = () => {
                                         background: "black",
                                         "&:hover": {
                                             background: "#333",
+                                            fontFamily: 'inherit'
                                         },
                                     }}
                                     variant="contained"
-
                                 >
-                                    Add/Modify Crypto
+                                    ADD/MODIFY CRYPTO
                                 </Button>
                             </Box>
                             <Box borderBottom="1px solid #ccc">
@@ -103,26 +103,28 @@ const CryptoPage = () => {
                                     marginX="1rem"
                                     padding="6px 0"
                                     fontWeight="500"
+                                    fontFamily='inherit'
                                     borderBottom={`4px solid black`}
                                 >
-                                    Twitter Feed
+                                    TWITTER FEED
                                 </Typography>
                             </Box>
                             <Box height="90vh" sx={{ overflowY: "scroll" }}>
-                                <TwitterPostList cryptoName={'bitcoin'} />
-                                <TwitterPostList cryptoName={'ethereum'} />
-                                <TwitterPostList cryptoName={'ripple'} />
+                                {cryptoByUserId && (
+                                    cryptoByUserId.map((crypto: any) => {
+                                        return <TwitterPostList key={crypto.id} cryptoName={crypto.crypto_name} />
+                                    })
+                                )}
                             </Box>
                         </>
                     )}
-
                 </Box>
             </Fade>
             {openModal && (
                 <AddModifyCrypto
                     open={openModal}
                     handleClose={handleModalClose}
-                    userId='chG0WmOFPheLzl528legA3iIpbO2'
+                    userId={userInfo.id}
                 />
             )}
         </CryptoPageContainer>

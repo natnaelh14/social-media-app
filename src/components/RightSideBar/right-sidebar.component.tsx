@@ -3,7 +3,6 @@ import { Search } from "@mui/icons-material";
 import { Input, Typography, CircularProgress, Hidden } from "@mui/material";
 import { Box } from "@mui/system";
 import WhoToFollow from "../WhoToFollow/who-to-follow.component";
-import DummyWhoToFollow from '../DummyWhoToFollow/dummy_who-to-follow.component';
 import { QUERY_USERS_LIST, QUERY_WHO_TO_FOLLOW_USERS } from "../../utils/queries";
 import { useQuery } from '@apollo/client';
 import { useAppSelector } from "../../app/hooks";
@@ -77,7 +76,7 @@ const RightSidebar = () => {
               minHeight: '600px'
             }}
           >
-            <Typography variant="h6" textAlign='center' sx={{ fontWeight: "bold" }}>
+            <Typography fontFamily='inherit' variant="h6" textAlign='center' sx={{ fontWeight: "bold" }}>
               Who to follow
             </Typography>
             {(searchText && usersArray) && (

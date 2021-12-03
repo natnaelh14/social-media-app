@@ -24,7 +24,7 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
         <Grid item>
           <Grid container alignItems="center">
             <Grid item>
-              <Typography sx={{ fontSize: "13px", fontWeight: "500" }}>
+              <Typography fontFamily='inherit' sx={{ fontSize: "13px", fontWeight: "500" }}>
                 {handle}
               </Typography>
               {/* <Typography
@@ -43,6 +43,8 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
                 sx={{
                   borderRadius: theme.shape.borderRadius,
                   textTransform: "capitalize",
+                  fontFamily: 'inherit',
+                  fontSize: '10px',
                   mt: "4px",
                   background: "black",
                   "&:hover": {
@@ -51,7 +53,7 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
                 }}
                 variant="contained"
               >
-                Follow
+                FOLLOW
               </Button>
             </Grid>
           </Grid>

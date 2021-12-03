@@ -53,8 +53,9 @@ const LeftSidebar = () => {
                 <ListItemText
                   primaryTypographyProps={{
                     fontSize: "18px",
+                    fontFamily: 'inherit'
                   }}
-                  primary="Home"
+                  primary="HOME"
                 />
               </Hidden>
             </ListItem>
@@ -109,8 +110,9 @@ const LeftSidebar = () => {
                 <ListItemText
                   primaryTypographyProps={{
                     fontSize: "18px",
+                    fontFamily: 'inherit'
                   }}
-                  primary="Cryptocurrency"
+                  primary="CRYPTO"
                 />
               </Hidden>
             </ListItem>
@@ -138,8 +140,9 @@ const LeftSidebar = () => {
                   // sx={{ minWidth: '0'}}
                   primaryTypographyProps={{
                     fontSize: "18px",
+                    fontFamily: 'inherit'
                   }}
-                  primary="Friend Requests"
+                  primary="FRIEND REQUESTS"
                 />
               </Hidden>
             </ListItem>
@@ -195,8 +198,9 @@ const LeftSidebar = () => {
                 <ListItemText
                   primaryTypographyProps={{
                     fontSize: "18px",
+                    fontFamily: 'inherit'
                   }}
-                  primary="Messages"
+                  primary="MESSAGES"
                 />
               </Hidden>
             </ListItem>
@@ -253,8 +257,9 @@ const LeftSidebar = () => {
                 <ListItemText
                   primaryTypographyProps={{
                     fontSize: "18px",
+                    fontFamily: 'inherit'
                   }}
-                  primary="Profile"
+                  primary="PROFILE"
                 />
               </Hidden>
             </ListItem>
@@ -267,6 +272,7 @@ const LeftSidebar = () => {
               sx={{
                 borderRadius: "28px",
                 padding: "10px",
+                fontFamily: 'inherit',
                 background: "black",
                 "&:hover": {
                   background: "#333",

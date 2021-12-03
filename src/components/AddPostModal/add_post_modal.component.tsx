@@ -40,7 +40,7 @@ const AddPostModal = ({
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
       <DialogTitle>
-        <Typography textAlign='center' style={{ fontSize: '20px' }}>ADD POST</Typography>
+        <Typography fontFamily='inherit' textAlign='center' style={{ fontSize: '20px' }}>ADD POST</Typography>
         <Box textAlign="right" borderBottom="1px solid #ccc">
           <IconButton onClick={handleClose}>
             <CloseIcon />
@@ -63,7 +63,7 @@ const AddPostModal = ({
                   disableUnderline
                   type="text"
                   placeholder="What's happening?"
-                  sx={{ width: "100%" }}
+                  sx={{ width: "100%", fontFamily: 'inherit' }}
                 />
               </Box>
             </Grid>

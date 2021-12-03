@@ -25,7 +25,7 @@ const MessagePage = () => {
     <MessagesContainer>
       <Fade in={true} timeout={1000}>
         <div style={{ border: '1px solid #cdcdcd', height: "90vh", padding: '20px' }}>
-          <Typography variant='h5' textAlign='center' >Messages</Typography>
+          <Typography fontFamily='inherit' variant='h5' textAlign='center' >Messages</Typography>
           <Box
             paddingBottom=".5rem"
             paddingTop=".5rem"

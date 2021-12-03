@@ -71,7 +71,7 @@ const CryptoUpdateInput = ({ name, holding, cryptoId }: cryptoProps) => {
                     // '& > :not(style)': { m: 1 },
                 }}>
                     <img src={image ? image : CoinImage} height='25' width='25' alt='crypto-image' />
-                    <Typography ml='0.5rem'>{name.toUpperCase()}</Typography>
+                    <Typography fontFamily='inherit' ml='0.5rem'>{name.toUpperCase()}</Typography>
                     <Box sx={{ position: 'absolute', left: '50%', display: 'flex', flexDirection: 'row' }}>
                         <FormControl sx={{ m: 0.25, maxWidth: 150 }}>
                             <OutlinedInput
@@ -83,7 +83,7 @@ const CryptoUpdateInput = ({ name, holding, cryptoId }: cryptoProps) => {
                                 type="number"
                             />
                         </FormControl>
-                        <Typography ml='0.5rem' display='flex' alignItems='center' > = ${(holding * currentPrice).toLocaleString()}</Typography>
+                        <Typography fontFamily='inherit' ml='0.5rem' display='flex' alignItems='center' > = ${(holding * currentPrice).toLocaleString()}</Typography>
                     </Box>
                     <Box display='flex' sx={{ flexDirection: 'row', marginLeft: 'auto' }} >
                         <IconButton onClick={handleCryptoUpdate}>

@@ -81,10 +81,10 @@ const SingleMessage = ({ msgId, senderId, sentAt, text }: MsgProps) => {
                 width='100%'
               >
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
-                  <Typography sx={{ fontSize: "15px", color: "#555" }}>
+                  <Typography fontFamily='inherit' sx={{ fontSize: "15px", color: "#555" }}>
                     {userProfile.handle}
                   </Typography>
-                  <Typography sx={{ marginLeft: 'auto', fontSize: "15px", color: "#555" }}>
+                  <Typography fontFamily='inherit' sx={{ marginLeft: 'auto', fontSize: "15px", color: "#555" }}>
                     {Moment(sentAt).format('llll')}
                   </Typography>
                   <Grid item>
@@ -114,13 +114,13 @@ const SingleMessage = ({ msgId, senderId, sentAt, text }: MsgProps) => {
                           handleDeletePost();
                         }}
                       >
-                        Delete
+                        DELETE
                       </MenuItem>
                     </Menu>
                   </Grid>
                 </Box>
                 <Box>
-                  <Typography sx={{ fontSize: "15px", color: "#555" }}>
+                  <Typography fontFamily='inherit' sx={{ fontSize: "15px", color: "#555" }}>
                     {text}
                   </Typography>
                 </Box>

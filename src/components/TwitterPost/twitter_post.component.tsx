@@ -26,14 +26,14 @@ const TwitterPost: React.FC<{ text: string }> = ({ text }) => {
                             >
                                 <Grid item>
                                     <Box display="flex">
-                                        <Typography
+                                        <Typography fontFamily='inherit'
                                             sx={{ fontSize: "15px", mr: "10px", color: "#555" }}
                                         >
                                             @twitter-user
                                         </Typography>
                                     </Box>
                                     <Box>
-                                        <Typography sx={{ fontSize: "15px", color: "#555" }}>
+                                        <Typography fontFamily='inherit' sx={{ fontSize: "15px", color: "#555" }}>
                                             {text}
                                         </Typography>
                                     </Box>

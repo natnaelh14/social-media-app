@@ -80,10 +80,10 @@ const Profile = () => {
                                         </RouteLink>
                                     </Grid>
                                     <Grid item>
-                                        <Typography variant="h6">
+                                        <Typography fontFamily='inherit' variant="h6">
                                             {userInfo.handle}
                                         </Typography>
-                                        <Typography sx={{ fontSize: "12px", color: "#555" }}>
+                                        <Typography fontFamily='inherit' sx={{ fontSize: "12px", color: "#555" }}>
                                             {postsData ? postsData.length : 0} posts
                                         </Typography>{" "}
                                     </Grid>
@@ -117,6 +117,7 @@ const Profile = () => {
                                             textTransform: "capitalize",
                                             padding: "6px 20px",
                                             background: "black",
+                                            fontFamily: 'inherit',
                                             "&:hover": {
                                                 background: "#333",
                                             },
@@ -124,17 +125,17 @@ const Profile = () => {
                                         variant="contained"
 
                                     >
-                                        Update
+                                        UPDATE
                                     </Button>
                                 </Box>
                                 <Box padding="10px 20px">
-                                    <Typography variant="h6" sx={{ fontWeight: "500" }}>
+                                    <Typography fontFamily='inherit' variant="h6" sx={{ fontWeight: "500" }}>
                                         {userInfo.handle}
                                     </Typography>
-                                    <Typography sx={{ fontSize: "14px", color: "#555" }}>
+                                    <Typography fontFamily='inherit' sx={{ fontSize: "14px", color: "#555" }}>
                                         @{userInfo.handle.trim().toLowerCase()}
                                     </Typography>
-                                    <Typography fontSize="16px" color="#333" padding="10px 0">
+                                    <Typography fontFamily='inherit' fontSize="16px" color="#333" padding="10px 0">
                                         {userInfo.bio}
                                     </Typography>
                                     <Box
@@ -145,13 +146,13 @@ const Profile = () => {
                                     >
                                         <Box display="flex">
                                             <LocationOnIcon htmlColor="#555" />
-                                            <Typography sx={{ ml: "6px", color: "#555" }}>
+                                            <Typography fontFamily='inherit' sx={{ ml: "6px", color: "#555" }}>
                                                 {userInfo.city}, {userInfo.state}, {userInfo.country}
                                             </Typography>
                                         </Box>
                                         <Box display="flex" marginLeft="1rem">
                                             <DateRangeIcon htmlColor="#555" />
-                                            <Typography sx={{ ml: "6px", color: "#555" }}>
+                                            <Typography fontFamily='inherit' sx={{ ml: "6px", color: "#555" }}>
                                                 {Moment(userInfo.birth_date).format('MMMM Do YYYY')}
                                             </Typography>
                                         </Box>
@@ -168,7 +169,7 @@ const Profile = () => {
                                                 },
                                             }}
                                         >
-                                            <Typography color="#555" marginRight="1rem">
+                                            <Typography fontFamily='inherit' color="#555" marginRight="1rem">
                                                 <strong style={{ color: "black" }}>
                                                     {`${followings.length} `}
                                                 </strong>
@@ -185,7 +186,7 @@ const Profile = () => {
                                                 },
                                             }}
                                         >
-                                            <Typography color="#555" marginRight="1rem">
+                                            <Typography fontFamily='inherit' color="#555" marginRight="1rem">
                                                 <strong style={{ color: "black" }}>
                                                     {`${followers.length} `}
                                                 </strong>
@@ -194,7 +195,7 @@ const Profile = () => {
                                         </Box>
                                     </Box>
                                     <Box display="flex" marginTop='1rem'>
-                                        <Typography color="#555" marginRight="1rem">Member Since {Moment(userInfo.created_at).format('YYYY')}</Typography>
+                                        <Typography fontFamily='inherit' color="#555" marginRight="1rem">Member Since {Moment(userInfo.created_at).format('YYYY')}</Typography>
                                     </Box>
                                 </Box>
                                 <Box borderBottom="1px solid #ccc">
@@ -205,9 +206,10 @@ const Profile = () => {
                                         marginX="1rem"
                                         padding="6px 0"
                                         fontWeight="500"
+                                        fontFamily='inherit'
                                         borderBottom={`4px solid black`}
                                     >
-                                        Posts
+                                        POSTS
                                     </Typography>
                                 </Box>
                                 <Box>

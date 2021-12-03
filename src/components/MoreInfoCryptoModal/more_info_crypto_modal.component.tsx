@@ -36,19 +36,19 @@ const MoreInfoCryptoModal = ({ open, handleClose, coinRank, coinAllTime, coinSup
                 <Box pb='0.5rem' mb='1rem' borderBottom="1px solid #ccc">
                     <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                         <img width='75' height='75' src={coinImage} alt='coinImage' />
-                        <Typography fontFamily='inherit' style={{ fontSize: '20px' }}>{coinName.toUpperCase()} - {coinSymbol.toUpperCase()}</Typography>
+                        <Typography fontFamily='inherit' style={{ fontSize: '25px' }}>{coinName.toUpperCase()} - {coinSymbol.toUpperCase()}</Typography>
                     </Box>
                 </Box>
                 <Box>
-                    <Typography fontFamily='inherit' mb='0.75rem' textAlign='justify' style={{ fontSize: '15px' }}><b>Description:</b> {coinDescription}</Typography>
-                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>White Paper:</b> <a target="_blank" style={{ textDecoration: 'none' }} href={coinWhitePaper}>{coinWhitePaper}</a></Typography>
-                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>Coin Structure:</b> {coinStructure}</Typography>
-                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>Coin Proof:</b> {coinProof}</Typography>
-                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>Coin Ranking:</b> ${coinRank.toLocaleString()}</Typography>
-                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>Market Cap:</b> ${coinMarketCap.toLocaleString()}</Typography>
-                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>Current Price:</b> ${coinCurrentPrice.toLocaleString()}</Typography>
-                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>All Time High:</b> ${coinAllTime.toLocaleString()}</Typography>
-                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>Circulating Supply:</b> {coinSupply.toLocaleString()}</Typography>
+                    <Typography fontFamily='inherit' mb='0.75rem' textAlign='justify' style={{ fontSize: '15px' }}><b>DESCRIPTION:</b> {coinDescription}</Typography>
+                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>WHITE PAPER:</b> <a target="_blank" style={{ textDecoration: 'none' }} href={coinWhitePaper}>{coinWhitePaper}</a></Typography>
+                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>COIN STRUCTURE:</b> {coinStructure}</Typography>
+                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>COIN PROOF:</b> {coinProof}</Typography>
+                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>COIN RANK:</b> {coinRank.toLocaleString()}</Typography>
+                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>MARKET CAP:</b> ${coinMarketCap.toLocaleString()}</Typography>
+                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>CURRENT PRICE:</b> ${coinCurrentPrice.toLocaleString()}</Typography>
+                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>ALL TIME HIGH:</b> ${coinAllTime.toLocaleString()}</Typography>
+                    <Typography fontFamily='inherit' mb='0.75rem' sx={{ fontSize: '15px' }}><b>CIRCULATING SUPPLY:</b> {coinSupply.toLocaleString()}</Typography>
                 </Box>
             </DialogContent>
             <DialogActions style={{ display: 'flex', justifyContent: 'center' }}>

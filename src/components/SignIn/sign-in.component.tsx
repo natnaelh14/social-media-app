@@ -11,7 +11,7 @@ import coinImage from './coin.jpeg';
 function Copyright() {
   return (
     <Typography style={{fontFamily: 'inherit'}} variant="body2" color="textSecondary" align="center">
-      {"Copyright © Crypto Connect "}
+      {"Copyright © Crypto Connect Natnael Haile "}
       {new Date().getFullYear()}
       {"."}
     </Typography>

@@ -52,9 +52,12 @@ const MessageBox = ({ msgId, msgHandle, msgAvatar, currentUser }: MessageProps) 
               >
                 <Grid width='100%'
                 >
-                  <Box sx={{  width: '100%', display: 'flex', flexDirection: 'row', justifyContent: "space-around" }}>
+                  <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: "space-around" }}>
                     <Typography fontFamily='inherit' sx={{ fontSize: "15px", color: "#555" }}>
                       {msgHandle}
+                    </Typography>
+                    <Typography ml='0.25rem' fontFamily='inherit' sx={{ fontSize: "15px", color: "#555" }}>
+                      @{msgHandle.trim().toLowerCase()}
                     </Typography>
                     <Typography fontFamily='inherit' sx={{ marginLeft: 'auto', fontSize: "15px", color: "#555" }}>
                       Seen
@@ -64,14 +67,14 @@ const MessageBox = ({ msgId, msgHandle, msgAvatar, currentUser }: MessageProps) 
                     {messages && (
                       <Typography fontFamily='inherit'
                         sx={{
-                          fontSize: "15px", 
+                          fontSize: "15px",
                           color: "#555",
                           display: '-webkit-box',
                           overflow: 'hidden',
                           WebkitBoxOrient: 'vertical',
                           WebkitLineClamp: 1,
-                      }}
-                        >
+                        }}
+                      >
                         {messages[messages.length - 1].text}
                       </Typography>
                     )}

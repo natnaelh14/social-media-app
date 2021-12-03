@@ -60,7 +60,7 @@ const UpdateUserProfile = ({
         );
         var avatarUrl = resumeRes.data.secure_url
       }
-                                                                             const { data } = await updateUserProfile({
+      const { data } = await updateUserProfile({
         variables: {
           id: userInfo.id,
           handle: userInfo.handle,
@@ -86,7 +86,7 @@ const UpdateUserProfile = ({
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
       <DialogTitle>
-        <Typography textAlign='center' style={{ fontSize: '20px' }}>Update Profile</Typography>
+        <Typography fontFamily='inherit' textAlign='center' style={{ fontSize: '20px' }}>Update Profile</Typography>
         <Box textAlign="right" borderBottom="1px solid #ccc">
           <IconButton onClick={handleClose}>
             <CloseIcon />
@@ -102,10 +102,10 @@ const UpdateUserProfile = ({
               sx={{ width: 80, height: 80, margin: 'auto' }}
               src={userInfo.avatar}
             />
-            <Typography textAlign='center' component="h1" variant="h6">
+            <Typography fontFamily='inherit' textAlign='center' component="h1" variant="h6">
               Natnael Haile
             </Typography>
-            <Typography textAlign='center' component="p" variant="subtitle2">
+            <Typography fontFamily='inherit' textAlign='center' component="p" variant="subtitle2">
               @natnaelhaile
             </Typography>
             <form noValidate>
@@ -115,6 +115,7 @@ const UpdateUserProfile = ({
                 minRows={3}
                 fullWidth
                 id="bio"
+                sx={{ fontFamily: 'inherit' }}
                 label="Bio"
                 name="bio"
                 autoComplete="off"
@@ -131,6 +132,7 @@ const UpdateUserProfile = ({
                 name="city"
                 autoComplete="off"
                 autoFocus
+                sx={{ fontFamily: 'inherit' }}
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
               />
@@ -143,6 +145,7 @@ const UpdateUserProfile = ({
                 name="state"
                 autoComplete="off"
                 autoFocus
+                sx={{ fontFamily: 'inherit' }}
                 value={state}
                 onChange={(e) => setState(e.target.value)}
               />
@@ -155,6 +158,7 @@ const UpdateUserProfile = ({
                 name="country"
                 autoComplete="off"
                 autoFocus
+                sx={{ fontFamily: 'inherit' }}
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
               />
@@ -168,6 +172,7 @@ const UpdateUserProfile = ({
                   id="demo-simple-select"
                   value={gender}
                   label="Gender"
+                  sx={{ fontFamily: 'inherit' }}
                   onChange={(e) => setGender(e.target.value)}
                 >
                   <MenuItem value="MALE">Male</MenuItem>
@@ -180,9 +185,10 @@ const UpdateUserProfile = ({
                 variant="standard"
                 label="Birthday"
                 type="date"
+                sx={{ fontFamily: 'inherit' }}
                 value={birthDate}
                 onChange={(e) => setBirthDate(e.target.value)}
-                sx={{ width: 220 }}
+                style={{ width: 220 }}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -191,8 +197,8 @@ const UpdateUserProfile = ({
               <br />
               <FormLabel component="legend" sx={{ fontSize: '0.8rem' }} >Avatar</FormLabel>
               <br />
-              <Button variant="outlined" component="label">
-                Upload Avatar
+              <Button style={{ fontFamily: 'inherit' }} variant="outlined" component="label">
+                UPLOAD AVATAR
                 <input type="file" hidden onChange={(e) => setAvatar(e.target.files)} />
               </Button>
             </form>
@@ -209,6 +215,8 @@ const UpdateUserProfile = ({
             marginBottom: '20px',
             width: "60%",
             background: "black",
+            fontFamily: 'inherit',
+
             "&:hover": {
               background: "#333",
             },

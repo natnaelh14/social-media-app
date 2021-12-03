@@ -84,6 +84,9 @@ const SingleMessage = ({ msgId, senderId, sentAt, text }: MsgProps) => {
                   <Typography fontFamily='inherit' sx={{ fontSize: "15px", color: "#555" }}>
                     {userProfile.handle}
                   </Typography>
+                  <Typography ml='0.25rem' fontFamily='inherit' sx={{ fontSize: "15px", color: "#555" }}>
+                    @{userProfile.handle.trim().toLowerCase()}
+                  </Typography>
                   <Typography fontFamily='inherit' sx={{ marginLeft: 'auto', fontSize: "15px", color: "#555" }}>
                     {Moment(sentAt).format('llll')}
                   </Typography>

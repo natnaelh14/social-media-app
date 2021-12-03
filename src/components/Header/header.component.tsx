@@ -10,6 +10,7 @@ import {
     OptionLink
 } from './header.styles';
 import { useAppSelector } from '../../app/hooks';
+import { Link } from 'react-router-dom';
 
 
 const Header = () => {
@@ -27,10 +28,13 @@ const Header = () => {
                     <OptionLink onClick={() => auth.signOut()}>
                         <span>SIGN OUT</span>
                     </OptionLink>
-                ):(                   
-                <OptionLink>
-                    <span>About Us</span>
-                </OptionLink>)}
+                ) : (
+                    <OptionLink >
+                        <Link style={{ textDecoration: 'none' }} to='/aboutus'>
+                            <span style={{ fontFamily: 'inherit' }}>ABOUT US</span>
+                        </Link>
+                    </OptionLink>
+                )}
             </OptionsContainer>
         </HeaderContainer>
     )

@@ -7,6 +7,7 @@ import { QUERY_USERS_LIST, QUERY_WHO_TO_FOLLOW_USERS } from "../../utils/queries
 import { useQuery } from '@apollo/client';
 import { useAppSelector } from "../../app/hooks";
 import { userProps } from '../../index.types';
+import WhoToFollowLoading from '../WhoToFollow/who_to_follow_loading.component';
 
 const RightSidebar = () => {
 
@@ -18,7 +19,7 @@ const RightSidebar = () => {
   })
 
   const [searchText, setSearchText] = useState<string>("")
-  const { loading, error, data } = useQuery(QUERY_USERS_LIST, {
+  const { loading: userListLoading, error: userLostError, data } = useQuery(QUERY_USERS_LIST, {
     variables: { handle: searchText },
   });
   if (data) {
@@ -31,6 +32,7 @@ const RightSidebar = () => {
     }> | undefined = usersList
   }
 
+  let pending = userListLoading || userLostError || whoToFollowError || whoToFollowLoading || currentUserError || currentUserLoading;
 
   return (
     <Hidden lgDown>
@@ -79,13 +81,21 @@ const RightSidebar = () => {
             <Typography fontFamily='inherit' variant="h6" textAlign='center' sx={{ fontWeight: "bold" }}>
               Who to follow
             </Typography>
+            {pending && (
+              <>
+                <WhoToFollowLoading />
+                <WhoToFollowLoading />
+                <WhoToFollowLoading />
+                <WhoToFollowLoading />
+              </>
+            )}
             {(searchText && usersArray) && (
               usersArray.map((user) => <WhoToFollow key={user.id} id={user.id} handle={user.handle} avatar={user.avatar} isActive={user.isActive} />)
             )}
             {(!searchText && whoToFollowData) && (
-                whoToFollowData?.whoToFollowUsers.map((user: any) => {
-                  return <WhoToFollow key={user.id} id={user.id} handle={user.handle} avatar={user.avatar} isActive={user.isActive} />
-                })
+              whoToFollowData?.whoToFollowUsers.map((user: any) => {
+                return <WhoToFollow key={user.id} id={user.id} handle={user.handle} avatar={user.avatar} isActive={user.isActive} />
+              })
 
             )}
           </Box>

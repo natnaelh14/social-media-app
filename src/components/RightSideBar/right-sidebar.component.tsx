@@ -4,10 +4,19 @@ import { Input, Typography, CircularProgress, Hidden } from "@mui/material";
 import { Box } from "@mui/system";
 import WhoToFollow from "../WhoToFollow/who-to-follow.component";
 import DummyWhoToFollow from '../DummyWhoToFollow/dummy_who-to-follow.component';
-import { QUERY_USERS_LIST } from "../../utils/queries";
+import { QUERY_USERS_LIST, QUERY_WHO_TO_FOLLOW_USERS } from "../../utils/queries";
 import { useQuery } from '@apollo/client';
+import { useAppSelector } from "../../app/hooks";
+import { userProps } from '../../index.types';
 
 const RightSidebar = () => {
+
+  const currentUser = useAppSelector(state => state.currentUser)
+  const { error: currentUserError, loading: currentUserLoading, user } = currentUser
+  const userInfo: userProps = user
+  const { error: whoToFollowError, loading: whoToFollowLoading, data: whoToFollowData } = useQuery(QUERY_WHO_TO_FOLLOW_USERS, {
+    variables: { id: userInfo.id }
+  })
 
   const [searchText, setSearchText] = useState<string>("")
   const { loading, error, data } = useQuery(QUERY_USERS_LIST, {
@@ -74,16 +83,11 @@ const RightSidebar = () => {
             {(searchText && usersArray) && (
               usersArray.map((user) => <WhoToFollow key={user.id} id={user.id} handle={user.handle} avatar={user.avatar} isActive={user.isActive} />)
             )}
-            {(!searchText) && (
-              <>
-                <DummyWhoToFollow />
-                <DummyWhoToFollow />
-                <DummyWhoToFollow />
-                <DummyWhoToFollow />
-                <DummyWhoToFollow />
-                <DummyWhoToFollow />
-                <DummyWhoToFollow />
-              </>
+            {(!searchText && whoToFollowData) && (
+                whoToFollowData?.whoToFollowUsers.map((user: any) => {
+                  return <WhoToFollow key={user.id} id={user.id} handle={user.handle} avatar={user.avatar} isActive={user.isActive} />
+                })
+
             )}
           </Box>
         </Box>

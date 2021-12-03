@@ -132,7 +132,7 @@ const Profile = () => {
                                         {userInfo.handle}
                                     </Typography>
                                     <Typography sx={{ fontSize: "14px", color: "#555" }}>
-                                        {/* @{userInfo.handle.trim().toLowerCase()} */}
+                                        @{userInfo.handle.trim().toLowerCase()}
                                     </Typography>
                                     <Typography fontSize="16px" color="#333" padding="10px 0">
                                         {userInfo.bio}
@@ -210,8 +210,10 @@ const Profile = () => {
                                         Posts
                                     </Typography>
                                 </Box>
-                                {postsData &&
-                                    postsData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
+                                <Box>
+                                    {postsData &&
+                                        postsData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
+                                </Box>
                             </Box>
                         </Box>
                     </div>

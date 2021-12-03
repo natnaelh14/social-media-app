@@ -24,10 +24,10 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
         <Grid item>
           <Grid container alignItems="center">
             <Grid item>
-              <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>
+              <Typography sx={{ fontSize: "13px", fontWeight: "500" }}>
                 {handle}
               </Typography>
-              <Typography
+              {/* <Typography
                 sx={{
                   fontSize: "12px",
                   background: "#ccc",
@@ -37,7 +37,7 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
                 }}
               >
                 follows you
-              </Typography>
+              </Typography> */}
               <Button
                 size="small"
                 sx={{

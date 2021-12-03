@@ -23,7 +23,7 @@ const GuestProfile = () => {
     const currentUser = useAppSelector(state => state.currentUser)
     const { error: currentUserError, loading: currentUserLoading, user } = currentUser
     const userInfo: userProps = user
-    if(profileId === userInfo.id) {
+    if (profileId === userInfo.id) {
         history.push("/home/profile");
     }
     if (profileId) {
@@ -99,7 +99,7 @@ const GuestProfile = () => {
             {(loading || error) && (
                 <CircularProgress color="success" />
             )}
-            {(userData?.userProfile) && (
+            {(userData?.userProfile && checkFriendRequestData && checkFriendData) && (
                 <Fade in={true} timeout={1000}>
                     <div style={{ padding: '20px' }}>
                         <Box borderBottom="1px solid #ccc" padding="8px 20px">
@@ -125,7 +125,7 @@ const GuestProfile = () => {
                             <GuestUserInfoContainer>
                                 <Box padding="10px 20px" display="flex" alignItems="center" sx={{ flexDirection: 'column' }}>
                                     <img width="100px" src={userData?.userProfile?.avatar} alt="profile" />
-                                    {checkFriendData?.checkFriendship && (
+                                    {checkFriendData?.checkFriendship ? (
                                         <Button
                                             onClick={handleRemoveFollowing}
                                             size="small"
@@ -142,8 +142,7 @@ const GuestProfile = () => {
                                         >
                                             UNFOLLOW
                                         </Button>
-                                    )}
-                                    {(checkFriendRequestData?.friendRequest?.status === "PENDING") && (
+                                    ) : (checkFriendRequestData?.friendRequest?.status === "PENDING") ? (
                                         <Button
                                             size="small"
                                             disabled={true}
@@ -160,11 +159,9 @@ const GuestProfile = () => {
                                         >
                                             PENDING
                                         </Button>
-                                    )}
-                                    {(checkFriendRequestData?.friendRequest?.status === "BLOCKED") && (
-                                        <div></div>
-                                    )}
-                                    {(!(checkFriendData?.checkFriendship) && !(checkFriendRequestData?.friendRequest)) && (
+                                    ) : (checkFriendRequestData?.friendRequest?.status === "BLOCKED") ? (
+                                        <div>BLOCKED</div>
+                                    ) : (
                                         <Button
                                             size="small"
                                             onClick={handleFollowRequest}
@@ -182,7 +179,6 @@ const GuestProfile = () => {
                                             FOLLOW
                                         </Button>
                                     )}
-
                                     <Typography textAlign='center' variant="h6" sx={{ fontWeight: "500" }}>
                                         {userData?.userProfile?.handle}
                                     </Typography>

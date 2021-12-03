@@ -203,3 +203,15 @@ export const QUERY_REACTIONS_BY_USER_COMMENT = gql`
     }
   }
 `;
+
+export const QUERY_WHO_TO_FOLLOW_USERS = gql`
+  query getWhoToFollowUsers($id: ID!) {
+    whoToFollowUsers(id: $id) {
+      id
+      handle
+      avatar
+      isActive
+    }
+  }
+`;
+

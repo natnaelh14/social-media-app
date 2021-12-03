@@ -1,17 +1,46 @@
 import { Typography, useTheme } from "@mui/material";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { userProps } from '../../index.types';
+import { useAppSelector } from '../../app/hooks';
+import { useMutation } from '@apollo/client';
+import { FRIEND_REQUEST } from '../../utils/mutations';
 
-type userProps = {
+type userInfoProps = {
   id: string,
   handle: string,
   avatar: string,
   isActive: string
 };
 
-const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
+const WhoToFollow = ({ id, handle, avatar, isActive }: userInfoProps) => {
+
+  const currentUser = useAppSelector(state => state.currentUser)
+  const { error, loading, user } = currentUser
+  const userInfo: userProps = user
+
+  const [buttonDisable, setButtonDisable] = useState(false)
+  const [buttonText, setButtonText] = useState("FOLLOW")
+  const [followRequest, { }] = useMutation(FRIEND_REQUEST)
+  const handleFollowRequest = async () => {
+    try {
+        const makeRequest = await followRequest({
+            variables: {
+                sender_id: userInfo.id,
+                receiver_id: id
+            }
+        })
+        if (makeRequest) {
+          setButtonText('PENDING')
+          setButtonDisable(true)
+        }
+    } catch (e) {
+        return e;
+    }
+}
+
   const theme = useTheme();
   return (
     <Box margin="1rem 0">
@@ -40,6 +69,8 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
               </Typography> */}
               <Button
                 size="small"
+                disabled={buttonDisable}
+                onClick={handleFollowRequest}
                 sx={{
                   borderRadius: theme.shape.borderRadius,
                   textTransform: "capitalize",
@@ -53,7 +84,7 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userProps) => {
                 }}
                 variant="contained"
               >
-                FOLLOW
+                {buttonText}
               </Button>
             </Grid>
           </Grid>

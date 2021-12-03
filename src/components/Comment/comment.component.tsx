@@ -126,33 +126,33 @@ const Comment = ({ commentId, postId, userId, text, commentTime }: commentProps)
           >
             <Grid width='100%' item>
               <Box display="flex">
-                <Typography
+                <Typography fontFamily='inherit'
                   sx={{ fontSize: "16px", fontWeight: 500, mr: "6px" }}
                 >
                   {userProfile.handle}
                 </Typography>
-                <Typography
+                <Typography fontFamily='inherit'
                   sx={{ fontSize: "12px", mr: "8px", color: "#555" }}
                 >
                   @{userProfile.handle.toLowerCase().trim()}
                 </Typography>
-                <Typography
+                <Typography fontFamily='inherit'
                   sx={{ fontSize: "15px", ml: "auto", color: "#555" }}
                 >
                   {Moment(commentTime).format('MMM DD YY')}
                 </Typography>
               </Box>
               <Box>
-                <Typography sx={{ fontSize: "15px", color: "#555", textAlign: "left" }}>
+                <Typography fontFamily='inherit' sx={{ fontSize: "15px", color: "#555", textAlign: "left" }}>
                   {text}
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                <Typography sx={{ fontSize: "15px", color: "#555", marginRight: '1rem' }}>
+                <Typography fontFamily='inherit' sx={{ fontSize: "15px", color: "#555", marginRight: '1rem' }}>
                   {likeList ? likeList.length : 0}
                   <FavoriteIcon style={{ color: "#e25349" }} fontSize="small" />
                 </Typography>
-                <Typography sx={{ fontSize: "15px", color: "#555" }}>
+                <Typography fontFamily='inherit' sx={{ fontSize: "15px", color: "#555" }}>
                   {dislikeList ? dislikeList.length : 0}
                   <ThumbDownIcon style={{ color: "#e25349" }} fontSize="small" />
                 </Typography>

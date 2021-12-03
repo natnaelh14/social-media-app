@@ -94,7 +94,7 @@ const Messages = () => {
                         width={100}
                       />
                     ) : (
-                      <Typography>{userProfile.handle}</Typography>
+                      <Typography fontFamily='inherit'>{userProfile.handle}</Typography>
                     )}
                   </Box>
                 </Grid>
@@ -119,6 +119,7 @@ const Messages = () => {
                   onChange={(e) => setMessageText(e.target.value)}
                   variant="filled"
                   label="Send Message..."
+                  style={{ fontFamily: 'inherit' }}
                   fullWidth />
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                   <IconButton onClick={handleSendMessage} >

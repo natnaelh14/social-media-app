@@ -52,7 +52,7 @@ const CryptoDoughnut: React.FC<{ currentUser: string }> = ({ currentUser }) => {
                 type="doughnut"
                 palette="Soft Pastel"
                 dataSource={cryptoData}
-            // style={{width: "700px", height: "400px"}}
+                style={{ fontFamily: 'inherit' }}
             >
                 <Title text="CRYPTO HOLDING">
                     <Subtitle text={`US$ ${cryptoTotal.toLocaleString()}`} />

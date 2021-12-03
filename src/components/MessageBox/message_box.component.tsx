@@ -53,16 +53,16 @@ const MessageBox = ({ msgId, msgHandle, msgAvatar, currentUser }: MessageProps) 
                 <Grid width='100%'
                 >
                   <Box sx={{  width: '100%', display: 'flex', flexDirection: 'row', justifyContent: "space-around" }}>
-                    <Typography sx={{ fontSize: "15px", color: "#555" }}>
+                    <Typography fontFamily='inherit' sx={{ fontSize: "15px", color: "#555" }}>
                       {msgHandle}
                     </Typography>
-                    <Typography sx={{ marginLeft: 'auto', fontSize: "15px", color: "#555" }}>
+                    <Typography fontFamily='inherit' sx={{ marginLeft: 'auto', fontSize: "15px", color: "#555" }}>
                       Seen
                     </Typography>
                   </Box>
                   <Box>
                     {messages && (
-                      <Typography 
+                      <Typography fontFamily='inherit'
                         sx={{
                           fontSize: "15px", 
                           color: "#555",

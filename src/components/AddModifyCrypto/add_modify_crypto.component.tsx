@@ -58,7 +58,7 @@ const AddModifyCrypto = ({
             {cryptoByUserId && (
                 <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
                     <DialogTitle>
-                        <Typography textAlign='center' style={{ fontSize: '20px' }}>ADD/MODIFY CRYPTO</Typography>
+                        <Typography fontFamily='inherit' textAlign='center' style={{ fontSize: '20px' }}>ADD/MODIFY CRYPTO</Typography>
                         <Box textAlign="right" borderBottom="1px solid #ccc">
                             <IconButton onClick={handleClose}>
                                 <CloseIcon />
@@ -109,9 +109,10 @@ const AddModifyCrypto = ({
                                     marginX="rem"
                                     padding="6px 0"
                                     fontWeight="500"
+                                    fontFamily='inherit'
                                     borderBottom={`4px solid black`}
                                 >
-                                    Holdings
+                                    HOLDINGS
                                 </Typography>
                             </Box>
                             {cryptoByUserId && (
@@ -132,6 +133,7 @@ const AddModifyCrypto = ({
                                 marginBottom: '20px',
                                 width: "60%",
                                 background: "black",
+                                fontFamily: 'inherit',
                                 "&:hover": {
                                     background: "#333",
                                 },

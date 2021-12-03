@@ -26,6 +26,7 @@ import NotificationPage from '../pages/notification_page';
 import MessagePage from '../pages/message_page';
 import Messages from "../components/Messages/messages.component";
 import FriendRequests from '../components/FriendRequests/friend_requests.component';
+import AboutUsPage from '../pages/about_us.page';
 
 type MyProps = {
   setCurrentUser: any;
@@ -132,6 +133,9 @@ class Routes extends Component<MyProps, {}> {
         <Switch>
           <Route exact path="/signin">
             {this.props.currentUser ? <Redirect to="/home/feed" /> : <SignIn />}
+          </Route>
+          <Route exact path="/aboutus">
+            {this.props.currentUser ? <AboutUsPage /> : <AboutUsPage />}
           </Route>
           <Route exact path="/">
             {this.props.currentUser ? <Redirect to="/home/feed" /> : <SignIn />}

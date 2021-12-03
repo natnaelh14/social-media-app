@@ -81,7 +81,7 @@ const AddPost = () => {
                   disableUnderline
                   type="text"
                   placeholder="What's new in Crypto World?"
-                  sx={{ width: "100%" }}
+                  sx={{ width: "100%", fontFamily: 'inherit' }}
                 />
               </Box>
               <Box
@@ -97,6 +97,7 @@ const AddPost = () => {
                       value={mood || ""}
                       variant="standard"
                       onChange={handleChangeMood}
+                      sx={{ fontFamily: 'inherit' }}
                     >
                       <MenuItem value='HAPPY'>HAPPY 😀</MenuItem>
                       <MenuItem value='SAD'>SAD 😔</MenuItem>
@@ -114,10 +115,11 @@ const AddPost = () => {
                     variant="contained"
                     color="primary"
                     sx={{
-                      fontSize: "12px"
+                      fontSize: "12px",
+                      fontFamily: 'inherit'
                     }}
                   >
-                    Post
+                    POST
                   </Button>
                 </Box>
               </Box>

@@ -10,7 +10,7 @@ import coinImage from './coin.jpeg';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography style={{fontFamily: 'inherit'}} variant="body2" color="textSecondary" align="center">
       {"Copyright © Crypto Connect "}
       {new Date().getFullYear()}
       {"."}
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column'
   },
   textFont: {
-    fontFamily: "'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'",
+    fontFamily: "inherit",
     color: '#55595C'
   },
   image: {

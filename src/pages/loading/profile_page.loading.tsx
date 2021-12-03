@@ -37,7 +37,7 @@ const ProfilePageLoading = () => {
                         </Box>
                         <Box height="90vh" sx={{ overflowY: "scroll" }}>
                             <Box position="relative">
-                                <RectShape color='gray' style={{ width: '100%', height: "300px" }} />
+                                <RectShape color='#cccccc' style={{ width: '100%', height: "300px" }} />
                                 <Box
                                     sx={{
                                         position: "absolute",

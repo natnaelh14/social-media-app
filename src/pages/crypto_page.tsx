@@ -14,6 +14,7 @@ import { QUERY_CRYPTOS } from '../utils/queries';
 import TwitterPostList from '../components/TwitterPostList/twitter_post_list.component';
 import { CryptoPageContainer, CryptoDataContainer, CryptoDoughnutContainer, CryptoCarouselContainer } from './styles/crypto_page.styles';
 import { makeStyles } from '@material-ui/core/styles';
+import CryptoPageLoading from './loading/crypto_page_loading';
 
 const useStyles = makeStyles(theme => ({
     carouselFormat: {
@@ -27,10 +28,10 @@ const CryptoPage = () => {
     const classes = useStyles();
 
     const currentUser = useAppSelector(state => state.currentUser)
-    const { loading, user } = currentUser
+    const { error: currentUserError, loading: currentUserLoading, user } = currentUser
     const userInfo: userProps = user
 
-    const { loading: cryptoLoading, data } = useQuery(QUERY_CRYPTOS, {
+    const { error: cryptoError, loading: cryptoLoading, data } = useQuery(QUERY_CRYPTOS, {
         variables: {
             user_id: userInfo.id
         }
@@ -48,12 +49,14 @@ const CryptoPage = () => {
         setOpenModal(false);
     };
 
+    let pending = currentUserError || currentUserLoading || cryptoError || cryptoLoading
+
     return (
         <CryptoPageContainer>
             <Fade in={true} timeout={1000}>
                 <Box sx={{ border: '1px solid #cdcdcd', padding: '20px' }} >
-                    {(loading && cryptoLoading) ? (
-                        <div>Crypto is Loading</div>
+                    {(pending) ? (
+                        <CryptoPageLoading />
                     ) : (
                         <>
                             <CryptoDataContainer>
@@ -91,6 +94,7 @@ const CryptoPage = () => {
                                         },
                                     }}
                                     variant="contained"
+
                                 >
                                     ADD/MODIFY CRYPTO
                                 </Button>
@@ -118,6 +122,7 @@ const CryptoPage = () => {
                             </Box>
                         </>
                     )}
+
                 </Box>
             </Fade>
             {openModal && (

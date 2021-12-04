@@ -27,7 +27,7 @@ type postProps = {
 };
 
 const Post = ({ postId, text, userId, postTime }: postProps) => {
-    const { loading, error, data } = useQuery(QUERY_USER, {
+    const { loading: userLoading, error: userError, data } = useQuery(QUERY_USER, {
         variables: {
             id: userId
         },
@@ -35,7 +35,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
     if (data) {
         var { userProfile } = data;
     }
-    const { data: likeData } = useQuery(QUERY_REACTIONS_BY_POST, {
+    const { data: likeData, loading: likesLoading, error: likesError } = useQuery(QUERY_REACTIONS_BY_POST, {
         variables: {
             reaction_type: 'LIKE',
             post_id: postId
@@ -44,7 +44,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
     if (likeData) {
         var { reactionsByPost: likeList } = likeData;
     }
-    const { data: dislikeData } = useQuery(QUERY_REACTIONS_BY_POST, {
+    const { data: dislikeData, loading: dislikesLoading, error: dislikesError } = useQuery(QUERY_REACTIONS_BY_POST, {
         variables: {
             reaction_type: 'DISLIKE',
             post_id: postId
@@ -71,8 +71,6 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
     const [addComment, { }] = useMutation(ADD_COMMENT);
     const [displayComment, setDisplayComment] = useState(false);
     const [commentText, setCommentText] = useState("");
-
-
 
     const handleDeletePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -103,7 +101,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                 }
             })
         } catch (e) {
-            throw new Error('Unable to Add a Reaction')
+            return e;
         }
     }
     const handleDeleteReaction = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -115,12 +113,15 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                 }
             })
         } catch (e) {
-            throw new Error('Unable to Delete a Reaction')
+            return e;
         }
     }
+
+    let pending = !postId || !text || !userId || !postTime || userLoading || userError || likesLoading || likesError || dislikesLoading || dislikesError
+
     return (
         <>
-            {(!postId || !text || !userId || !postTime || loading || error || !data || !userProfile) ? (
+            {(pending) ? (
                 <PostLoading />
             ) : (
                 <Box

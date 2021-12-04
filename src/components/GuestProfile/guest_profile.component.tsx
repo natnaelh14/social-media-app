@@ -15,7 +15,8 @@ const Moment = require('moment')
 import { userProps } from "../../index.types";
 import CryptoDoughnut from "../CryptoDoughnut/crypto_doughnut.component";
 import { useAppSelector } from '../../app/hooks';
-import { GuestDataContainer, CryptoCarouselContainer, GuestUserInfoContainer, UserBioContainer } from './guest_profile.styles'
+import { GuestDataContainer, CryptoCarouselContainer, GuestUserInfoContainer, UserBioContainer } from './guest_profile.styles';
+import GuestProfileLoading from './guest_profile_loading.component';
 
 const GuestProfile = () => {
     const history = useHistory();
@@ -27,7 +28,7 @@ const GuestProfile = () => {
         history.push("/home/profile");
     }
     if (profileId) {
-        var { loading, error, data: userData } = useQuery(QUERY_USER, {
+        var { loading: userLoading, error: userError, data: userData } = useQuery(QUERY_USER, {
             variables: {
                 id: profileId
             },
@@ -37,12 +38,12 @@ const GuestProfile = () => {
                 user_id: profileId
             },
         });
-        var { loading: followerLoading, data: followerData } = useQuery(QUERY_FOLLOWERS, {
+        var { error: followerError, loading: followerLoading, data: followerData } = useQuery(QUERY_FOLLOWERS, {
             variables: {
                 id: userInfo.id
             }
         });
-        var { loading: followingLoading, data: followingData } = useQuery(QUERY_FOLLOWINGS, {
+        var { error: followingError, loading: followingLoading, data: followingData } = useQuery(QUERY_FOLLOWINGS, {
             variables: {
                 id: userInfo.id
             }
@@ -50,9 +51,6 @@ const GuestProfile = () => {
     }
 
     if (profileId && userInfo) {
-        // if(profileId === userInfo.id) {
-        //     history.push("/home/profile");
-        // }
         var { data: checkFriendData } = useQuery(QUERY_CHECK_FRIENDSHIP, {
             variables: {
                 follower: userInfo.id,
@@ -94,10 +92,12 @@ const GuestProfile = () => {
         }
     }
 
+    let pending = userLoading || userError || postsLoading || postsError || followerError || followerLoading || followingError || followingLoading
+
     return (
         <div style={{ width: '75%', margin: '20px' }}>
-            {(loading || error) && (
-                <CircularProgress color="success" />
+            {(pending) && (
+                <GuestProfileLoading />
             )}
             {(userData?.userProfile && checkFriendRequestData && checkFriendData) && (
                 <Fade in={true} timeout={1000}>

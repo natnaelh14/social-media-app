@@ -4,8 +4,7 @@ import { QUERY_CRYPTOS } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
 
 const CryptoDoughnut: React.FC<{ currentUser: string }> = ({ currentUser }) => {
-
-    const { loading, data } = useQuery(QUERY_CRYPTOS, {
+    const { error: cryptoError, loading: cryptoLoading, data } = useQuery(QUERY_CRYPTOS, {
         variables: {
             user_id: currentUser
         }
@@ -13,14 +12,10 @@ const CryptoDoughnut: React.FC<{ currentUser: string }> = ({ currentUser }) => {
     if (data) {
         var { cryptoByUserId } = data;
     }
-
     const [cryptoData, setCryptoData] = useState();
     const [cryptoTotal, setCryptoTotal] = useState(0);
-
     const customizeTooltip = (arg: any) => {
-        return {
-            text: `${arg.valueText} - ${(arg.percent * 100).toFixed(2)}%`,
-        };
+        return { text: `${arg.valueText} - ${(arg.percent * 100).toFixed(2)}%` };
     }
 
     useEffect(() => {
@@ -33,46 +28,54 @@ const CryptoDoughnut: React.FC<{ currentUser: string }> = ({ currentUser }) => {
                         .then((res: any) => {
                             return res.json()
                         })
-                        .then((res) => {
+                        .then((res: any) => {
                             cryptoArray.push({ region: res[0].name, val: res[0].current_price * cryptoByUserId[i].holding_amount })
                             total += res[0].current_price * cryptoByUserId[i].holding_amount
+                        })
+                        .catch((e) => {
+                            return;
                         })
                 }
                 setCryptoData(cryptoArray)
                 setCryptoTotal(total)
             })()
         }
-
     }, [cryptoByUserId])
+
+    let pending = cryptoError || cryptoLoading
 
     return (
         <>
-            <PieChart
-                id="pie"
-                type="doughnut"
-                palette="Soft Pastel"
-                dataSource={cryptoData}
-                style={{ fontFamily: 'inherit' }}
-            >
-                <Title text="CRYPTO HOLDING">
-                    <Subtitle text={`US$ ${cryptoTotal.toLocaleString()}`} />
-                </Title>
-                <Series argumentField="region">
-                    <Label visible={true} format="currency">
-                        <Connector visible={true} />
-                    </Label>
-                </Series>
-                <Size width={500} />
-                <Legend
-                    margin={0}
-                    verticalAlignment="bottom"
-                    horizontalAlignment="center"
-                    itemTextPosition="right"
-                />
-                <Tooltip enabled={true} customizeTooltip={customizeTooltip}>
-                    <Format type="currency" />
-                </Tooltip>
-            </PieChart>
+            {pending ? (
+                <div />
+            ) : (
+                <PieChart
+                    id="pie"
+                    type="doughnut"
+                    palette="Soft Pastel"
+                    dataSource={cryptoData}
+                    style={{ fontFamily: 'inherit' }}
+                >
+                    <Title text="CRYPTO HOLDING">
+                        <Subtitle text={`US$ ${cryptoTotal.toLocaleString()}`} />
+                    </Title>
+                    <Series argumentField="region">
+                        <Label visible={true} format="currency">
+                            <Connector visible={true} />
+                        </Label>
+                    </Series>
+                    <Size width={500} />
+                    <Legend
+                        margin={0}
+                        verticalAlignment="bottom"
+                        horizontalAlignment="center"
+                        itemTextPosition="right"
+                    />
+                    <Tooltip enabled={true} customizeTooltip={customizeTooltip}>
+                        <Format type="currency" />
+                    </Tooltip>
+                </PieChart>
+            )}
         </>
     )
 }

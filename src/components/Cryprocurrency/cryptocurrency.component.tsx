@@ -56,6 +56,9 @@ const CryptoCurrency = ({ name }: nameProps) => {
                         })
                     setCoinMarketData(res)
                 })
+                .catch((e) => {
+                    return
+                })
             await fetch(`https://api.coingecko.com/api/v3/coins/${name}/market_chart?vs_currency=usd&days=30&interval=daily`)
                 .then((response) => {
                     return response.json()
@@ -70,12 +73,18 @@ const CryptoCurrency = ({ name }: nameProps) => {
                     setCoinDateData(day);
                     setCoinPriceData(price);
                 })
+                .catch((e) => {
+                    return
+                })
             await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${name}`)
                 .then((res: any) => {
                     return res.json()
                 })
                 .then((res: any) => {
                     setCoinData(res[0])
+                })
+                .catch((e) => {
+                    return
                 })
         })()
     }, [name])

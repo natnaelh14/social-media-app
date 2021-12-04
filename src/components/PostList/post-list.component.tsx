@@ -5,12 +5,13 @@ import { Fade } from "@mui/material";
 import { useAppSelector } from '../../app/hooks';
 import { CircularProgress, Box } from "@mui/material";
 const Moment = require('moment');
-import { PostListContainer } from './post_list.styles'
+import { PostListContainer } from './post_list.styles';
+import PostLoading from '../Post/post_loading.component';
 
 const PostList: React.FC = () => {
 
   const postListByFollowing = useAppSelector((state) => state.postListByFollowing)
-  const { posts, loading } = postListByFollowing
+  const { posts, loading: postsLoading, error: postsError } = postListByFollowing
   let postData: Array<{
     id: number,
     user_id: string,
@@ -27,7 +28,18 @@ const PostList: React.FC = () => {
             <>
               <AddPost />
               <Box height="90vh" sx={{ overflowY: "scroll" }}>
-                {postsData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />)}
+                {(postsLoading || postsError) && (
+                  <>
+                    <PostLoading />
+                    <PostLoading />
+                    <PostLoading />
+                    <PostLoading />
+                    <PostLoading />
+                  </>
+                )}
+                {postsData && (
+                  postsData.map((post) => <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />
+                  ))}
               </Box>
             </>
           )}

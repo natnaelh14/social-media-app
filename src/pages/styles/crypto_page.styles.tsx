@@ -20,6 +20,7 @@ export const CryptoDataContainer = styled.div`
 
 export const CryptoDoughnutContainer = styled.div`
 @media (max-width: 1400px) {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 }

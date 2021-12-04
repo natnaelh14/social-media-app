@@ -1,9 +1,5 @@
 import { Box } from "@mui/system";
-import { Grid, IconButton, Typography } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import DateRangeIcon from "@mui/icons-material/DateRange";
-import { Link as RouteLink } from "react-router-dom";
+import { Grid, Typography } from "@mui/material";
 import { Fade } from "@mui/material";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -19,11 +15,7 @@ const ProfilePageLoading = () => {
                         <Box borderBottom="1px solid #ccc" padding="8px 20px">
                             <Grid container alignItems="center">
                                 <Grid item sx={{ mr: "10px" }}>
-                                    <RouteLink to="/">
-                                        <IconButton>
-                                            <ArrowBackIcon />
-                                        </IconButton>
-                                    </RouteLink>
+                                    <Skeleton width={30} />
                                 </Grid>
                                 <Grid item>
                                     <Typography variant="h6">
@@ -75,13 +67,13 @@ const ProfilePageLoading = () => {
                                     flexWrap="wrap"
                                 >
                                     <Box display="flex">
-                                        <LocationOnIcon htmlColor="#555" />
+                                        <Skeleton width={20} />
                                         <Typography sx={{ ml: "6px", color: "#555" }}>
                                             <Skeleton width={200} />
                                         </Typography>
                                     </Box>
                                     <Box display="flex" marginLeft="1rem">
-                                        <DateRangeIcon htmlColor="#555" />
+                                        <Skeleton width={20} />
                                         <Typography sx={{ ml: "6px", color: "#555" }}>
                                             <Skeleton width={70} />
                                         </Typography>
@@ -100,7 +92,7 @@ const ProfilePageLoading = () => {
                             <Box borderBottom="1px solid #ccc" marginLeft='1.25rem'>
                                 <Skeleton width={40} />
                             </Box>
-                            <Box sx={{ width: '100%'}}>
+                            <Box sx={{ width: '100%' }}>
                                 <PostLoading />
                                 <PostLoading />
                                 <PostLoading />

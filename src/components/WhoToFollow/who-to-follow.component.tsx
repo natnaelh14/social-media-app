@@ -5,7 +5,8 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { userProps } from '../../index.types';
 import { useAppSelector } from '../../app/hooks';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
+import { QUERY_CHECK_FRIENDSHIP } from '../../utils/queries';
 import { FRIEND_REQUEST } from '../../utils/mutations';
 
 type userInfoProps = {
@@ -21,25 +22,32 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userInfoProps) => {
   const { error, loading, user } = currentUser
   const userInfo: userProps = user
 
+  const { error: checkFriendError, loading: checkFriendLoading, data: checkFriendData } = useQuery(QUERY_CHECK_FRIENDSHIP, {
+    variables: {
+      follower: userInfo.id,
+      followed: id
+    }
+  })
+
   const [buttonDisable, setButtonDisable] = useState(false)
   const [buttonText, setButtonText] = useState("FOLLOW")
   const [followRequest, { }] = useMutation(FRIEND_REQUEST)
   const handleFollowRequest = async () => {
     try {
-        const makeRequest = await followRequest({
-            variables: {
-                sender_id: userInfo.id,
-                receiver_id: id
-            }
-        })
-        if (makeRequest) {
-          setButtonText('PENDING')
-          setButtonDisable(true)
+      const makeRequest = await followRequest({
+        variables: {
+          sender_id: userInfo.id,
+          receiver_id: id
         }
+      })
+      if (makeRequest) {
+        setButtonText('PENDING')
+        setButtonDisable(true)
+      }
     } catch (e) {
-        return e;
+      return e;
     }
-}
+  }
 
   const theme = useTheme();
   return (
@@ -56,18 +64,30 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userInfoProps) => {
               <Typography fontFamily='inherit' sx={{ fontSize: "13px", fontWeight: "500" }}>
                 {handle}
               </Typography>
-              {/* <Typography
-                sx={{
-                  fontSize: "12px",
-                  background: "#ccc",
-                  borderRadius: theme.shape.borderRadius,
-                  padding: "0 6px",
-                  color: "#777",
-                }}
-              >
-                follows you
-              </Typography> */}
-              <Button
+              {checkFriendData?.checkFriendship ? (
+                <Button
+                  size="small"
+                  disabled={true}
+                  onClick={handleFollowRequest}
+                  sx={{
+                    borderRadius: theme.shape.borderRadius,
+                    textTransform: "capitalize",
+                    fontFamily: 'inherit',
+                    fontSize: '10px',
+                    mt: "4px",
+                    background: "black",
+                    "&:hover": {
+                      background: "#333",
+                    },
+                  }}
+                  variant="contained"
+                >
+                  FOLLOWING
+                </Button>
+              ): (userInfo.id === id) ? ( 
+                <div />
+              ) : ( 
+                <Button
                 size="small"
                 disabled={buttonDisable}
                 onClick={handleFollowRequest}
@@ -86,6 +106,7 @@ const WhoToFollow = ({ id, handle, avatar, isActive }: userInfoProps) => {
               >
                 {buttonText}
               </Button>
+              )}
             </Grid>
           </Grid>
         </Grid>

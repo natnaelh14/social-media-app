@@ -59,7 +59,7 @@ const Messages = () => {
       };
       setMessageText("")
     } catch (e) {
-      throw new Error('Unable to send message')
+      return e;
     }
   }
 

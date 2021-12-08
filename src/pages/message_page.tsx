@@ -32,26 +32,29 @@ const MessagePage = () => {
       <Fade in={true} timeout={1000}>
         <div style={{ border: '1px solid #cdcdcd', height: "90vh", padding: '20px' }}>
           <Typography fontFamily='inherit' variant='h5' textAlign='center' >Messages</Typography>
-          <Button
-            size="small"
-            onClick={() => setOpenModal(true)}
-            sx={{
-              textTransform: "capitalize",
-              fontFamily: 'inherit',
-              borderRadius: "12px",
-              marginLeft: 'auto',
-              padding: "10px",
-              fontSize: '15px',
-              mt: "4px",
-              background: "black",
-              "&:hover": {
-                background: "#333",
-              },
-            }}
-            variant="contained"
-          >
-            SEND MESSAGE
-          </Button>
+          <Box display='flex' justifyContent='flex-end'>
+            <Button
+              size="small"
+              onClick={() => setOpenModal(true)}
+              sx={{
+                textTransform: "capitalize",
+                fontFamily: 'inherit',
+                borderRadius: "12px",
+                marginLeft: 'auto',
+                padding: "10px",
+                fontSize: '15px',
+                mt: "4px",
+                background: "black",
+                "&:hover": {
+                  background: "#333",
+                },
+              }}
+              variant="contained"
+            >
+              SEND MESSAGE
+            </Button>
+          </Box>
+
           <Box
             paddingBottom=".5rem"
             paddingTop=".5rem"

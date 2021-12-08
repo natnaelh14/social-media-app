@@ -119,6 +119,8 @@ const Messages = () => {
                   onChange={(e) => setMessageText(e.target.value)}
                   variant="filled"
                   label="Send Message..."
+                  multiline
+                  rows={3}
                   style={{ fontFamily: 'inherit' }}
                   fullWidth />
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>

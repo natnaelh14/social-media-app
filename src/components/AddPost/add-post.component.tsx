@@ -23,7 +23,7 @@ const AddPost = () => {
   const [mood, setMood] = useState<string>(userInfo.status)
   const [addPost, { }] = useMutation(ADD_POST,
     {
-      refetchQueries: [
+      refetchQueries: () => [
         { query: QUERY_POSTS_BY_FOLLOWING }
       ]
     }

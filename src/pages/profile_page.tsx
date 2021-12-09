@@ -162,7 +162,7 @@ const Profile = () => {
                                 </Box>
                                 {userInfo?.handle && (
                                     <Typography fontFamily='inherit' sx={{ fontSize: "14px", color: "#555" }}>
-                                        {`@${userInfo?.handle?.trim().toLowerCase()}`}
+                                        {`@${userInfo?.handle?.trim().replace(/ /g,'').toLowerCase()}`}
                                     </Typography>
                                 )}
                                 <Typography fontFamily='inherit' fontSize="16px" color="#333" padding="10px 0">

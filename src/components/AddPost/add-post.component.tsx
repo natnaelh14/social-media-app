@@ -77,8 +77,7 @@ const AddPost = () => {
         <Box padding="1rem 1rem 0 1rem" borderBottom="1px solid #ccc">
           <Grid >
             <Grid item sx={{ paddingRight: "1rem" }}>
-              <Avatar alt="user-image" src={userInfo.avatar ? userInfo.avatar : noAvatar} />
-              {/* <img src={userInfo.avatar ? userInfo.avatar : noAvatar} alt="logo" width="50px" /> */}
+              <Avatar alt="user-image" style={{ width: "50px", height: "50px" }} src={userInfo.avatar ? userInfo.avatar : noAvatar} />
             </Grid>
             <Grid item >
               <Box padding=".5rem 0">

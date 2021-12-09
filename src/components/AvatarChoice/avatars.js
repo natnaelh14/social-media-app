@@ -9,5 +9,9 @@ export const avatarsArray = [
     "https://res.cloudinary.com/doalzf6o2/image/upload/v1639057968/2945937_bosz3q.png",
     "https://res.cloudinary.com/doalzf6o2/image/upload/v1639057987/2945943_plyf5a.png",
     "https://res.cloudinary.com/doalzf6o2/image/upload/v1639058004/2945947_dccpyv.png",
-    "https://res.cloudinary.com/doalzf6o2/image/upload/v1639058023/2945949_vwqax2.png"
+    "https://res.cloudinary.com/doalzf6o2/image/upload/v1639058023/2945949_vwqax2.png",
+    "https://res.cloudinary.com/doalzf6o2/image/upload/v1639061270/2945927_ehhw3j.png",
+    "https://res.cloudinary.com/doalzf6o2/image/upload/v1639061302/2945936_r4jgro.png",
+    "https://res.cloudinary.com/doalzf6o2/image/upload/v1639061319/2945939_hu0znq.png",
+    "https://res.cloudinary.com/doalzf6o2/image/upload/v1639061336/2945942_ngpwos.png"
 ]

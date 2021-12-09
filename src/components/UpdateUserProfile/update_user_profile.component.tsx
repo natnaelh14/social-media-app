@@ -46,9 +46,14 @@ const UpdateUserProfile = ({
   const [country, setCountry] = useState<string>(userInfo.country)
   const [gender, setGender] = useState<string>(userInfo.gender)
   const [avatar, setAvatar] = useState<FileList | any>()
+  const [sampleAvatar, setSampleAvatar] = useState<string>("")
   const [birthDate, setBirthDate] = useState<Date | any>(userInfo.birth_date)
   const [updateUserProfile, { data, loading, error }] = useMutation(UPDATE_USER_PROFILE)
   const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const handleSampleAvatar = (avatar: string) => {
+    setSampleAvatar(avatar)
+  }
 
   const handleModalClose = () => {
     setOpenModal(false);
@@ -72,7 +77,7 @@ const UpdateUserProfile = ({
           id: userInfo.id,
           handle: userInfo.handle,
           email: userInfo.email,
-          avatar: avatarUrl ? avatarUrl : userInfo.avatar,
+          avatar: avatarUrl ? avatarUrl : sampleAvatar ? sampleAvatar : userInfo.avatar,
           bio,
           city,
           state,
@@ -244,13 +249,14 @@ const UpdateUserProfile = ({
             UPDATE PROFILE
           </Button>
         </DialogActions>
-      {openModal && (
-        <AvatarChoice
-          open={openModal}
-          handleClose={handleModalClose}
-        />
-      )}
-            </Dialog>
+        {openModal && (
+          <AvatarChoice
+            open={openModal}
+            handleClose={handleModalClose}
+            handleSampleAvatar={handleSampleAvatar}
+          />
+        )}
+      </Dialog>
 
     </>
   );

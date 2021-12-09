@@ -7,7 +7,8 @@ export const AvatarContainer = styled.div`
   justify-content: center;
 `;
 
-export const SingleAvatar = styled.div`
+export const SingleAvatar = styled.button`
+background-color: transparent;
 &:hover .image {
     opacity: 0.5;
     cursor: pointer;

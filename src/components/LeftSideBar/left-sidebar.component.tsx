@@ -32,6 +32,7 @@ const LeftSidebar = () => {
           variables: {
               id: user.id
           },
+          pollInterval: 1000
       });
   }
   if (data) {

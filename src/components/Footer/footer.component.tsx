@@ -5,11 +5,6 @@ import './footer.css';
 const Footer = () => {
   return (
     <footer className='footer'>
-      <section className='contact-info'>
-        <div>
-          <span>Copyright &copy; 2021 Crypto Connect. All Rights Reserved.</span>
-        </div>
-      </section>
       <section className='contact-link'>
         <ul className='footer-social'>
           <a

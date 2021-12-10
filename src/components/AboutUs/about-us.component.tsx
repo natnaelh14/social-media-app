@@ -21,7 +21,7 @@ const AboutUsPage = () => {
     const classes = useStyles();
     return (
         <section style={{ marginTop: '500px' }}>
-            <Typography sx={{ fontSize: '3rem !Important' }} mb='2rem' fontFamily='inherit' textAlign='center'>FEATURES</Typography>
+            <Typography sx={{ fontSize: '3rem !Important', fontWeight: 800 }} mb='2rem' fontFamily='inherit' textAlign='center'>FEATURES</Typography>
             <Box style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-around" }}>
                 <Box>
                     <Grid container component="main" className={classes.root}>

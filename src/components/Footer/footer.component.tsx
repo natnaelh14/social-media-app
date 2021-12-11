@@ -8,7 +8,7 @@ const Footer = () => {
       <section className='contact-link'>
         <ul className='footer-social'>
           <a
-            href='https://www.linkedin.com/in/natnael-haile-b146b41bb/'
+            href='https://www.linkedin.com/in/natnael-haile-b146b41bb'
             target='_blank'
             rel='noopener noreferrer'
           >

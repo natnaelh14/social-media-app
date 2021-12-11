@@ -20,6 +20,7 @@ import CommentList from "../CommentList/comment_list.component";
 import PostLoading from "./post_loading.component";
 import noAvatar from '../../img/no-avatar.png';
 import Avatar from '@material-ui/core/Avatar';
+import ShareModal from '../ShareModal/share-modal.component';
 
 type postProps = {
     postId: number,
@@ -55,6 +56,11 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
     if (dislikeData) {
         var { reactionsByPost: dislikeList } = dislikeData;
     }
+
+    const [openShareModal, setOpenShareModal] = useState(false);
+    const handleModalClose = () => {
+        setOpenShareModal(false)
+    };
 
     const currentUser = useAppSelector(state => state.currentUser)
     const { user } = currentUser
@@ -217,7 +223,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                     </IconButton>
                                 )}
                                 {!(userId === userInfo.id) && (
-                                    <IconButton size="small">
+                                    <IconButton size="small" onClick={() => setOpenShareModal(!openShareModal)} >
                                         <IosShareIcon fontSize="small" />
                                     </IconButton>
                                 )}
@@ -269,9 +275,17 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                     </Grid>
                 </Box>
             )}
-
-
-
+            {openShareModal && (
+                <ShareModal
+                    open={openShareModal}
+                    handleClose={handleModalClose}
+                    shareText={text}
+                    textAuthor={userProfile?.handle}
+                    currentUserId={userInfo?.id}
+                    currentUserName={userInfo?.handle}
+                    currentUserAvatar={userInfo?.avatar}
+                />
+            )}
         </>
     )
 }

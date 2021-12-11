@@ -12,7 +12,7 @@ import moment from 'moment';
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { userProps } from '../../index.types';
-import { QUERY_USER, QUERY_REACTIONS_BY_POST, QUERY_REACTIONS_BY_USER_POST } from '../../utils/queries';
+import { QUERY_USER, QUERY_USERS_LIST, QUERY_REACTIONS_BY_POST, QUERY_REACTIONS_BY_USER_POST } from '../../utils/queries';
 import { ADD_REACTION_POST, DELETE_REACTION_POST } from '../../utils/mutations';
 import { DELETE_POST, ADD_COMMENT } from '../../utils/mutations'
 import { useQuery, useMutation } from '@apollo/client';
@@ -74,6 +74,18 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
     });
     if (userPostData) {
         var { reactionsByUserAndPost } = userPostData;
+    }
+
+    const checkShareText: any = text.substring(
+        text.lastIndexOf("@") + 1,
+        text.lastIndexOf("-")
+    );
+    if (checkShareText) {
+        var { data: shareUserData, loading: shareUserLoading, error: shareUserError } = useQuery(QUERY_USERS_LIST, {
+            variables: {
+                handle: checkShareText
+            },
+        });
     }
 
     const [deletePost, { }] = useMutation(DELETE_POST);
@@ -166,7 +178,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                         <Typography fontFamily='inherit'
                                             sx={{ fontSize: "15px", mr: "10px", color: "#555" }}
                                         >
-                                            @{userProfile.handle.trim().replace(/ /g,'').toLowerCase()}
+                                            @{userProfile.handle.trim().replace(/ /g, '').toLowerCase()}
                                         </Typography>
                                         <Typography fontFamily='inherit'
                                             sx={{ fontSize: "15px", ml: "auto", color: "#555" }}
@@ -174,6 +186,25 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                                             {moment(postTime).format('MMM DD YY')}
                                         </Typography>
                                     </Box>
+                                    {shareUserData?.usersList[0] && (
+                                        <Box sx={{ display: 'flex', flexDirection: 'row' }} >
+                                            <Link to={`/home/profile/${shareUserData?.usersList[0].id}`}>
+                                                <Avatar alt="user-image" src={shareUserData?.usersList[0].avatar ? shareUserData?.usersList[0].avatar : noAvatar} />
+                                            </Link>
+                                            <Box>
+                                                <Typography fontFamily='inherit'
+                                                    sx={{ fontSize: "16px", fontWeight: 500, ml: '1rem' }}
+                                                >
+                                                    {shareUserData?.usersList[0].handle}
+                                                </Typography>
+                                                <Typography fontFamily='inherit'
+                                                    sx={{ fontSize: "12px", color: "#555", ml: '1rem' }}
+                                                >
+                                                    @{shareUserData?.usersList[0].handle.trim().replace(/ /g, '').toLowerCase()}
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                    )}
                                     <Box>
                                         <Typography fontFamily='inherit' sx={{ fontSize: "15px", color: "#555" }}>
                                             {text}

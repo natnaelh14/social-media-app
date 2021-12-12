@@ -15,7 +15,8 @@ import { DELETE_COMMENT, ADD_REACTION_COMMENT, DELETE_REACTION_COMMENT } from '.
 import { useAppSelector } from '../../app/hooks';
 import { userProps } from '../../index.types';
 import Avatar from '@material-ui/core/Avatar';
-import noAvatar from '../../img/no-avatar.png'
+import noAvatar from '../../img/no-avatar.png';
+import { Link } from 'react-router-dom';
 
 type commentProps = {
   commentId: number,
@@ -127,7 +128,9 @@ const Comment = ({ commentId, postId, userId, text, commentTime, commentsRefetch
     >
       <Grid container flexWrap="nowrap">
         <Grid item sx={{ paddingRight: "1rem" }}>
-          <Avatar src={userProfile.avatar ? userProfile.avatar : noAvatar} alt='user-logo' style={{ width: '50px', height: '50px' }} />
+          <Link to={`/home/profile/${userProfile?.id}`}>
+            <Avatar src={userProfile?.avatar ? userProfile?.avatar : noAvatar} alt='user-logo' style={{ width: '50px', height: '50px' }} />
+          </Link>
         </Grid>
         <Box width="100%"
         >

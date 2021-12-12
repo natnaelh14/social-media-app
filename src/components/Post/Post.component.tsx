@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Grid, IconButton, Typography, Input, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Grid, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -14,7 +14,7 @@ import { useAppSelector } from "../../app/hooks";
 import { userProps } from '../../index.types';
 import { QUERY_USER, QUERY_USERS_LIST, QUERY_REACTIONS_BY_POST, QUERY_REACTIONS_BY_USER_POST } from '../../utils/queries';
 import { ADD_REACTION_POST, DELETE_REACTION_POST } from '../../utils/mutations';
-import { DELETE_POST, ADD_COMMENT } from '../../utils/mutations'
+import { DELETE_POST } from '../../utils/mutations'
 import { useQuery, useMutation } from '@apollo/client';
 import CommentList from "../CommentList/comment_list.component";
 import PostLoading from "./post_loading.component";
@@ -90,26 +90,13 @@ const Post = ({ postId, text, userId, postTime, refetchPosts }: postProps) => {
     }
 
     const [deletePost, { }] = useMutation(DELETE_POST);
-    const [addComment, { }] = useMutation(ADD_COMMENT);
     const [displayComment, setDisplayComment] = useState(false);
-    const [commentText, setCommentText] = useState("");
 
     const handleDeletePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         await deletePost({ variables: { id: postId } }).then(() => {
             refetchPosts()
         })
-    }
-    const handleAddComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        await addComment({
-            variables: {
-                user_id: userInfo?.id,
-                post_id: postId,
-                text: commentText
-            }
-        });
-        setCommentText("");
     }
     const [addReactionOnPost, { }] = useMutation(ADD_REACTION_POST);
     const [deleteReactionOnPost, { }] = useMutation(DELETE_REACTION_POST);
@@ -279,40 +266,8 @@ const Post = ({ postId, text, userId, postTime, refetchPosts }: postProps) => {
                                 )}
                             </Box>
                             {displayComment && (
-                                <Box >
-                                    <Grid item padding="1rem 1rem 0 1rem" borderBottom="1px solid #ccc">
-                                        <Box padding=".5rem 0">
-                                            <Input
-                                                onChange={(e) => setCommentText(e.target.value)}
-                                                value={commentText}
-                                                multiline
-                                                rows="2"
-                                                disableUnderline
-                                                type="text"
-                                                placeholder="Post your comment"
-                                                sx={{ width: "100%" }}
-                                            />
-                                        </Box>
-                                        <Box textAlign="right" paddingBottom=".5rem">
-                                            <Button
-                                                onClick={handleAddComment}
-                                                variant="contained"
-                                                disabled={commentText.length === 0}
-                                                color="primary"
-                                                size="small"
-                                                sx={{
-                                                    fontSize: "12px",
-                                                    fontFamily: 'inherit'
-                                                }}
-                                            >
-                                                Comment
-                                            </Button>
-                                        </Box>
-                                    </Grid>
-                                    <Box marginTop="1rem" width="100%">
-                                        <CommentList postId={postId} />
-                                    </Box>
-                                </Box>)}
+                                <CommentList postId={postId} userId={userInfo?.id} />
+                            )}
                         </Box>
                     </Grid>
                 </Box>

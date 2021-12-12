@@ -7,7 +7,7 @@ import { ImageContainer } from './about-us.styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginBottom: '200px',
+        marginBottom: '100px',
         marginTop: '3rem',
         display: "flex",
         justifyContent: "center"
@@ -15,17 +15,35 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         margin: theme.spacing(2, 6),
     },
+    featureTitle: {
+        fontSize: '2.5rem !Important',
+        fontWeight: 'bolder',
+        color: '#222060',
+        marginBottom: '1rem',
+        fontFamily: 'inherit',
+        textAlign: 'center',
+        "@media (max-width: 800px)": {
+            fontSize: '1.9rem !Important'
+        }
+    },
+    featureText: {
+        lineHeight: 2,
+        padding: '10px',
+        fontFamily: 'inherit',
+        textAlign: 'left',
+        "@media (max-width: 800px)": {
+            fontSize: '0.8rem'
+        }
+    }
 }))
 
 const AboutUsPage = () => {
     const classes = useStyles();
     return (
-        <section style={{ marginTop: '500px' }}>
-            <Typography sx={{ fontSize: '3rem !Important', fontWeight: 800 }} mb='2rem' fontFamily='inherit' textAlign='center'>FEATURES</Typography>
+        <section style={{ marginTop: '400px' }}>
             <Box style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-around" }}>
                 <Box>
                     <Grid container component="main" className={classes.root}>
-
                         <Box
                             sx={{ margin: '20px', width: '500px' }}
                         >
@@ -36,13 +54,15 @@ const AboutUsPage = () => {
                                 square
                                 sx={{ margin: '20px', padding: '20px', width: '500px', display: "flex", flexDirection: "column" }}
                             >
-                                <Typography fontFamily='inherit' textAlign='left' sx={{ padding: '10px' }} >▹ USER AUTHENTICATION USING GOOGLE</Typography>
-                                <Typography fontFamily='inherit' textAlign='left' sx={{ padding: '10px' }} >▹ PERSONALIZED USER PROFILE</Typography>
-                                <Typography fontFamily='inherit' textAlign='left' sx={{ padding: '10px' }} >▹ POST / COMMENT / LIKES / DISLIKES</Typography>
-                                <Typography fontFamily='inherit' textAlign='left' sx={{ padding: '10px' }} >▹ SEND MESSAGES</Typography>
-                                <Typography fontFamily='inherit' textAlign='left' sx={{ padding: '10px' }} >▹ FOLLOW USERS</Typography>
-                                <Typography fontFamily='inherit' textAlign='left' sx={{ padding: '10px', lineHeight: '2rem' }} >▹ CREATE PERSONALIZED CRYPTOCURRENCY PORTFOLIO</Typography>
-                                <Typography fontFamily='inherit' textAlign='left' sx={{ padding: '10px' }} >▹ REAL-TIME CRYPTO PRICING AND OTHER CRYPTO INFO</Typography>
+                                <Typography className={classes.featureTitle}>FEATURES</Typography>
+                                <Typography className={classes.featureText}>▹ USER AUTHENTICATION USING GOOGLE, GITHUB, TWITTER</Typography>
+                                <Typography className={classes.featureText}>▹ PERSONALIZED USER PROFILE</Typography>
+                                <Typography className={classes.featureText}>▹ POSTS / COMMENTS / LIKES / DISLIKES</Typography>
+                                <Typography className={classes.featureText}>▹ SHARE POSTS AND TWEETS</Typography>
+                                <Typography className={classes.featureText}>▹ SEND MESSAGES</Typography>
+                                <Typography className={classes.featureText}>▹ FOLLOW USERS</Typography>
+                                <Typography className={classes.featureText}>▹ CREATE PERSONALIZED CRYPTOCURRENCY PORTFOLIO</Typography>
+                                <Typography className={classes.featureText}>▹ REAL-TIME CRYPTO PRICING, TWEETS ABOUT CRYPTO HOLDING AND OTHER CRYPTO INFO</Typography>
                             </Grid>
                         </Box>
                     </Grid>
@@ -52,10 +72,6 @@ const AboutUsPage = () => {
                 </ImageContainer>
             </Box>
         </section>
-
-
-
-
     )
 }
 

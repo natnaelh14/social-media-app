@@ -17,7 +17,7 @@ function Copyright() {
   return (
     <Typography style={{ fontFamily: 'inherit' }} variant="body2" color="textSecondary" align="center">
       {"Copyright © Crypto Connect "}
-      {new Date().getFullYear() }
+      {new Date().getFullYear()}
       {". All Rights Reserved."}
     </Typography>
   );
@@ -25,10 +25,13 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: '40px',
+    marginTop: '120px',
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
+    "@media (max-width: 1000px)": {
+      marginTop: "40px"
+    }
   },
   paper: {
     margin: theme.spacing(2, 6),
@@ -89,13 +92,13 @@ const SignIn = () => {
               <Typography className={classes.textFont} style={{ marginTop: '0.5rem', fontSize: '1.5rem' }} >
                 WELCOME TO CRYPTO CONNECT
               </Typography>
-              <Typography className={classes.textFont} style={{ marginTop: '0.5rem', fontSize: '1rem' }}>
+              <Typography className={classes.textFont} style={{ marginTop: '0.5rem', fontSize: '1.2rem' }}>
                 A cryptocurrency based social media application
               </Typography>
               <form className={classes.form} noValidate>
-              <GoogleLoginButton style={{ width: '300px'}} onClick={signInWithGoogle} />
-              <GithubLoginButton style={{ width: '300px'}} onClick={signInWithGithub} />
-              <TwitterLoginButton style={{ width: '300px'}} onClick={signInWithTwitter} />
+                <GoogleLoginButton style={{ width: '300px' }} onClick={signInWithGoogle} />
+                <GithubLoginButton style={{ width: '300px' }} onClick={signInWithGithub} />
+                <TwitterLoginButton style={{ width: '300px' }} onClick={signInWithTwitter} />
                 <Box mt={5}>
                   <Copyright />
                 </Box>
@@ -105,12 +108,8 @@ const SignIn = () => {
         </Grid>
         <ScrollArrow />
       </div>
-      {/* <Fade in={true} timeout={1000}>
-        <> */}
-          <AboutUsPage />
-          <Footer />
-        {/* </>
-      </Fade> */}
+      <AboutUsPage />
+      <Footer />
     </>
   );
 }

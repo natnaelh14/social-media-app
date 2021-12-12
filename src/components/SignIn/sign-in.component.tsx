@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { signInWithGoogle } from '../../firebase/firebase.utils';
 import { signInWithGithub } from '../../firebase/firebase.utils';
+import { signInWithTwitter } from '../../firebase/firebase.utils';
 import coinImage from './coin.jpeg';
 import AboutUsPage from '../AboutUs/about-us.component';
 import Footer from '../Footer/footer.component';
@@ -124,6 +125,23 @@ const SignIn = () => {
                   variant="contained"
                 >
                   SIGN IN WITH GITHUB
+                </Button>
+                <Button
+                  onClick={signInWithTwitter}
+                  disableElevation
+                  size="small"
+                  sx={{
+                    textTransform: "capitalize",
+                    padding: "6px 20px",
+                    marginBottom: '20px',
+                    background: "black",
+                    "&:hover": {
+                      background: "#333",
+                    },
+                  }}
+                  variant="contained"
+                >
+                  SIGN IN WITH TWITTER
                 </Button>
                 <Box mt={5}>
                   <Copyright />

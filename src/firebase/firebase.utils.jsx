@@ -29,6 +29,12 @@ const providerTwo = new firebase.auth.GithubAuthProvider();
 providerTwo.setCustomParameters({ prompt: "select_account" });
 export const signInWithGithub = () => auth.signInWithPopup(providerTwo);
 
+//TWITTER
+const providerThree = new firebase.auth.TwitterAuthProvider();
+// We want to trigger the google pop whenever we use the GoogleAuthProvider
+providerThree.setCustomParameters({ prompt: "select_account" });
+export const signInWithTwitter = () => auth.signInWithPopup(providerThree);
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   //If the userAuth object doesn't exist, we don't want to run the function
   if (!userAuth) return;

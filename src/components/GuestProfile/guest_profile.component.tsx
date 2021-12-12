@@ -315,7 +315,7 @@ const GuestProfile = () => {
                             </Box >
                             {(postsData?.posts && checkFriendData?.checkFriendship) &&
                                 postsData?.posts.map((post: any) => {
-                                    return <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} />
+                                    return <Post key={post.id} postId={post.id} userId={post.user_id} postTime={post.created_at} text={post.text} refetchPosts={() => {}} />
                                 }
                                 )
                             }

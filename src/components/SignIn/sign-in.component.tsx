@@ -8,6 +8,7 @@ import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { signInWithGoogle } from '../../firebase/firebase.utils';
 import { signInWithGithub } from '../../firebase/firebase.utils';
 import { signInWithTwitter } from '../../firebase/firebase.utils';
+import { GoogleLoginButton, GithubLoginButton, TwitterLoginButton } from 'react-social-login-buttons';
 import coinImage from './coin.jpeg';
 import AboutUsPage from '../AboutUs/about-us.component';
 import Footer from '../Footer/footer.component';
@@ -92,57 +93,9 @@ const SignIn = () => {
                 A cryptocurrency based social media application
               </Typography>
               <form className={classes.form} noValidate>
-                <Button
-                  onClick={signInWithGoogle}
-                  disableElevation
-                  size="small"
-                  sx={{
-                    textTransform: "capitalize",
-                    padding: "6px 20px",
-                    marginBottom: '20px',
-                    background: "black",
-                    "&:hover": {
-                      background: "#333",
-                    },
-                  }}
-                  variant="contained"
-                >
-                  SIGN IN WITH GOOGLE
-                </Button>
-                <Button
-                  onClick={signInWithGithub}
-                  disableElevation
-                  size="small"
-                  sx={{
-                    textTransform: "capitalize",
-                    padding: "6px 20px",
-                    marginBottom: '20px',
-                    background: "black",
-                    "&:hover": {
-                      background: "#333",
-                    },
-                  }}
-                  variant="contained"
-                >
-                  SIGN IN WITH GITHUB
-                </Button>
-                <Button
-                  onClick={signInWithTwitter}
-                  disableElevation
-                  size="small"
-                  sx={{
-                    textTransform: "capitalize",
-                    padding: "6px 20px",
-                    marginBottom: '20px',
-                    background: "black",
-                    "&:hover": {
-                      background: "#333",
-                    },
-                  }}
-                  variant="contained"
-                >
-                  SIGN IN WITH TWITTER
-                </Button>
+              <GoogleLoginButton style={{ width: '300px'}} onClick={signInWithGoogle} />
+              <GithubLoginButton style={{ width: '300px'}} onClick={signInWithGithub} />
+              <TwitterLoginButton style={{ width: '300px'}} onClick={signInWithTwitter} />
                 <Box mt={5}>
                   <Copyright />
                 </Box>

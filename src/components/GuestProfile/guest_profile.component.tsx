@@ -80,13 +80,13 @@ const GuestProfile = () => {
     }
 
     if (profileId && userInfo) {
-        var { data: checkFriendData } = useQuery(QUERY_CHECK_FRIENDSHIP, {
+        var { data: checkFriendData, refetch } = useQuery(QUERY_CHECK_FRIENDSHIP, {
             variables: {
                 follower: userInfo.id,
                 followed: profileId
             }
         })
-        var { data: checkFriendRequestData } = useQuery(QUERY_FRIEND_REQUEST, {
+        var { data: checkFriendRequestData, refetch: requestRefetch } = useQuery(QUERY_FRIEND_REQUEST, {
             variables: {
                 sender_id: userInfo.id,
                 receiver_id: profileId
@@ -109,6 +109,9 @@ const GuestProfile = () => {
                     follower_user_id: userInfo.id,
                     followed_user_id: profileId
                 }
+            }).then(() => {
+                refetch();
+                requestRefetch();
             })
         } catch (e) {
             return e;
@@ -122,6 +125,9 @@ const GuestProfile = () => {
                     sender_id: userInfo.id,
                     receiver_id: profileId
                 }
+            }).then(() => {
+                refetch();
+                requestRefetch();
             })
         } catch (e) {
             return e;

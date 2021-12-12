@@ -48,7 +48,8 @@ const useStyles = makeStyles((theme) => ({
   },
   textFont: {
     fontFamily: "inherit",
-    color: '#55595C'
+    color: '#55595C',
+    textAlign: 'center'
   },
   image: {
     "@media (max-width: 1300px)": {

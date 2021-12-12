@@ -26,10 +26,11 @@ type postProps = {
     postId: number,
     text: string,
     userId: string,
-    postTime: Date
+    postTime: Date,
+    refetchPosts: () => void
 };
 
-const Post = ({ postId, text, userId, postTime }: postProps) => {
+const Post = ({ postId, text, userId, postTime, refetchPosts }: postProps) => {
     const { loading: userLoading, error: userError, data } = useQuery(QUERY_USER, {
         variables: {
             id: userId
@@ -38,7 +39,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
     if (data) {
         var { userProfile } = data;
     }
-    const { data: likeData, loading: likesLoading, error: likesError } = useQuery(QUERY_REACTIONS_BY_POST, {
+    const { data: likeData, loading: likesLoading, error: likesError, refetch: likesRefetch } = useQuery(QUERY_REACTIONS_BY_POST, {
         variables: {
             reaction_type: 'LIKE',
             post_id: postId
@@ -47,7 +48,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
     if (likeData) {
         var { reactionsByPost: likeList } = likeData;
     }
-    const { data: dislikeData, loading: dislikesLoading, error: dislikesError } = useQuery(QUERY_REACTIONS_BY_POST, {
+    const { data: dislikeData, loading: dislikesLoading, error: dislikesError, refetch: dislikesRefetch } = useQuery(QUERY_REACTIONS_BY_POST, {
         variables: {
             reaction_type: 'DISLIKE',
             post_id: postId
@@ -66,7 +67,7 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
     const { user } = currentUser
     const userInfo: userProps = user
 
-    const { data: userPostData } = useQuery(QUERY_REACTIONS_BY_USER_POST, {
+    const { data: userPostData, refetch: userReactionRefetch } = useQuery(QUERY_REACTIONS_BY_USER_POST, {
         variables: {
             user_id: userInfo.id,
             post_id: postId
@@ -95,7 +96,9 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
 
     const handleDeletePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        await deletePost({ variables: { id: postId } });
+        await deletePost({ variables: { id: postId } }).then(() => {
+            refetchPosts()
+        })
     }
     const handleAddComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -120,6 +123,10 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                     post_id: postId,
                     reaction_type: Button.value
                 }
+            }).then(() => {
+                userReactionRefetch();
+                dislikesRefetch();
+                likesRefetch();
             })
         } catch (e) {
             return e;
@@ -132,6 +139,10 @@ const Post = ({ postId, text, userId, postTime }: postProps) => {
                     user_id: userInfo?.id,
                     post_id: postId
                 }
+            }).then(() => {
+                userReactionRefetch()
+                dislikesRefetch();
+                likesRefetch();
             })
         } catch (e) {
             return e;

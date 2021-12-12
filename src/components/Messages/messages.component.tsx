@@ -39,7 +39,6 @@ const Messages = () => {
     var userInfo: userProps = user
     var { loading: messageLoading, error: messageError, data, refetch } = useQuery(QUERY_MESSAGES, {
       variables: { sender_id: userInfo.id, receiver_id: messagesId },
-      pollInterval: 60000
     });
   }
   if (data) {
@@ -134,7 +133,7 @@ const Messages = () => {
                 </Box>
                 {messages && (
                   messages.map((msg: any, index: any) => {
-                    return <SingleMessage key={msg.id} msgId={msg.id} senderId={msg.sender_id} sentAt={msg.sent_at} text={msg.text} />
+                    return <SingleMessage key={msg.id} msgId={msg.id} senderId={msg.sender_id} sentAt={msg.sent_at} text={msg.text} refetchMessages={refetch} />
                   })
                 )}
               </Box>

@@ -11,7 +11,7 @@ type postListProps = {
 const CommentList = ({ postId }: postListProps) => {
 
 
-    const { error, loading, data } = useQuery(QUERY_COMMENTS, {
+    const { error, loading, data, refetch: commentsRefetch } = useQuery(QUERY_COMMENTS, {
         variables: { post_id: postId },
     });
     if (data) {
@@ -34,7 +34,7 @@ const CommentList = ({ postId }: postListProps) => {
                 <div>It is loading</div>
             )}
             {(commentArray) &&
-                commentArray.map((comment) => <Comment key={comment.id} commentId={comment.id} postId={comment.post_id} userId={comment.user_id} commentTime={comment.created_at} text={comment.text} />)}
+                commentArray.map((comment) => <Comment key={comment.id} commentId={comment.id} postId={comment.post_id} userId={comment.user_id} commentTime={comment.created_at} text={comment.text} commentsRefetch={commentsRefetch} />)}
         </>
     )
 }

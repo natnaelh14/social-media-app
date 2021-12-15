@@ -3,7 +3,7 @@
 ### ![alt text](https://img.shields.io/github/last-commit/natnael14/social-media-app)
 ### [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## Live Link
-http://crypto-connect-app.herokuapp.com/signin
+https://crypto-connect-app.herokuapp.com/signin
 ## Crypto Connect API Repo
 https://github.com/natnaelh14/social-media-api
 ## Description

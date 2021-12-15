@@ -54,7 +54,6 @@ class Routes extends Component<MyProps, {}> {
       // userAuth returns null when auth.signOut() is called
       if (userAuth) {
         try {
-          // console.log('who to follow', userAuth)
           const result = await client.query({
             query: QUERY_USER,
             variables: {

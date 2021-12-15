@@ -81,10 +81,9 @@ const AddModifyCrypto = ({
                             }}>
                                 <Autocomplete
                                     freeSolo
-                                    // id="free-solo-2-demo"
                                     disableClearable
                                     fullWidth
-                                    // sx={{ marginBottom: '3rem' }}
+                                    sx={{ paddingBottom: '1rem' }}
                                     options={coinsList.map((option) => option.name)}
                                     renderInput={(params) => (
                                         <TextField

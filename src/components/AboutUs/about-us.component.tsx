@@ -1,5 +1,5 @@
 import React from 'react';
-import { Fade, Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import feature from './feature.jpg';

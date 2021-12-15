@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { Box, typography } from "@mui/system";
+import { Box } from "@mui/system";
 import { Button, Grid, IconButton, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Link as RouteLink } from "react-router-dom";
-const Moment = require('moment')
+const Moment = require('moment');
 import { Fade } from "@mui/material";
 import { useAppSelector } from "../app/hooks";
 import { userProps } from '../index.types';

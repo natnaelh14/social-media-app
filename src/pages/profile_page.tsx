@@ -95,8 +95,8 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        console.log('grande', userData)
-    }, [userData])
+        userRefetch()
+    }, [])
 
     let pending = currentUserLoading || followerLoading || followingLoading || postsLoading || followingError || followerError || postsError || currentUserError || userLoading || userError
     let currentMood = userData?.userProfile?.status
@@ -194,7 +194,7 @@ const Profile = () => {
                                     {(userData?.userProfile?.city || userData?.userProfile?.state || userData?.userProfile?.country) && (
                                         <Box display="flex">
                                             <LocationOnIcon htmlColor="#555" />
-                                            <Typography fontFamily='inherit' sx={{ ml: "6px", color: "#555" }}>
+                                            <Typography fontFamily='inherit' sx={{ color: "#555" }}>
                                                 {userData?.userProfile?.city}, {userData?.userProfile?.state}, {userData?.userProfile?.country}
                                             </Typography>
                                         </Box>

@@ -22,13 +22,14 @@ const useStyles = makeStyles((theme) => ({
     },
     featureText: {
         lineHeight: 2,
-        textIndent: '-1.4em',
+        textIndent: '-2.5em',
         padding: '10px',
         fontFamily: 'inherit',
         textAlign: 'left',
         "&::before": {
             content: '▹',
             paddingRight: '1em',
+            marginLeft: '1em',
             color: 'red'
         },
         "@media (max-width: 1300px)": {

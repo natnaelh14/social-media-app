@@ -167,7 +167,7 @@ const LeftSidebar = () => {
                     fontSize: "18px",
                     fontWeight: 'bold'
                   }}
-                  primary="FRIEND REQUESTS"
+                  primary="FOLLOW REQUESTS"
                   secondary={friendRequestsData?.length ? `(${friendRequestsData?.length})` : ""}
                 />
               </Hidden>

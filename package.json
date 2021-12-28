@@ -61,13 +61,57 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint . --ext .js,.jsx,.tsx",
+    "lint:fix": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-unused-vars": "off",
+      "quotes": [
+        2,
+        "double",
+        {
+          "avoidEscape": true,
+          "allowTemplateLiterals": true
+        }
+      ],
+      "@typescript-eslint/quotes": [
+        "error",
+        "double",
+        {
+          "avoidEscape": true,
+          "allowTemplateLiterals": true
+        }
+      ],
+      "react/prop-types": "off",
+      "max-len": [
+        "error",
+        {
+          "code": 200
+        }
+      ],
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx",
+            ".tsx"
+          ]
+        }
+      ],
+      "no-nested-ternary": "off",
+      "no-case-declarations": "off",
+      "no-underscore-dangle": "off",
+      "no-console": "off",
+      "func-names": "off",
+      "import/prefer-default-export": "off"
+    }
   },
   "browserslist": {
     "production": [

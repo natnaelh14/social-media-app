@@ -5,36 +5,36 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Link as RouteLink } from "react-router-dom";
-const Moment = require('moment');
+const Moment = require("moment");
 import { Fade } from "@mui/material";
 import { useAppSelector } from "../app/hooks";
-import { userProps } from '../index.types';
+import { userProps } from "../index.types";
 import Post from "../components/Post/Post.component";
 import UpdateUserProfile from "../components/UpdateUserProfile/update_user_profile.component";
-import { QUERY_FOLLOWERS, QUERY_FOLLOWINGS, QUERY_POSTS, QUERY_USER } from '../utils/queries';
-import { useQuery } from '@apollo/client';
+import { QUERY_FOLLOWERS, QUERY_FOLLOWINGS, QUERY_POSTS, QUERY_USER } from "../utils/queries";
+import { useQuery } from "@apollo/client";
 import FollowModal from "../components/FollowModal/follow_modal.component";
-import cover from '../img/cover.jpeg';
-import { ProfileContainer } from './styles/profile_page.styles';
-import ProfilePageLoading from './loading/profile_page.loading';
-import noAvatar from '../img/no-avatar.png';
+import cover from "../img/cover.jpeg";
+import { ProfileContainer } from "./styles/profile_page.styles";
+import ProfilePageLoading from "./loading/profile_page.loading";
+import noAvatar from "../img/no-avatar.png";
 import Avatar from "@material-ui/core/Avatar";
-import RefreshIcon from '@mui/icons-material/Refresh';
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 const moodObj = (currentMood: string) => {
     switch (currentMood) {
-        case 'HAPPY':
-            return '😀';
-        case 'SAD':
-            return '😔';
-        case 'EXCITED':
-            return '😃';
-        case 'AMUSED':
-            return '🙂';
-        case 'OPTIMISTIC':
-            return '😊';
-        case 'FRUSTRATED':
-            return '😩';
+        case "HAPPY":
+            return "😀";
+        case "SAD":
+            return "😔";
+        case "EXCITED":
+            return "😃";
+        case "AMUSED":
+            return "🙂";
+        case "OPTIMISTIC":
+            return "😊";
+        case "FRUSTRATED":
+            return "😩";
         default:
             return "";
     }
@@ -58,13 +58,13 @@ const Profile = () => {
     });
 
     if (data) {
-        var { posts } = data;
+        const { posts } = data;
         var postsArray: Array<{
             id: number,
             user_id: string,
             text: string,
             created_at: Date
-        }> | undefined = [...posts].sort((a: any, b: any) => new Moment(b.created_at).format('YYYYMMDDHHMMSS') - new Moment(a.created_at).format('YYYYMMDDHHMMSS'));
+        }> | undefined = [...posts].sort((a: any, b: any) => new Moment(b.created_at).format("YYYYMMDDHHMMSS") - new Moment(a.created_at).format("YYYYMMDDHHMMSS"));
     }
 
     const { error: followerError, loading: followerLoading, data: followerData, refetch: followerRefetch } = useQuery(QUERY_FOLLOWERS, {
@@ -101,8 +101,8 @@ const Profile = () => {
         followerRefetch()
     }, [])
 
-    let pending = currentUserLoading || followerLoading || followingLoading || postsLoading || followingError || followerError || postsError || currentUserError || userLoading || userError
-    let currentMood = userData?.userProfile?.status
+    const pending = currentUserLoading || followerLoading || followingLoading || postsLoading || followingError || followerError || postsError || currentUserError || userLoading || userError
+    const currentMood = userData?.userProfile?.status
     
     return (
         <ProfileContainer>
@@ -112,7 +112,7 @@ const Profile = () => {
             <Fade in={true} timeout={1000}>
                 <Box 
                 sx={{ 
-                    padding: '20px',
+                    padding: "20px",
                     "@media (max-width: 1000px)": {
                         padding: "0px"
                       }
@@ -165,7 +165,7 @@ const Profile = () => {
                                         textTransform: "capitalize",
                                         padding: "6px 20px",
                                         background: "black",
-                                        fontFamily: 'inherit',
+                                        fontFamily: "inherit",
                                         "&:hover": {
                                             background: "#333",
                                         },
@@ -189,7 +189,7 @@ const Profile = () => {
                                 </Box>
                                 {userData?.userProfile?.handle && (
                                     <Typography fontFamily='inherit' sx={{ fontSize: "14px", color: "#555" }}>
-                                        {`@${userData?.userProfile?.handle?.trim().replace(/ /g, '').toLowerCase()}`}
+                                        {`@${userData?.userProfile?.handle?.trim().replace(/ /g, "").toLowerCase()}`}
                                     </Typography>
                                 )}
                                 <Typography fontFamily='inherit' fontSize="16px" color="#333" padding="10px 0">
@@ -220,7 +220,7 @@ const Profile = () => {
                                         >
                                             <DateRangeIcon htmlColor="#555" />
                                             <Typography fontFamily='inherit' sx={{ ml: "6px", color: "#555" }}>
-                                                {Moment(userData?.userProfile?.birth_date).format('MMMM Do YYYY')}
+                                                {Moment(userData?.userProfile?.birth_date).format("MMMM Do YYYY")}
                                             </Typography>
                                         </Box>
                                     )}
@@ -263,7 +263,7 @@ const Profile = () => {
                                     </Box>
                                 </Box>
                                 <Box display="flex" marginTop='1rem'>
-                                    <Typography fontFamily='inherit' color="#555" marginRight="1rem">Member Since {Moment(userData?.userProfile?.created_at).format('YYYY')}</Typography>
+                                    <Typography fontFamily='inherit' color="#555" marginRight="1rem">Member Since {Moment(userData?.userProfile?.created_at).format("YYYY")}</Typography>
                                 </Box>
                             </Box>
                             <Box borderBottom="1px solid #ccc">
@@ -281,7 +281,7 @@ const Profile = () => {
                                 </Typography>
                             </Box>
                             {postsArray && (
-                                <Box sx={{ display: 'flex', justifyContent: 'center' }} >
+                                <Box sx={{ display: "flex", justifyContent: "center" }} >
                                     <IconButton size="medium" onClick={() => refetch()} >
                                         <RefreshIcon fontSize="small" />
                                     </IconButton>

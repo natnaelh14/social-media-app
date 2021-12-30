@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Box } from "@mui/system";
 import { Grid, IconButton, Typography, Menu, MenuItem } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -18,6 +18,7 @@ type MsgProps = {
   text: string,
   refetchMessages: () => void
 }
+
 const SingleMessage = ({ msgId, senderId, sentAt, text, refetchMessages }: MsgProps) => {
 
   const currentUser = useAppSelector(state => state.currentUser)
@@ -33,13 +34,13 @@ const SingleMessage = ({ msgId, senderId, sentAt, text, refetchMessages }: MsgPr
   const [anchorEl, setAnchorEl] = useState<any>(null);
   const open = Boolean(anchorEl);
   const [deleteMessage, { }] = useMutation(DELETE_MESSAGE);
-  const handleDeletePost = async () => {
+  const handleDeleteMessage = async () => {
     try {
       await deleteMessage({
         variables: { id: msgId }
       })
       .then(() => {
-        refetchMessages()
+        refetchMessages();
       })
     } catch (e) {
       return e;
@@ -50,6 +51,7 @@ const SingleMessage = ({ msgId, senderId, sentAt, text, refetchMessages }: MsgPr
   };
   const handleClose = () => {
     setAnchorEl(null);
+    refetchMessages();
   };
 
   return (
@@ -110,7 +112,8 @@ const SingleMessage = ({ msgId, senderId, sentAt, text, refetchMessages }: MsgPr
                       <MenuItem
                         onClick={(e) => {
                           e.preventDefault();
-                          handleDeletePost();
+                          handleDeleteMessage();
+                          handleClose();
                         }}
                       >
                         DELETE

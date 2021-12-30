@@ -38,7 +38,7 @@ const Messages = () => {
   }
   if (user && messagesId) {
     var userInfo: userProps = user
-    var { loading: messageLoading, error: messageError, data, refetch } = useQuery(QUERY_MESSAGES, {
+    var { loading: messageLoading, error: messageError, data, refetch: messagesRefetch } = useQuery(QUERY_MESSAGES, {
       variables: { sender_id: userInfo.id, receiver_id: messagesId },
     });
   }
@@ -57,7 +57,7 @@ const Messages = () => {
             receiver_id: messagesId
           },
         }).then(() => {
-          refetch()
+          messagesRefetch()
         })
       }
       setMessageText("")
@@ -66,12 +66,8 @@ const Messages = () => {
     }
   }
   const getMessages = () => {
-    refetch()
+    messagesRefetch()
   }
-
-  useEffect(() => {
-    refetch()
-  }, [])
 
   return (
     <MessagesContainer>
@@ -135,11 +131,13 @@ const Messages = () => {
                     <RefreshIcon fontSize="small" />
                   </IconButton>
                 </Box>
-                {messages && (
-                  messages.map((msg: any, index: any) => {
-                    return <SingleMessage key={msg.id} msgId={msg.id} senderId={msg.sender_id} sentAt={msg.sent_at} text={msg.text} refetchMessages={refetch} />
-                  })
-                )}
+                <Box height="40vh" sx={{ overflowY: "scroll" }}>
+                  {messages && (
+                    messages.map((msg: any) => {
+                      return <SingleMessage key={msg.id} msgId={msg.id} senderId={msg.sender_id} sentAt={msg.sent_at} text={msg.text} refetchMessages={messagesRefetch} />
+                    })
+                  )};
+                </Box>
               </Box>
               <Box sx={{ width: "100%", marginTop: "30px" }}>
                 <TextField

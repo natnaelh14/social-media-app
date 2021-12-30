@@ -235,18 +235,22 @@ const GuestProfile = () => {
                                     <Typography textAlign='center' sx={{ fontSize: "14px", color: "#555" }}>
                                         @{userData?.userProfile?.handle.trim().replace(/ /g, "").toLowerCase()}
                                     </Typography>
-                                    <Box display="flex">
-                                        <LocationOnIcon htmlColor="#555" />
-                                        <Typography textAlign='center' sx={{ ml: "6px", color: "#555" }}>
-                                            {userData?.userProfile?.city}, {userData?.userProfile?.state}, {userData?.userProfile?.country}
-                                        </Typography>
-                                    </Box>
-                                    <Box display="flex">
-                                        <DateRangeIcon htmlColor="#555" />
-                                        <Typography sx={{ ml: "6px", color: "#555" }}>
-                                            {Moment(userData?.userProfile?.birth_date).format("MMMM Do YYYY")}
-                                        </Typography>
-                                    </Box>
+                                    {(userData?.userProfile?.city || userData?.userProfile?.state || userData?.userProfile?.country) && (
+                                        <Box display="flex">
+                                            <LocationOnIcon htmlColor="#555" />
+                                            <Typography textAlign='center' sx={{ ml: "6px", color: "#555" }}>
+                                                {userData?.userProfile?.city}, {userData?.userProfile?.state}, {userData?.userProfile?.country}
+                                            </Typography>
+                                        </Box>
+                                    )}
+                                    {userData?.userProfile?.birth_date && (
+                                        <Box display="flex" mt='0.5rem'>
+                                            <DateRangeIcon htmlColor="#555" />
+                                            <Typography sx={{ ml: "6px", color: "#555" }}>
+                                                {Moment(userData?.userProfile?.birth_date).format("MMMM Do YYYY")}
+                                            </Typography>
+                                        </Box>
+                                    )}
                                 </Box>
                                 <UserBioContainer>
                                     <Typography fontSize="16px" color="#333" textAlign='center' padding="10px 0">

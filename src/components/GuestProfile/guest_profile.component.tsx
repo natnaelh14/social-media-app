@@ -222,7 +222,7 @@ const GuestProfile = () => {
                                             FOLLOW
                                         </Button>
                                     )}
-                                    <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                    <Box sx={{ display: "flex", flexDirection: "row" }} mt='0.5rem'>
                                         <Typography fontFamily='inherit' variant="h6" mr="0.5rem" sx={{ fontWeight: "500" }}>
                                             {userData?.userProfile?.handle}
                                         </Typography>
@@ -236,7 +236,7 @@ const GuestProfile = () => {
                                         @{userData?.userProfile?.handle.trim().replace(/ /g, "").toLowerCase()}
                                     </Typography>
                                     {(userData?.userProfile?.city || userData?.userProfile?.state || userData?.userProfile?.country) && (
-                                        <Box display="flex">
+                                        <Box display="flex" mt='0.5rem'>
                                             <LocationOnIcon htmlColor="#555" />
                                             <Typography textAlign='center' sx={{ ml: "6px", color: "#555" }}>
                                                 {userData?.userProfile?.city}, {userData?.userProfile?.state}, {userData?.userProfile?.country}
@@ -315,7 +315,7 @@ const GuestProfile = () => {
                                     fontWeight="500"
                                     borderBottom={`4px solid black`}
                                 >
-                                    Posts
+                                    POSTS
                                 </Typography>
                             </Box >
                             {(postsData?.posts && checkFriendData?.checkFriendship) &&

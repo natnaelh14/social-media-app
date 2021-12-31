@@ -126,18 +126,20 @@ const Messages = () => {
                     <SingleMessageLoading />
                   </>
                 )}
-                <Box sx={{ display: "flex", justifyContent: "center" }} >
-                  <IconButton size="medium" onClick={getMessages} >
-                    <RefreshIcon fontSize="small" />
-                  </IconButton>
-                </Box>
-                <Box height="40vh" sx={{ overflowY: "scroll" }}>
-                  {messages && (
-                    messages.map((msg: any) => {
-                      return <SingleMessage key={msg.id} msgId={msg.id} senderId={msg.sender_id} sentAt={msg.sent_at} text={msg.text} refetchMessages={messagesRefetch} />
-                    })
-                  )};
-                </Box>
+                {messages && (
+                  <Box>
+                    <Box sx={{ display: "flex", justifyContent: "center" }} >
+                      <IconButton size="medium" onClick={getMessages} >
+                        <RefreshIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                    <Box height="40vh" sx={{ overflowY: "scroll" }}>
+                      {messages.map((msg: any) => {
+                        return <SingleMessage key={msg.id} msgId={msg.id} senderId={msg.sender_id} sentAt={msg.sent_at} text={msg.text} refetchMessages={messagesRefetch} />
+                      })}
+                    </Box>
+                  </Box>
+                )}
               </Box>
               <Box sx={{ width: "100%", marginTop: "30px" }}>
                 <TextField

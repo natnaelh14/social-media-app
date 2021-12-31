@@ -43,7 +43,7 @@ const PostList: React.FC = () => {
           <>
             <AddPost refetchPosts={refetch} />
             <Box height="90vh" sx={{ overflowY: "scroll" }}>
-              {(postsLoading || postsError || currentUserError || currentUserLoading) && (
+              {(postsLoading  || currentUserError || currentUserLoading) && (
                 <>
                   <PostLoading />
                   <PostLoading />

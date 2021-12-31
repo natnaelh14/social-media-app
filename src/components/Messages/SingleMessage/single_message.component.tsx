@@ -42,6 +42,7 @@ const SingleMessage = ({ msgId, senderId, sentAt, text, refetchMessages }: MsgPr
       .then(() => {
         refetchMessages();
       })
+      refetchMessages();
     } catch (e) {
       return e;
     }

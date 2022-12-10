@@ -101,7 +101,8 @@ const Profile = () => {
         followerRefetch()
     }, [])
 
-    const pending = currentUserLoading || followerLoading || followingLoading || postsLoading || followingError || followerError || postsError || currentUserError || userLoading || userError
+    // const pending = currentUserLoading || followerLoading || followingLoading || postsLoading || followingError || followerError || postsError || currentUserError || userLoading || userError
+    const pending = currentUserLoading || followerLoading || followingLoading || postsLoading || userLoading
     const currentMood = userData?.userProfile?.status
 
     return (

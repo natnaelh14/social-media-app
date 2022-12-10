@@ -49,7 +49,8 @@ const GuestProfile = () => {
     if (profileId === userInfo.id) {
         history.push("/home/profile");
     }
-    if (profileId) {
+    // ! TEST WORLD
+    // if (profileId) {
         var { loading: userLoading, error: userError, data: userData } = useQuery(QUERY_USER, {
             variables: {
                 id: profileId
@@ -70,7 +71,7 @@ const GuestProfile = () => {
                 id: profileId
             }
         });
-    }
+    // }
 
     if (followerData) {
         var { followers } = followerData;
@@ -79,20 +80,20 @@ const GuestProfile = () => {
         var { followings } = followingData;
     }
 
-    if (profileId && userInfo) {
+    // if (profileId && userInfo) {
         var { data: checkFriendData, refetch } = useQuery(QUERY_CHECK_FRIENDSHIP, {
             variables: {
-                follower: userInfo.id,
+                follower: userInfo?.id,
                 followed: profileId
             }
         })
         var { data: checkFriendRequestData, refetch: requestRefetch } = useQuery(QUERY_FRIEND_REQUEST, {
             variables: {
-                sender_id: userInfo.id,
+                sender_id: userInfo?.id,
                 receiver_id: profileId
             }
         })
-    }
+    // }
 
     const [openFollowingModal, setOpenFollowingModal] = React.useState(false);
     const [openFollowerModal, setOpenFollowerModal] = React.useState(false);
@@ -222,7 +223,7 @@ const GuestProfile = () => {
                                             FOLLOW
                                         </Button>
                                     )}
-                                    <Box sx={{ display: "flex", flexDirection: "row" }} mt='0.5rem'>
+                                    <Box sx={{ display: "flex", flexDirection: "row" }}>
                                         <Typography fontFamily='inherit' variant="h6" mr="0.5rem" sx={{ fontWeight: "500" }}>
                                             {userData?.userProfile?.handle}
                                         </Typography>
@@ -236,7 +237,7 @@ const GuestProfile = () => {
                                         @{userData?.userProfile?.handle.trim().replace(/ /g, "").toLowerCase()}
                                     </Typography>
                                     {(userData?.userProfile?.city || userData?.userProfile?.state || userData?.userProfile?.country) && (
-                                        <Box display="flex" mt='0.5rem'>
+                                        <Box display="flex">
                                             <LocationOnIcon htmlColor="#555" />
                                             <Typography textAlign='center' sx={{ ml: "6px", color: "#555" }}>
                                                 {userData?.userProfile?.city}, {userData?.userProfile?.state}, {userData?.userProfile?.country}
@@ -315,7 +316,7 @@ const GuestProfile = () => {
                                     fontWeight="500"
                                     borderBottom={`4px solid black`}
                                 >
-                                    POSTS
+                                    Posts
                                 </Typography>
                             </Box >
                             {(postsData?.posts && checkFriendData?.checkFriendship) &&

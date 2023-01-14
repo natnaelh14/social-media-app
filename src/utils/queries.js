@@ -234,3 +234,9 @@ export const QUERY_WHO_TO_FOLLOW_USERS = gql`
     }
   }
 `;
+
+export const QUERY_CHECK_CONNECTION = gql`
+  query Query {
+    checkConnection
+  }
+`;

@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { Grid, IconButton, Typography, TextField } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link as RouteLink } from "react-router-dom";
-const Moment = require("moment")
+import Moment from "moment";
 import { Fade } from "@mui/material";
 import { Link } from "react-router-dom";
 import { QUERY_MESSAGES } from "../../utils/queries";
@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 import { userProps } from "../../index.types";
 import { useAppSelector } from "../../app/hooks";
 import { QUERY_USER } from "../../utils/queries";
-import SingleMessage from "./SingleMessage/single_message.component"
+import SingleMessage from "./SingleMessage/single_message.component";
 import SendIcon from "@material-ui/icons/Send";
 import { ADD_MESSAGE } from "../../utils/mutations";
 import SingleMessageLoading from "./SingleMessage/single_message_loading.component";
@@ -23,33 +23,41 @@ import Avatar from "@material-ui/core/Avatar";
 import noAvatar from "../../img/no-avatar.png";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
-
 const Messages = () => {
   const { messagesId } = useParams<{ messagesId: string | undefined }>();
   // !COULD BE ERROR
   // if (messagesId) {
-    const currentUser = useAppSelector(state => state.currentUser)
-    var { loading: currentUserLoading, user } = currentUser
-    var { loading: guestLoading, data: { userProfile } } = useQuery(QUERY_USER, {
-      skip: !messagesId,
-      variables: { id: messagesId }
-    });
+  const currentUser = useAppSelector((state) => state.currentUser);
+  var { loading: currentUserLoading, user } = currentUser;
+  var {
+    loading: guestLoading,
+    data: { userProfile },
+  } = useQuery(QUERY_USER, {
+    skip: !messagesId,
+    variables: { id: messagesId },
+  });
   // }
   // if (guestData) {
   //   var { userProfile }: { userProfile: userProps } = guestData;
   // }
   // if (user && messagesId) {
-    var userInfo: userProps = user
-    var { loading: messageLoading, error: messageError, data: { messages }, refetch: messagesRefetch } = useQuery(QUERY_MESSAGES, {
-      skip: !userInfo?.id || !messagesId,
-      variables: { sender_id: userInfo?.id, receiver_id: messagesId },
-    });
+  var userInfo: userProps = user;
+  var {
+    loading: messageLoading,
+    error: messageError,
+    data: { messages },
+    refetch: messagesRefetch,
+  } = useQuery(QUERY_MESSAGES, {
+    skip: !userInfo?.id || !messagesId,
+    variables: { sender_id: userInfo?.id, receiver_id: messagesId },
+  });
   // }
   // if (data) {
   //   var { messages } = data;
   // }
   const [messageText, setMessageText] = useState<string>("");
-  const [addMessage, { data: addMessageData, loading, error }] = useMutation(ADD_MESSAGE)
+  const [addMessage, { data: addMessageData, loading, error }] =
+    useMutation(ADD_MESSAGE);
   const handleSendMessage = () => {
     try {
       if (messageText) {
@@ -57,20 +65,20 @@ const Messages = () => {
           variables: {
             text: messageText,
             sender_id: userInfo.id,
-            receiver_id: messagesId
+            receiver_id: messagesId,
           },
         }).then(() => {
-          messagesRefetch()
-        })
+          messagesRefetch();
+        });
       }
-      setMessageText("")
+      setMessageText("");
     } catch (e) {
       return e;
     }
-  }
+  };
   const getMessages = () => {
-    messagesRefetch()
-  }
+    messagesRefetch();
+  };
 
   return (
     <MessagesContainer>
@@ -87,10 +95,22 @@ const Messages = () => {
                   </RouteLink>
                 </Grid>
                 <Grid item>
-                  <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }} >
-                    {(!currentUserLoading) ? (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    {!currentUserLoading ? (
                       <Link to={`/home/profile/${userProfile.id}`}>
-                        <Avatar alt="messenger-image" style={{ height: "75px", width: "75px" }} src={userProfile?.avatar ? userProfile?.avatar : noAvatar} />
+                        <Avatar
+                          alt="messenger-image"
+                          style={{ height: "75px", width: "75px" }}
+                          src={
+                            userProfile?.avatar ? userProfile?.avatar : noAvatar
+                          }
+                        />
                       </Link>
                     ) : (
                       <Skeleton
@@ -100,23 +120,23 @@ const Messages = () => {
                         containerClassName="avatar-skeleton"
                       />
                     )}
-                    {(!userProfile.avatar || currentUserLoading) ? (
+                    {!userProfile.avatar || currentUserLoading ? (
                       <>
-                        <Skeleton
-                          width={100}
-                        />
-                        <Skeleton
-                          width={100}
-                        />
+                        <Skeleton width={100} />
+                        <Skeleton width={100} />
                       </>
                     ) : (
                       <>
-                        <Typography mt='0.5rem' fontFamily='inherit'>{userProfile?.handle.toUpperCase()}</Typography>
-                        <Typography fontFamily='inherit'>
-                          {`@${userProfile?.handle.trim().replace(/ /g, "").toLowerCase()}`}
+                        <Typography mt="0.5rem" fontFamily="inherit">
+                          {userProfile?.handle.toUpperCase()}
+                        </Typography>
+                        <Typography fontFamily="inherit">
+                          {`@${userProfile?.handle
+                            .trim()
+                            .replace(/ /g, "")
+                            .toLowerCase()}`}
                         </Typography>
                       </>
-
                     )}
                   </Box>
                 </Grid>
@@ -129,17 +149,26 @@ const Messages = () => {
                     <SingleMessageLoading />
                   </>
                 )}
-                <Box sx={{ display: "flex", justifyContent: "center" }} >
-                  <IconButton size="medium" onClick={getMessages} >
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                  <IconButton size="medium" onClick={getMessages}>
                     <RefreshIcon fontSize="small" />
                   </IconButton>
                 </Box>
                 <Box height="40vh" sx={{ overflowY: "scroll" }}>
-                  {messages && (
+                  {messages &&
                     messages.map((msg: any) => {
-                      return <SingleMessage key={msg.id} msgId={msg.id} senderId={msg.sender_id} sentAt={msg.sent_at} text={msg.text} refetchMessages={messagesRefetch} />
-                    })
-                  )};
+                      return (
+                        <SingleMessage
+                          key={msg.id}
+                          msgId={msg.id}
+                          senderId={msg.sender_id}
+                          sentAt={msg.sent_at}
+                          text={msg.text}
+                          refetchMessages={messagesRefetch}
+                        />
+                      );
+                    })}
+                  ;
                 </Box>
               </Box>
               <Box sx={{ width: "100%", marginTop: "30px" }}>
@@ -151,10 +180,13 @@ const Messages = () => {
                   multiline
                   rows={3}
                   style={{ fontFamily: "inherit" }}
-                  fullWidth />
+                  fullWidth
+                />
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <IconButton onClick={handleSendMessage} >
-                    <SendIcon style={{ width: 40, height: 40, color: "#000000" }} />
+                  <IconButton onClick={handleSendMessage}>
+                    <SendIcon
+                      style={{ width: 40, height: 40, color: "#000000" }}
+                    />
                   </IconButton>
                 </div>
               </Box>
@@ -163,7 +195,7 @@ const Messages = () => {
         </div>
       </Fade>
     </MessagesContainer>
-  )
-}
+  );
+};
 
 export default Messages;

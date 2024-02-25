@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { getCurrentUser } from "../../redux/user.selectors";
-import { ReactComponent as Logo } from "../../assets/logo.svg";
+import Logo from "../../assets/logo.svg";
 import { auth } from "../../firebase/firebase.utils";
 import {
   HeaderContainer,

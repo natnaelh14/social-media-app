@@ -4,7 +4,7 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { ReactComponent as Logo } from "../../assets/logo.svg";
+import Logo from "../../assets/logo.svg";
 import { signInWithGoogle } from "../../firebase/firebase.utils";
 import { signInWithGithub } from "../../firebase/firebase.utils";
 import { signInWithTwitter } from "../../firebase/firebase.utils";

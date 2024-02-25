@@ -8,12 +8,14 @@ import {
   ApolloProvider,
   createHttpLink,
 } from "@apollo/client";
-const { store } = require("./redux/store.ts");
+import { store } from "./redux/store";
 import { Provider } from "react-redux";
 //Enable apollo devtools, if  production is set to false
 export const client = new ApolloClient({
   //New instance of ApolloClient
-  link: createHttpLink({ uri: `${process.env.REACT_APP_BASE_URL}/graphql` }),
+  link: createHttpLink({
+    uri: `${import.meta.env.REACT_APP_BASE_URL}/graphql`,
+  }),
   cache: new InMemoryCache(), //New instance of InMemoryCache
   connectToDevTools: true,
 });

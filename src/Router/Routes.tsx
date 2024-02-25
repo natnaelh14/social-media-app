@@ -6,7 +6,12 @@ import Header from "../components/Header/header.component";
 import SignIn from "../components/SignIn/sign-in.component";
 import LeftSidebar from "../components/LeftSideBar/left-sidebar.component";
 import RightSidebar from "../components/RightSideBar/right-sidebar.component";
-import { BrowserRouter as Switch, Route, Router, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Switch,
+  Route,
+  Router,
+  redirect,
+} from "react-router-dom";
 import PostList from "../components/PostList/post-list.component";
 import { FeedContainer } from "./Router.styles";
 import { setCurrentUser } from "../redux/actions/userActions";
@@ -15,7 +20,11 @@ import { getCurrentUser } from "../redux/user.selectors";
 import { auth, createUserProfileDocument } from "../firebase/firebase.utils";
 import { gql } from "@apollo/client";
 import { client } from "../index";
-import { QUERY_USER, QUERY_POSTS_BY_FOLLOWING, QUERY_FRIEND_REQUEST } from "../utils/queries";
+import {
+  QUERY_USER,
+  QUERY_POSTS_BY_FOLLOWING,
+  QUERY_FRIEND_REQUEST,
+} from "../utils/queries";
 import { CREATE_USER_PROFILE, FRIEND_REQUEST } from "../utils/mutations";
 import GuestProfile from "../components/GuestProfile/guest_profile.component";
 import ProfilePage from "../pages/profile_page";
@@ -35,14 +44,14 @@ type MyProps = {
 };
 
 const QUERY_POSTS = gql`
-query posts($user_id: ID!) {
-  posts(user_id: $user_id) {
-    id
-    user_id
-    text
-    created_at
+  query posts($user_id: ID!) {
+    posts(user_id: $user_id) {
+      id
+      user_id
+      text
+      created_at
+    }
   }
-}
 `;
 
 class Routes extends Component<MyProps, unknown> {
@@ -50,70 +59,83 @@ class Routes extends Component<MyProps, unknown> {
 
   componentDidMount = () => {
     const { listPosts, listPostsByFollowing, setCurrentUser } = this.props;
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       // userAuth returns null when auth.signOut() is called
       if (userAuth) {
         try {
           const result = await client.query({
             query: QUERY_USER,
             variables: {
-              id: userAuth.uid
-            }
-          })
-          if (!(result?.data?.userProfile)) {
+              id: userAuth.uid,
+            },
+          });
+          if (!result?.data?.userProfile) {
             await client.mutate({
               mutation: CREATE_USER_PROFILE,
               variables: {
                 id: userAuth.uid,
                 email: userAuth.email,
-                handle: userAuth.displayName
-              }
-            })
+                handle: userAuth.displayName,
+              },
+            });
           }
         } catch (e) {
-          console.log("Unable to create a user account")
+          console.log("Unable to create a user account");
         }
         const userRef: any = await createUserProfileDocument(userAuth);
         //From this, we are going to get back the first state from our data.
         userRef.onSnapshot(async (snapShot: any) => {
           //We actually don't get any data, until we use the data method.
-          const { data: { posts: postsData } } = await client.query({
+          const {
+            data: { posts: postsData },
+          } = await client.query({
             query: QUERY_POSTS,
             variables: {
-              user_id: userAuth.uid
-            }
-          })
-          listPosts(postsData)
-          const { data: { postsByFollowing: postsDataByFollowing } } = await client.query({
+              user_id: userAuth.uid,
+            },
+          });
+          listPosts(postsData);
+          const {
+            data: { postsByFollowing: postsDataByFollowing },
+          } = await client.query({
             query: QUERY_POSTS_BY_FOLLOWING,
             variables: {
-              user_id: userAuth.uid
-            }
-          })
+              user_id: userAuth.uid,
+            },
+          });
           const { data } = await client.query({
             query: QUERY_FRIEND_REQUEST,
             variables: {
               sender_id: "chG0WmOFPheLzl528legA3iIpbO2",
-              receiver_id: userAuth.uid
-            }
-          })
-          if(!data?.friendRequest && !(userAuth.uid === "chG0WmOFPheLzl528legA3iIpbO2")) {
+              receiver_id: userAuth.uid,
+            },
+          });
+          if (
+            !data?.friendRequest &&
+            !(userAuth.uid === "chG0WmOFPheLzl528legA3iIpbO2")
+          ) {
             await client.mutate({
               mutation: FRIEND_REQUEST,
               variables: {
                 sender_id: "chG0WmOFPheLzl528legA3iIpbO2",
                 receiver_id: userAuth.uid,
-              }
-            })
+              },
+            });
           }
-          listPostsByFollowing(postsDataByFollowing)
-          const { data: { userProfile } } = await client.query({
+          listPostsByFollowing(postsDataByFollowing);
+          const {
+            data: { userProfile },
+          } = await client.query({
             query: QUERY_USER,
             variables: {
-              id: userAuth.uid
-            }
-          })
-          setCurrentUser({ id: snapShot.id, ...snapShot.data(), ...userProfile });
+              id: userAuth.uid,
+            },
+          });
+          setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data(),
+            ...userProfile,
+          });
         });
       }
       setCurrentUser(userAuth);
@@ -130,53 +152,113 @@ class Routes extends Component<MyProps, unknown> {
       <Router history={history}>
         <Header />
         <Switch>
-          <Route exact path="/signin" >
-            {this.props.currentUser === null ? <SignIn /> : Object.keys(this.props.currentUser).length ? <Redirect to="/home/feed" /> : <SignIn />}
+          <Route exact path="/signin">
+            {this.props.currentUser === null ? (
+              <SignIn />
+            ) : Object.keys(this.props.currentUser).length ? (
+              redirect("/home/feed")
+            ) : (
+              <SignIn />
+            )}
           </Route>
           <Route exact path="/">
-            {this.props.currentUser === null ? <SignIn /> : Object.keys(this.props.currentUser).length ? <Redirect to="/home/feed" /> : <SignIn />}
+            {this.props.currentUser === null ? (
+              <SignIn />
+            ) : Object.keys(this.props.currentUser).length ? (
+              <Redirect to="/home/feed" />
+            ) : (
+              <SignIn />
+            )}
           </Route>
           <FeedContainer>
             <Route path="/home">
-              {this.props.currentUser ? <LeftSidebar /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <LeftSidebar />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
             <Route exact path="/home/messages">
-              {this.props.currentUser ? <MessagePage /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <MessagePage />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
             <Route exact path="/home/messages/:messagesId">
-              {this.props.currentUser ? <Messages /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <Messages />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
             <Route exact path="/home/profile">
-              {this.props.currentUser ? <ProfilePage /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <ProfilePage />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
             <Route exact path="/home/profile/:profileId">
-              {this.props.currentUser ? <GuestProfile /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <GuestProfile />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
             <Route exact path="/home/explore">
-              {this.props.currentUser ? <ExplorePage /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <ExplorePage />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
             <Route exact path="/home/crypto">
-              {this.props.currentUser ? <CryptoPage /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <CryptoPage />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
             <Route exact path="/home/notifications">
-              {this.props.currentUser ? <NotificationPage /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <NotificationPage />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
             <Route exact path="/home/chat">
-              {this.props.currentUser ? <ChatPage /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <ChatPage />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
             <Route exact path="/home/feed">
-              {this.props.currentUser ? <PostList /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <PostList />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
             <Route exact path="/home/requests">
-              {this.props.currentUser ? <FriendRequests /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <FriendRequests />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
             <Route path="/home">
-              {this.props.currentUser ? <RightSidebar /> : <Redirect to="/signin" />}
+              {this.props.currentUser ? (
+                <RightSidebar />
+              ) : (
+                <Redirect to="/signin" />
+              )}
             </Route>
           </FeedContainer>
         </Switch>
       </Router>
-    )
+    );
   }
 }
 
@@ -187,10 +269,7 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   setCurrentUser: (user: any) => dispatch(setCurrentUser(user)),
   listPosts: (posts: any) => dispatch(listPosts(posts)),
-  listPostsByFollowing: (posts: any) => dispatch(listPostsByFollowing(posts))
+  listPostsByFollowing: (posts: any) => dispatch(listPostsByFollowing(posts)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Routes);
+export default connect(mapStateToProps, mapDispatchToProps)(Routes);

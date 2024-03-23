@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { createMemoryHistory } from "history";
 const history = createMemoryHistory();
 import Header from "../components/Header/header.component";
-import SignIn from "../components/SignIn/sign-in.component";
+import { SignIn } from "../components/SignIn/SignIn";
 import LeftSidebar from "../components/LeftSideBar/left-sidebar.component";
 import RightSidebar from "../components/RightSideBar/right-sidebar.component";
 import {

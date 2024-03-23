@@ -7,7 +7,7 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbDownAltOutlinedIcon from "@mui/icons-material/ThumbDownAltOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IosShareIcon from "@mui/icons-material/IosShare";
-const Moment = require("moment");
+import Moment from "moment";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_USER, QUERY_REACTIONS_BY_COMMENT, QUERY_REACTIONS_BY_USER_COMMENT } from "../../utils/queries";
 import { DELETE_COMMENT, ADD_REACTION_COMMENT, DELETE_REACTION_COMMENT } from "../../utils/mutations";

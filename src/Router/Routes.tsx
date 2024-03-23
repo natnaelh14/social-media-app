@@ -6,12 +6,7 @@ import Header from "../components/Header/header.component";
 import { SignIn } from "../components/SignIn/SignIn";
 import LeftSidebar from "../components/LeftSideBar/left-sidebar.component";
 import RightSidebar from "../components/RightSideBar/right-sidebar.component";
-import {
-  BrowserRouter as Switch,
-  Route,
-  Router,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Switch, Route, Router, Redirect } from "react-router-dom";
 import PostList from "../components/PostList/post-list.component";
 import { FeedContainer } from "./Router.styles";
 import { setCurrentUser } from "../redux/actions/userActions";
@@ -152,14 +147,8 @@ class Routes extends Component<MyProps, unknown> {
       <Router history={history}>
         <Header />
         <Switch>
-          <Route exact path="/signin">
-            {this.props.currentUser === null ? (
-              <SignIn />
-            ) : Object.keys(this.props.currentUser).length ? (
-              <Redirect to="/home/feed" />
-            ) : (
-              <SignIn />
-            )}
+          <Route exact path="/signin" >
+            {this.props.currentUser === null ? <SignIn /> : Object.keys(this.props.currentUser).length ? <Redirect to="/home/feed" /> : <SignIn />}
           </Route>
           <Route exact path="/">
             {this.props.currentUser === null ? (

@@ -1,11 +1,6 @@
-import React from "react";
 import "./App.scss";
-import Routes from "../Router/Routes.tsx";
+import RoutesI from "../Router/RoutesI";
 
-const App = () => (
-  <div className="App">
-    <Routes />
-  </div>
-);
+const App = () => <div className="App">{<RoutesI />}</div>;
 
 export default App;

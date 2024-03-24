@@ -25,7 +25,7 @@ const Header = (props: any) => {
   return (
     <HeaderContainer>
       <LogoContainer to="/home/feed">
-        <Logo className="logo" />
+        <img src={Logo} alt="" />
       </LogoContainer>
       <ConnectionContainer>
         {connectionError ? (

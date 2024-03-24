@@ -1,17 +1,12 @@
-import React, { Component } from "react";
+import { Fragment, Component } from "react";
 import { connect } from "react-redux";
 import { createMemoryHistory } from "history";
 const history = createMemoryHistory();
 import Header from "../components/Header/header.component";
-import { SignIn } from "../components/SignIn/SignIn";
+import SignIn from "../components/SignIn/SignIn";
 import LeftSidebar from "../components/LeftSideBar/left-sidebar.component";
 import RightSidebar from "../components/RightSideBar/right-sidebar.component";
-import {
-  BrowserRouter as Switch,
-  Route,
-  Router,
-  redirect,
-} from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import PostList from "../components/PostList/post-list.component";
 import { FeedContainer } from "./Router.styles";
 import { setCurrentUser } from "../redux/actions/userActions";
@@ -54,7 +49,7 @@ const QUERY_POSTS = gql`
   }
 `;
 
-class Routes extends Component<MyProps, unknown> {
+class RoutesI extends Component<MyProps, unknown> {
   unsubscribeFromAuth: any = null;
 
   componentDidMount = () => {
@@ -149,115 +144,167 @@ class Routes extends Component<MyProps, unknown> {
 
   render() {
     return (
-      <Router history={history}>
+      <Fragment>
         <Header />
-        <Switch>
-          <Route exact path="/signin">
-            {this.props.currentUser === null ? (
-              <SignIn />
-            ) : Object.keys(this.props.currentUser).length ? (
-              redirect("/home/feed")
-            ) : (
-              <SignIn />
-            )}
-          </Route>
-          <Route exact path="/">
-            {this.props.currentUser === null ? (
-              <SignIn />
-            ) : Object.keys(this.props.currentUser).length ? (
-              <Redirect to="/home/feed" />
-            ) : (
-              <SignIn />
-            )}
-          </Route>
-          <FeedContainer>
-            <Route path="/home">
-              {this.props.currentUser ? (
+        <Routes>
+          <Route
+            path="/signin"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
+                <Navigate to="/home/feed" replace />
+              ) : (
+                <SignIn />
+              )
+            }
+          />
+          <Route
+            path="/"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
+                <Navigate to="/home/feed" replace />
+              ) : (
+                <SignIn />
+              )
+            }
+          />
+          {/* <FeedContainer> */}
+          <Route
+            path="/home"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <LeftSidebar />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-            <Route exact path="/home/messages">
-              {this.props.currentUser ? (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/home/messages"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <MessagePage />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-            <Route exact path="/home/messages/:messagesId">
-              {this.props.currentUser ? (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/home/messages/:messagesId"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <Messages />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-            <Route exact path="/home/profile">
-              {this.props.currentUser ? (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/home/profile"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <ProfilePage />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-            <Route exact path="/home/profile/:profileId">
-              {this.props.currentUser ? (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/home/profile/:profileId"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <GuestProfile />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-            <Route exact path="/home/explore">
-              {this.props.currentUser ? (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/home/explore"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <ExplorePage />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-            <Route exact path="/home/crypto">
-              {this.props.currentUser ? (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/home/crypto"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <CryptoPage />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-            <Route exact path="/home/notifications">
-              {this.props.currentUser ? (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/home/notifications"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <NotificationPage />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-            <Route exact path="/home/chat">
-              {this.props.currentUser ? (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/home/chat"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <ChatPage />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-            <Route exact path="/home/feed">
-              {this.props.currentUser ? (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/home/feed"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <PostList />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-            <Route exact path="/home/requests">
-              {this.props.currentUser ? (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/home/requests"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <FriendRequests />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-            <Route path="/home">
-              {this.props.currentUser ? (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/home"
+            element={
+              this.props.currentUser &&
+              Object.keys(this.props.currentUser)?.length ? (
                 <RightSidebar />
               ) : (
-                <Redirect to="/signin" />
-              )}
-            </Route>
-          </FeedContainer>
-        </Switch>
-      </Router>
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          {/* </FeedContainer> */}
+        </Routes>
+      </Fragment>
     );
   }
 }
@@ -272,4 +319,4 @@ const mapDispatchToProps = (dispatch: any) => ({
   listPostsByFollowing: (posts: any) => dispatch(listPostsByFollowing(posts)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Routes);
+export default connect(mapStateToProps, mapDispatchToProps)(RoutesI);

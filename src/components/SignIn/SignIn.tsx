@@ -1,15 +1,16 @@
-import Logo from "../../assets/logo.svg";
-import { signInWithGoogle } from "../../firebase/firebase.utils";
-import { signInWithGithub } from "../../firebase/firebase.utils";
-import { signInWithTwitter } from "../../firebase/firebase.utils";
+import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import {
-  GoogleLoginButton,
   GithubLoginButton,
+  GoogleLoginButton,
   TwitterLoginButton,
 } from "react-social-login-buttons";
-import { AboutUs } from "../AboutUs/AboutUs";
-import { Footer } from "../Footer/Footer";
-import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+import { AboutUs } from "~/components/AboutUs/AboutUs";
+import { Footer } from "~/components/Footer/Footer";
+import {
+  signInWithGithub,
+  signInWithGoogle,
+  signInWithTwitter,
+} from "~/firebase/firebase.utils";
 import heroOne from "./hero-01.jpg";
 import heroTwo from "./hero-02.jpg";
 
@@ -19,7 +20,7 @@ const SignIn = () => {
       <Parallax pages={3}>
         <ParallaxLayer
           offset={0}
-          speed={1}
+          speed={0.5}
           factor={1}
           className="flex items-center justify-center lg:justify-end"
           style={{
@@ -27,9 +28,9 @@ const SignIn = () => {
             backgroundSize: "cover",
           }}
         >
-          <div className="flex flex-col items-center p-20 gap-2 bg-[#001219]/25 lg:backdrop-blur-0 lg:bg-transparent backdrop-blur-md rounded-2xl">
-            <img src={Logo} alt="" />
-            <h1 className="text-center text-white">
+          <div className="flex flex-col items-center p-20 gap-4 bg-[#001219]/25 lg:backdrop-blur-0 lg:bg-transparent backdrop-blur-md rounded-2xl">
+            <img src="/logo.svg" alt="" />
+            <h1 className="text-center text-white lg:text-4xl">
               Welcome to Crypto Connect
             </h1>
             <p className="text-center text-white">
@@ -51,7 +52,7 @@ const SignIn = () => {
         </ParallaxLayer>
         <ParallaxLayer
           offset={1}
-          speed={1}
+          speed={0.5}
           factor={1}
           className="flex items-center justify-center lg:justify-end"
           style={{
@@ -63,7 +64,7 @@ const SignIn = () => {
         >
           <AboutUs />
         </ParallaxLayer>
-        <ParallaxLayer offset={2} speed={1} factor={1}>
+        <ParallaxLayer offset={2} speed={0.5} factor={1}>
           <Footer />
         </ParallaxLayer>
       </Parallax>

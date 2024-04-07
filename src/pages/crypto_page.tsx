@@ -6,7 +6,7 @@ import CryptoCurrency from "../components/Cryprocurrency/cryptocurrency.componen
 import { Grid, Typography, Fade, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import CryptoDoughnut from "../components/CryptoDoughnut/crypto_doughnut.component";
-import AddModifyCrypto from "../components/AddModifyCrypto/add_modify_crypto.component";
+import AddModifyCrypto from "../components/AddModifyCrypto/AddModifyCrypto";
 import { userProps } from "../index.types";
 import { useAppSelector } from "../app/hooks";
 import { useQuery } from "@apollo/client";

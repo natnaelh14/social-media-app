@@ -1,17 +1,17 @@
+import { useQuery } from "@apollo/client";
 import { connect } from "react-redux";
-import { getCurrentUser } from "../../redux/user.selectors";
+import { useAppSelector } from "../../app/hooks";
 import Logo from "../../assets/logo.svg";
-import { auth } from "../../firebase/firebase.utils";
+import { auth } from "../../firebase/utils";
+import { getCurrentUser } from "../../redux/user.selectors";
+import { QUERY_CHECK_CONNECTION } from "../../utils/queries";
 import {
+  ConnectionContainer,
   HeaderContainer,
   LogoContainer,
-  OptionsContainer,
-  ConnectionContainer,
   OptionTag,
+  OptionsContainer,
 } from "./header.styles";
-import { useAppSelector } from "../../app/hooks";
-import { QUERY_CHECK_CONNECTION } from "../../utils/queries";
-import { useQuery } from "@apollo/client";
 
 const Header = (props: any) => {
   const currentUser = useAppSelector((state) => state.currentUser);

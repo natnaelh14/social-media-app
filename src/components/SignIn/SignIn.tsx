@@ -10,7 +10,7 @@ import {
   signInWithGithub,
   signInWithGoogle,
   signInWithTwitter,
-} from "~/firebase/firebase.utils";
+} from "~/firebase/utils";
 import heroOne from "./hero-01.jpg";
 import heroTwo from "./hero-02.jpg";
 

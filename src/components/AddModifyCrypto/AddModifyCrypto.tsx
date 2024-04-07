@@ -1,23 +1,23 @@
-import { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import CloseIcon from "@mui/icons-material/Close";
 import {
+  Autocomplete,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  Autocomplete,
   DialogTitle,
   IconButton,
-  Typography,
   TextField,
+  Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import NumberFormat from "react-number-format";
 import { Box } from "@mui/system";
-import { coinsList } from "./coin";
-import { QUERY_CRYPTOS } from "~/utils/queries";
-import { useQuery, useMutation } from "@apollo/client";
+import { useState } from "react";
+import NumberFormat from "react-number-format";
 import { ADD_CRYPTO } from "~/utils/mutations";
+import { QUERY_CRYPTOS } from "~/utils/queries";
 import CryptoUpdateInput from "./CryptoUpdateInput/crypto_update_input.component";
+import { coinsList } from "./coin";
 
 type ModalProps = {
   open: boolean;

@@ -1,35 +1,36 @@
-import { Fragment, Component } from "react";
-import { connect } from "react-redux";
-import { createMemoryHistory } from "history";
-const history = createMemoryHistory();
-import Header from "../components/Header/header.component";
-import SignIn from "../components/SignIn/SignIn";
-import LeftSidebar from "../components/LeftSideBar/left-sidebar.component";
-import RightSidebar from "../components/RightSideBar/right-sidebar.component";
-import { Navigate, Route, Routes } from "react-router-dom";
-import PostList from "../components/PostList/post-list.component";
-import { FeedContainer } from "./Router.styles";
-import { setCurrentUser } from "../redux/actions/userActions";
-import { listPosts, listPostsByFollowing } from "../redux/actions/postActions";
-import { getCurrentUser } from "../redux/user.selectors";
-import { auth, createUserProfileDocument } from "../firebase/firebase.utils";
 import { gql } from "@apollo/client";
-import { client } from "../index";
+import { createMemoryHistory } from "history";
+import { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { Navigate, Route, Routes } from "react-router-dom";
+import FriendRequests from "~/components/FriendRequests/friend_requests.component";
+import GuestProfile from "~/components/GuestProfile/guest_profile.component";
+import Header from "~/components/Header/Header";
+import LeftSidebar from "~/components/LeftSideBar/LeftSideBar";
+import Messages from "~/components/Messages/messages.component";
+import PostList from "~/components/PostList/PostList";
+import RightSidebar from "~/components/RightSideBar/RightSideBar";
+import SignIn from "~/components/SignIn/SignIn";
+import ChatPage from "~/pages/chat_page";
+import CryptoPage from "~/pages/crypto_page";
+import ExplorePage from "~/pages/explore_page";
+import MessagePage from "~/pages/message_page";
+import NotificationPage from "~/pages/notification_page";
+import ProfilePage from "~/pages/profile_page";
 import {
-  QUERY_USER,
-  QUERY_POSTS_BY_FOLLOWING,
   QUERY_FRIEND_REQUEST,
-} from "../utils/queries";
+  QUERY_POSTS_BY_FOLLOWING,
+  QUERY_USER,
+} from "~/utils/queries";
+import { auth, createUserProfileDocument } from "../firebase/utils";
+import { client } from "../index";
+import { listPosts, listPostsByFollowing } from "../redux/actions/postActions";
+import { setCurrentUser } from "../redux/actions/userActions";
+import { getCurrentUser } from "../redux/user.selectors";
 import { CREATE_USER_PROFILE, FRIEND_REQUEST } from "../utils/mutations";
-import GuestProfile from "../components/GuestProfile/guest_profile.component";
-import ProfilePage from "../pages/profile_page";
-import CryptoPage from "../pages/crypto_page";
-import ChatPage from "../pages/chat_page";
-import ExplorePage from "../pages/explore_page";
-import NotificationPage from "../pages/notification_page";
-import MessagePage from "../pages/message_page";
-import Messages from "../components/Messages/messages.component";
-import FriendRequests from "../components/FriendRequests/friend_requests.component";
+import { FeedContainer } from "./Router.styles";
+
+const history = createMemoryHistory();
 
 type MyProps = {
   setCurrentUser: any;
@@ -169,7 +170,6 @@ class RoutesI extends Component<MyProps, unknown> {
               )
             }
           />
-          {/* <FeedContainer> */}
           <Route
             path="/home"
             element={
@@ -274,7 +274,11 @@ class RoutesI extends Component<MyProps, unknown> {
             element={
               this.props.currentUser &&
               Object.keys(this.props.currentUser)?.length ? (
-                <PostList />
+                <FeedContainer>
+                  <LeftSidebar />
+                  <PostList />
+                  <RightSidebar />
+                </FeedContainer>
               ) : (
                 <Navigate to="/signin" replace />
               )
@@ -302,7 +306,6 @@ class RoutesI extends Component<MyProps, unknown> {
               )
             }
           />
-          {/* </FeedContainer> */}
         </Routes>
       </Fragment>
     );

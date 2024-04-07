@@ -1,30 +1,29 @@
-import React, { useEffect } from "react";
-import { Box } from "@mui/system";
-import { Button, Grid, IconButton, Typography } from "@mui/material";
+import { useQuery } from "@apollo/client";
+import Avatar from "@material-ui/core/Avatar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import { Link as RouteLink } from "react-router-dom";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { Button, Fade, Grid, IconButton, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import Moment from "moment";
-import { Fade } from "@mui/material";
+import React, { useEffect } from "react";
+import { Link as RouteLink } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
-import { userProps } from "../index.types";
-import Post from "../components/Post/Post.component";
+import FollowModal from "../components/FollowModal/follow_modal.component";
+import Post from "../components/Post/Post";
 import UpdateUserProfile from "../components/UpdateUserProfile/update_user_profile.component";
+import cover from "../img/cover.jpeg";
+import noAvatar from "../img/no-avatar.png";
+import { userProps } from "../index.types";
 import {
   QUERY_FOLLOWERS,
   QUERY_FOLLOWINGS,
   QUERY_POSTS,
   QUERY_USER,
 } from "../utils/queries";
-import { useQuery } from "@apollo/client";
-import FollowModal from "../components/FollowModal/follow_modal.component";
-import cover from "../img/cover.jpeg";
-import { ProfileContainer } from "./styles/profile_page.styles";
 import ProfilePageLoading from "./loading/profile_page.loading";
-import noAvatar from "../img/no-avatar.png";
-import Avatar from "@material-ui/core/Avatar";
-import RefreshIcon from "@mui/icons-material/Refresh";
+import { ProfileContainer } from "./styles/profile_page.styles";
 
 const moodObj = (currentMood: string) => {
   switch (currentMood) {
@@ -88,7 +87,7 @@ const Profile = () => {
       | undefined = [...posts].sort(
       (a: any, b: any) =>
         new Moment(b.created_at).format("YYYYMMDDHHMMSS") -
-        new Moment(a.created_at).format("YYYYMMDDHHMMSS")
+        new Moment(a.created_at).format("YYYYMMDDHHMMSS"),
     );
   }
 
@@ -246,7 +245,7 @@ const Profile = () => {
                       >
                         (
                         {`${userData?.userProfile?.status} ${moodObj(
-                          currentMood
+                          currentMood,
                         )}`}
                         )
                       </Typography>
@@ -305,7 +304,7 @@ const Profile = () => {
                           sx={{ ml: "6px", color: "#555" }}
                         >
                           {Moment(userData?.userProfile?.birth_date).format(
-                            "MMMM Do YYYY"
+                            "MMMM Do YYYY",
                           )}
                         </Typography>
                       </Box>

@@ -8,7 +8,7 @@ import { userProps } from "../index.types";
 import { useAppSelector } from "../app/hooks";
 import MessageBoxLoading from "../components/MessageBox/message_box_loading.component";
 import { MessagesContainer } from "./styles/message_page.styles";
-import AddNewMessageModal from "../components/AddNewMessageModal/AddNewMessageModal.component";
+import AddNewMessageModal from "../components/AddNewMessageModal/AddNewMessageModal";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
 const MessagePage = () => {

@@ -1,42 +1,40 @@
-import React, { useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import HomeIcon from "@mui/icons-material/Home";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import NotificationAddIcon from "@mui/icons-material/NotificationAdd";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import TagIcon from "@mui/icons-material/Tag";
+import { Box, Button, Hidden, IconButton } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import HomeIcon from "@mui/icons-material/Home";
-import TagIcon from "@mui/icons-material/Tag";
-import { Button, Box, IconButton, Hidden } from "@mui/material";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import NotificationAddIcon from "@mui/icons-material/NotificationAdd";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import ChatIcon from "@mui/icons-material/Chat";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import AddPostModal from "../AddPostModal/add_post_modal.component";
-import { QUERY_FRIEND_REQUESTS } from "../../utils/queries";
 import { useAppSelector } from "../../app/hooks";
-import { useQuery } from "@apollo/client";
+import { QUERY_FRIEND_REQUESTS } from "../../utils/queries";
+import AddPostModal from "../AddPostModal/AddPostModal";
 
 type userProps = {
-  id: string,
-  handle: string,
-  avatar: string
-}
+  id: string;
+  handle: string;
+  avatar: string;
+};
 const LeftSidebar = () => {
-  const currentUser = useAppSelector(state => state.currentUser)
-  const { user }: { user: userProps } = currentUser
+  const currentUser = useAppSelector((state) => state.currentUser);
+  const { user }: { user: userProps } = currentUser;
   if (currentUser) {
     var { loading, error, data } = useQuery(QUERY_FRIEND_REQUESTS, {
       variables: {
-        id: user.id
+        id: user.id,
       },
-      pollInterval: 60000
+      pollInterval: 60000,
     });
   }
   if (data) {
-    var friendRequestsData = data.friendRequests
+    var friendRequestsData = data.friendRequests;
   }
 
   const [openModal, setOpenModal] = React.useState(false);
@@ -49,7 +47,7 @@ const LeftSidebar = () => {
 
   return (
     <>
-      <Box sx={{ minWidth: "40px" }} >
+      <Box sx={{ minWidth: "40px", backgroundColor: "#1d2330" }}>
         <List>
           <NavLink
             to="/home/feed"
@@ -73,7 +71,7 @@ const LeftSidebar = () => {
                 <ListItemText
                   primaryTypographyProps={{
                     fontSize: "18px",
-                    fontFamily: "inherit"
+                    fontFamily: "inherit",
                   }}
                   primary="HOME"
                 />
@@ -124,7 +122,7 @@ const LeftSidebar = () => {
                 <ListItemText
                   primaryTypographyProps={{
                     fontSize: "18px",
-                    fontFamily: "inherit"
+                    fontFamily: "inherit",
                   }}
                   primary="CRYPTO"
                 />
@@ -154,15 +152,19 @@ const LeftSidebar = () => {
                   // sx={{ minWidth: '0'}}
                   primaryTypographyProps={{
                     fontSize: "18px",
-                    fontFamily: "inherit"
+                    fontFamily: "inherit",
                   }}
                   secondaryTypographyProps={{
                     color: "red",
                     fontSize: "18px",
-                    fontWeight: "bold"
+                    fontWeight: "bold",
                   }}
                   primary="FOLLOW REQUESTS"
-                  secondary={friendRequestsData?.length ? `(${friendRequestsData?.length})` : ""}
+                  secondary={
+                    friendRequestsData?.length
+                      ? `(${friendRequestsData?.length})`
+                      : ""
+                  }
                 />
               </Hidden>
             </ListItem>
@@ -218,7 +220,7 @@ const LeftSidebar = () => {
                 <ListItemText
                   primaryTypographyProps={{
                     fontSize: "18px",
-                    fontFamily: "inherit"
+                    fontFamily: "inherit",
                   }}
                   primary="MESSAGES"
                 />
@@ -277,7 +279,7 @@ const LeftSidebar = () => {
                 <ListItemText
                   primaryTypographyProps={{
                     fontSize: "18px",
-                    fontFamily: "inherit"
+                    fontFamily: "inherit",
                   }}
                   primary="PROFILE"
                 />
@@ -307,7 +309,7 @@ const LeftSidebar = () => {
               onClick={handleModalOpen}
               sx={{
                 borderRadius: "28px",
-                marginLeft: "8px"
+                marginLeft: "8px",
                 // padding: "10px",
               }}
             >
@@ -317,13 +319,10 @@ const LeftSidebar = () => {
         </List>
       </Box>
       {openModal && (
-        <AddPostModal
-          open={openModal}
-          handleClose={handleModalClose}
-        />
+        <AddPostModal open={openModal} handleClose={handleModalClose} />
       )}
     </>
   );
-}
+};
 
 export default LeftSidebar;

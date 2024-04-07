@@ -1,37 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { Box } from "@mui/system";
-import { Button, Grid, IconButton, Typography, Fade } from "@mui/material";
+import { useMutation, useQuery } from "@apollo/client";
+import Avatar from "@material-ui/core/Avatar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import { Link as RouteLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import Post from "../Post/Post.component";
-import { useParams } from "react-router-dom";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { Button, Fade, Grid, IconButton, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import Moment from "moment";
+import React from "react";
+import { Link as RouteLink, useNavigate, useParams } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
+import noAvatar from "../../img/no-avatar.png";
+import { userProps } from "../../index.types";
+import { FRIEND_REQUEST, REMOVE_FOLLOWING } from "../../utils/mutations";
 import {
-  QUERY_USER,
-  QUERY_POSTS,
   QUERY_CHECK_FRIENDSHIP,
   QUERY_FOLLOWERS,
   QUERY_FOLLOWINGS,
   QUERY_FRIEND_REQUEST,
+  QUERY_POSTS,
+  QUERY_USER,
 } from "../../utils/queries";
-import { REMOVE_FOLLOWING, FRIEND_REQUEST } from "../../utils/mutations";
-import { useQuery, useMutation } from "@apollo/client";
-import Moment from "moment";
-import { userProps } from "../../index.types";
 import CryptoDoughnut from "../CryptoDoughnut/crypto_doughnut.component";
-import { useAppSelector } from "../../app/hooks";
+import FollowModal from "../FollowModal/follow_modal.component";
+import Post from "../Post/Post";
 import {
-  GuestDataContainer,
   CryptoCarouselContainer,
+  GuestDataContainer,
   GuestUserInfoContainer,
   UserBioContainer,
 } from "./guest_profile.styles";
 import GuestProfileLoading from "./guest_profile_loading.component";
-import Avatar from "@material-ui/core/Avatar";
-import noAvatar from "../../img/no-avatar.png";
-import FollowModal from "../FollowModal/follow_modal.component";
 
 const moodObj = (currentMood: string) => {
   switch (currentMood) {
@@ -129,7 +127,7 @@ const GuestProfile = () => {
         sender_id: userInfo?.id,
         receiver_id: profileId,
       },
-    }
+    },
   );
   // }
 
@@ -292,7 +290,7 @@ const GuestProfile = () => {
                       >
                         (
                         {`${userData?.userProfile?.status} ${moodObj(
-                          currentMood
+                          currentMood,
                         )}`}
                         )
                       </Typography>
@@ -328,7 +326,7 @@ const GuestProfile = () => {
                       <DateRangeIcon htmlColor="#555" />
                       <Typography sx={{ ml: "6px", color: "#555" }}>
                         {Moment(userData?.userProfile?.birth_date).format(
-                          "MMMM Do YYYY"
+                          "MMMM Do YYYY",
                         )}
                       </Typography>
                     </Box>

@@ -1,31 +1,32 @@
-import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
 import {
   ApolloClient,
-  InMemoryCache,
   ApolloProvider,
+  InMemoryCache,
   createHttpLink,
 } from "@apollo/client";
-import { store } from "./redux/store";
+import { render } from "react-dom";
 import { Provider } from "react-redux";
-import App from "./app/App.jsx";
+import { BrowserRouter } from "react-router-dom";
+import App from "./app/App";
 import "./index.css";
+import { store } from "./redux/store";
 
 export const client = new ApolloClient({
   link: createHttpLink({
-    uri: `${import.meta.env.REACT_APP_BASE_URL}/graphql`,
+    uri: `${import.meta.env.VITE_BASE_URL}/graphql`,
   }),
   cache: new InMemoryCache(),
   connectToDevTools: true,
 });
 
-const root = createRoot(document.getElementById("root")!);
-root.render(
+const root = document.getElementById("root");
+render(
   <ApolloProvider client={client}>
     <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
-  </ApolloProvider>
+  </ApolloProvider>,
+  root,
 );

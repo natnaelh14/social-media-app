@@ -1,28 +1,33 @@
-import { Grid, Input } from "@mui/material";
+import { useMutation } from "@apollo/client";
+import Avatar from "@material-ui/core/Avatar";
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  IconButton,
+  Input,
+  Typography,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import { useState } from "react";
 import { useAppSelector } from "../../app/hooks";
+import noAvatar from "../../img/no-avatar.png";
 import { userProps } from "../../index.types";
 import { ADD_POST } from "../../utils/mutations";
-import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { Box } from "@mui/system";
-import noAvatar from "../../img/no-avatar.png";
-import Avatar from "@material-ui/core/Avatar";
 
 type ModalProps = {
-  open: boolean,
-  handleClose: () => void,
-}
+  open: boolean;
+  handleClose: () => void;
+};
 
-const AddPostModal = ({
-  open,
-  handleClose,
-}: ModalProps) => {
-
+const AddPostModal = ({ open, handleClose }: ModalProps) => {
   const currentUser = useAppSelector((state) => state.currentUser);
-  const { user } = currentUser
-  const userInfo: userProps = user
+  const { user } = currentUser;
+  const userInfo: userProps = user;
 
   const [postText, setPostText] = useState("");
   const [addPost, { data }] = useMutation(ADD_POST);
@@ -31,17 +36,23 @@ const AddPostModal = ({
     await addPost({
       variables: {
         user_id: userInfo.id,
-        text: postText
-      }
-    })
+        text: postText,
+      },
+    });
     setPostText("");
     handleClose();
-  }
+  };
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
       <DialogTitle>
-        <Typography fontFamily='inherit' textAlign='center' style={{ fontSize: "20px" }}>ADD POST</Typography>
+        <Typography
+          fontFamily="inherit"
+          textAlign="center"
+          style={{ fontSize: "20px" }}
+        >
+          ADD POST
+        </Typography>
         <Box textAlign="right" borderBottom="1px solid #ccc">
           <IconButton onClick={handleClose}>
             <CloseIcon />
@@ -50,9 +61,13 @@ const AddPostModal = ({
       </DialogTitle>
       <DialogContent style={{ height: "auto" }}>
         <Box padding="1rem 1rem 0 1rem" borderBottom="1px solid #ccc">
-          <Grid >
+          <Grid>
             <Grid item>
-              <Avatar alt="user-message-image" style={{ width: "60px", height: "60px" }} src={userInfo.avatar ? userInfo.avatar : noAvatar} />
+              <Avatar
+                alt="user-message-image"
+                style={{ width: "60px", height: "60px" }}
+                src={userInfo.avatar ? userInfo.avatar : noAvatar}
+              />
             </Grid>
             <Grid item>
               <Box padding=".5rem 0">
@@ -94,7 +109,7 @@ const AddPostModal = ({
         </Button>
       </DialogActions>
     </Dialog>
-  )
+  );
 };
 
 export default AddPostModal;

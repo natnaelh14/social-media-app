@@ -1,6 +1,7 @@
+// @ts-nocheck
 import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
 import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEFROU_qKelvSPkEZBmCCc5FxeGruirTo",
@@ -21,33 +22,34 @@ export const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 // We want to trigger the google pop whenever we use the GoogleAuthProvider
 provider.setCustomParameters({ prompt: "select_account" });
-export const signInWithGoogle = () => auth.signInWithPopup(provider).catch(function (error) {
-  console.error(error);
-});
+export const signInWithGoogle = () =>
+  auth.signInWithPopup(provider).catch(function (error) {
+    console.error(error);
+  });
 
 //GITHUB
 const providerTwo = new firebase.auth.GithubAuthProvider();
 // We want to trigger the google pop whenever we use the GoogleAuthProvider
 providerTwo.setCustomParameters({ prompt: "select_account" });
-export const signInWithGithub = () => auth.signInWithPopup(providerTwo).catch(function (error) {
-  console.error(error);
-});
+export const signInWithGithub = () =>
+  auth.signInWithPopup(providerTwo).catch(function (error) {
+    console.error(error);
+  });
 
 //TWITTER
 const providerThree = new firebase.auth.TwitterAuthProvider();
 // We want to trigger the google pop whenever we use the GoogleAuthProvider
 providerThree.setCustomParameters({ prompt: "select_account" });
-export const signInWithTwitter = () => auth.signInWithPopup(providerThree).catch(function (error) {
-  console.error(error);
-});
+export const signInWithTwitter = () =>
+  auth.signInWithPopup(providerThree).catch(function (error) {
+    console.error(error);
+  });
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   //If the userAuth object doesn't exist, we don't want to run the function
   if (!userAuth) return;
-
   // Get a reference to the place in the database where the user is stored
   const userRef = firestore.doc(`users/${userAuth.uid}`);
-
   const snapshot = await userRef.get();
   //We are creating the user data.
   if (!snapshot.exists) {

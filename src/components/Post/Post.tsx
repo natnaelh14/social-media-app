@@ -179,7 +179,8 @@ const Post = ({ postId, text, userId, postTime, refetchPosts }: postProps) => {
         <Box
           padding="1rem"
           width="100%"
-          backgroundColor="#151a27"
+          borderRadius="20px"
+          border="1px solid #e5e7eb"
           sx={{
             "@media (max-width: 1000px)": {
               padding: "0.25rem",

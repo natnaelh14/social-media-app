@@ -65,7 +65,6 @@ const RightSidebar = () => {
           <Box
             width="100%"
             borderRadius="28px"
-            backgroundColor="#1d2330"
             sx={{
               "&:hover": {
                 background: "white",
@@ -94,8 +93,8 @@ const RightSidebar = () => {
           </Box>
           <Box
             sx={{
-              background: "#1d2330",
               borderRadius: "20px",
+              border: "1px solid #e5e7eb",
               padding: "10px 20px",
               margin: "1rem 0",
               minHeight: "600px",

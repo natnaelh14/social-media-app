@@ -13,9 +13,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
-import { QUERY_FRIEND_REQUESTS } from "../../utils/queries";
-import AddPostModal from "../AddPostModal/AddPostModal";
+import { useAppSelector } from "~/app/hooks";
+import AddPostModal from "~/components/AddPostModal/AddPostModal";
+import { QUERY_FRIEND_REQUESTS } from "~/utils/queries";
 
 type userProps = {
   id: string;
@@ -47,7 +47,7 @@ const LeftSidebar = () => {
 
   return (
     <>
-      <Box sx={{ minWidth: "40px", backgroundColor: "#1d2330" }}>
+      <Box sx={{ minWidth: "40px" }}>
         <List>
           <NavLink
             to="/home/feed"

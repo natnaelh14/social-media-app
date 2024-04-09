@@ -20,7 +20,7 @@ const SignIn = () => {
       <Parallax pages={3}>
         <ParallaxLayer
           offset={0}
-          speed={0.5}
+          speed={1}
           factor={1}
           className="flex items-center justify-center lg:justify-end"
           style={{
@@ -28,7 +28,7 @@ const SignIn = () => {
             backgroundSize: "cover",
           }}
         >
-          <div className="flex flex-col items-center p-20 gap-4 bg-[#001219]/25 lg:backdrop-blur-0 lg:bg-transparent backdrop-blur-md rounded-2xl">
+          <div className="flex flex-col items-center p-20 gap-4  lg:backdrop-blur-0 lg:bg-transparent backdrop-blur-md rounded-2xl">
             <img src="/logo.svg" alt="" />
             <h1 className="text-center text-white lg:text-4xl">
               Welcome to Crypto Connect
@@ -52,7 +52,7 @@ const SignIn = () => {
         </ParallaxLayer>
         <ParallaxLayer
           offset={1}
-          speed={0.5}
+          speed={1}
           factor={1}
           className="flex items-center justify-center lg:justify-end"
           style={{
@@ -64,7 +64,7 @@ const SignIn = () => {
         >
           <AboutUs />
         </ParallaxLayer>
-        <ParallaxLayer offset={2} speed={0.5} factor={1}>
+        <ParallaxLayer offset={2} speed={1} factor={1}>
           <Footer />
         </ParallaxLayer>
       </Parallax>

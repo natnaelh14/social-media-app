@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { createMemoryHistory } from "history";
-import { Component, Fragment } from "react";
+import { Component } from "react";
 import { connect } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import FriendRequests from "~/components/FriendRequests/friend_requests.component";
@@ -145,7 +145,7 @@ class RoutesI extends Component<MyProps, unknown> {
 
   render() {
     return (
-      <Fragment>
+      <div>
         <Header />
         <Routes>
           <Route
@@ -307,7 +307,7 @@ class RoutesI extends Component<MyProps, unknown> {
             }
           />
         </Routes>
-      </Fragment>
+      </div>
     );
   }
 }

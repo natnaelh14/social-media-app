@@ -6,7 +6,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { Button, Fade, Grid, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import Moment from "moment";
+import moment from "moment";
 import React, { useEffect } from "react";
 import { Link as RouteLink } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
@@ -84,10 +84,8 @@ const Profile = () => {
           text: string;
           created_at: Date;
         }>
-      | undefined = [...posts].sort(
-      (a: any, b: any) =>
-        new Moment(b.created_at).format("YYYYMMDDHHMMSS") -
-        new Moment(a.created_at).format("YYYYMMDDHHMMSS"),
+      | undefined = [...posts].sort((a: any, b: any) =>
+      moment(b.created_at).diff(moment(a.created_at), "milliseconds"),
     );
   }
 
@@ -303,7 +301,7 @@ const Profile = () => {
                           fontFamily="inherit"
                           sx={{ ml: "6px", color: "#555" }}
                         >
-                          {Moment(userData?.userProfile?.birth_date).format(
+                          {moment(userData?.userProfile?.birth_date).format(
                             "MMMM Do YYYY",
                           )}
                         </Typography>
@@ -361,7 +359,7 @@ const Profile = () => {
                       marginRight="1rem"
                     >
                       Member Since{" "}
-                      {Moment(userData?.userProfile?.created_at).format("YYYY")}
+                      {moment(userData?.userProfile?.created_at).format("YYYY")}
                     </Typography>
                   </Box>
                 </Box>

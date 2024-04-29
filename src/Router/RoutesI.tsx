@@ -78,7 +78,7 @@ class RoutesI extends Component<MyProps, unknown> {
         } catch (e) {
           console.log("Unable to create a user account");
         }
-        const userRef: any = await createUserProfileDocument(userAuth);
+        const userRef: any = await createUserProfileDocument(userAuth, {});
         //From this, we are going to get back the first state from our data.
         userRef.onSnapshot(async (snapShot: any) => {
           //We actually don't get any data, until we use the data method.
@@ -186,7 +186,11 @@ class RoutesI extends Component<MyProps, unknown> {
             element={
               this.props.currentUser &&
               Object.keys(this.props.currentUser)?.length ? (
-                <MessagePage />
+                <FeedContainer>
+                  <LeftSidebar />
+                  <MessagePage />
+                  <RightSidebar />
+                </FeedContainer>
               ) : (
                 <Navigate to="/signin" replace />
               )
@@ -208,7 +212,11 @@ class RoutesI extends Component<MyProps, unknown> {
             element={
               this.props.currentUser &&
               Object.keys(this.props.currentUser)?.length ? (
-                <ProfilePage />
+                <FeedContainer>
+                  <LeftSidebar />
+                  <ProfilePage />
+                  <RightSidebar />
+                </FeedContainer>
               ) : (
                 <Navigate to="/signin" replace />
               )
@@ -241,7 +249,11 @@ class RoutesI extends Component<MyProps, unknown> {
             element={
               this.props.currentUser &&
               Object.keys(this.props.currentUser)?.length ? (
-                <CryptoPage />
+                <FeedContainer>
+                  <LeftSidebar />
+                  <CryptoPage />
+                  <RightSidebar />
+                </FeedContainer>
               ) : (
                 <Navigate to="/signin" replace />
               )
@@ -263,7 +275,11 @@ class RoutesI extends Component<MyProps, unknown> {
             element={
               this.props.currentUser &&
               Object.keys(this.props.currentUser)?.length ? (
-                <ChatPage />
+                <FeedContainer>
+                  <LeftSidebar />
+                  <ChatPage />
+                  <RightSidebar />
+                </FeedContainer>
               ) : (
                 <Navigate to="/signin" replace />
               )
@@ -289,7 +305,11 @@ class RoutesI extends Component<MyProps, unknown> {
             element={
               this.props.currentUser &&
               Object.keys(this.props.currentUser)?.length ? (
-                <FriendRequests />
+                <FeedContainer>
+                  <LeftSidebar />
+                  <FriendRequests />
+                  <RightSidebar />
+                </FeedContainer>
               ) : (
                 <Navigate to="/signin" replace />
               )

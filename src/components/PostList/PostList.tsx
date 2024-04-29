@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { Box, Fade, IconButton } from "@mui/material";
-import Moment from "moment";
+import moment from "moment";
 import React, { useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { userProps } from "../../index.types";
@@ -39,10 +39,8 @@ const PostList: React.FC = () => {
           text: string;
           created_at: Date;
         }>
-      | undefined = [...postsByFollowing].sort(
-      (a: any, b: any) =>
-        new Moment(b.created_at).format("YYYYMMDDHHMMSS") -
-        new Moment(a.created_at).format("YYYYMMDDHHMMSS"),
+      | undefined = [...postsByFollowing].sort((a: any, b: any) =>
+      moment(b.created_at).diff(moment(a.created_at), "milliseconds"),
     );
   }
 

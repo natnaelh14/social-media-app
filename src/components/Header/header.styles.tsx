@@ -1,11 +1,12 @@
-import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 
 export const HeaderContainer = styled.div`
   height: 70px;
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 25px;
   position: relative;
   @media (max-width: 1400px) {
@@ -21,9 +22,11 @@ export const ConnectionContainer = styled.div`
 
 export const LogoContainer = styled(NavLink)`
   height: 100%;
-  width: 70px;
+  /* width: 70px; */
   padding: 25px;
   text-decoration: none;
+  display: flex;
+  align-items: center;
 `;
 
 export const OptionsContainer = styled.div`

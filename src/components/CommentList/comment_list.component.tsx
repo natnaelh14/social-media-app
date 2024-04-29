@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import { Grid, IconButton, Input, Button } from "@mui/material";
+import { useMutation, useQuery } from "@apollo/client";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { Button, Grid, IconButton, Input } from "@mui/material";
 import { Box } from "@mui/system";
+import moment from "moment"; // Import Moment type from Moment.js
+import React, { useState } from "react";
+import { ADD_COMMENT } from "../../utils/mutations";
 import { QUERY_COMMENTS } from "../../utils/queries";
 import Comment from "../Comment/comment.component";
-import Moment from "moment";
-import { ADD_COMMENT } from "../../utils/mutations";
-import RefreshIcon from "@mui/icons-material/Refresh";
 
 type postListProps = {
   postId: number;
@@ -25,20 +25,11 @@ const CommentList = ({ postId, userId }: postListProps) => {
   } = useQuery(QUERY_COMMENTS, {
     variables: { post_id: postId },
   });
+  let commentArray;
   if (data) {
     const { comments } = data;
-    var commentArray:
-      | Array<{
-          id: number;
-          post_id: number;
-          user_id: string;
-          text: string;
-          created_at: Date;
-        }>
-      | undefined = [...comments].sort(
-      (a: any, b: any) =>
-        new Moment(b.created_at).format("YYYYMMDDHHMMSS") -
-        new Moment(a.created_at).format("YYYYMMDDHHMMSS")
+    commentArray = [...comments].sort((a: any, b: any) =>
+      moment(b.created_at).diff(moment(a.created_at), "milliseconds"),
     );
   }
 

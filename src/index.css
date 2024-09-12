@@ -9,6 +9,9 @@
   h2 {
     @apply text-2xl font-bold;
   }
+  :root {
+    --radius: 0.5rem;
+  }
 }
 
 body {

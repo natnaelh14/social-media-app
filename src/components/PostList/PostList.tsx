@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { Box, Fade, IconButton } from "@mui/material";
 import moment from "moment";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { userProps } from "../../index.types";
 import { QUERY_POSTS_BY_FOLLOWING } from "../../utils/queries";
@@ -11,7 +11,7 @@ import Post from "../Post/Post";
 import PostLoading from "../Post/post_loading.component";
 import { PostListContainer } from "./PostList.styles";
 
-const PostList: React.FC = () => {
+const PostList = () => {
   const currentUser = useAppSelector((state) => state.currentUser);
   const {
     error: currentUserError,
@@ -29,17 +29,17 @@ const PostList: React.FC = () => {
       user_id: userInfo.id,
     },
   });
-
+  let postsArray:
+    | Array<{
+        id: number;
+        user_id: string;
+        text: string;
+        created_at: Date;
+      }>
+    | undefined;
   if (data) {
     const { postsByFollowing } = data;
-    var postsArray:
-      | Array<{
-          id: number;
-          user_id: string;
-          text: string;
-          created_at: Date;
-        }>
-      | undefined = [...postsByFollowing].sort((a: any, b: any) =>
+    postsArray = [...postsByFollowing].sort((a: any, b: any) =>
       moment(b.created_at).diff(moment(a.created_at), "milliseconds"),
     );
   }

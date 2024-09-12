@@ -48,8 +48,9 @@ const Post = ({ postId, text, userId, postTime, refetchPosts }: postProps) => {
       id: userId,
     },
   });
+  let userProfile;
   if (data) {
-    var { userProfile } = data;
+    userProfile = data.userProfile;
   }
   const {
     data: likeData,
@@ -270,32 +271,22 @@ const Post = ({ postId, text, userId, postTime, refetchPosts }: postProps) => {
                       {text}
                     </Typography>
                   </Box>
-                  <Box sx={{ display: "flex", flexDirection: "row" }}>
-                    <Typography
-                      fontFamily="inherit"
-                      sx={{
-                        fontSize: "15px",
-                        color: "#555",
-                        marginRight: "1rem",
-                      }}
-                    >
+                  <div className="flex flex-row gap-2">
+                    <span className="text-[15px] text-[#555] mr-4">
                       {likeList ? likeList.length : 0}
                       <FavoriteIcon
                         style={{ color: "#e25349" }}
                         fontSize="small"
                       />
-                    </Typography>
-                    <Typography
-                      fontFamily="inherit"
-                      sx={{ fontSize: "15px", color: "#555" }}
-                    >
+                    </span>
+                    <span className="text-[15px] text-[#555]">
                       {dislikeList ? dislikeList.length : 0}
                       <ThumbDownIcon
                         style={{ color: "#e25349" }}
                         fontSize="small"
                       />
-                    </Typography>
-                  </Box>
+                    </span>
+                  </div>
                 </Grid>
               </Grid>
               <Box

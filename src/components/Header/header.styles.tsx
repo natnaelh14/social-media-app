@@ -7,8 +7,9 @@ export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  /* margin-bottom: 25px; */
   position: relative;
+  background-color: #f9fafb;
   @media (max-width: 1400px) {
     margin-bottom: 0px;
   }
@@ -32,8 +33,7 @@ export const LogoContainer = styled(NavLink)`
 export const OptionsContainer = styled.div`
   height: 100%;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: center;
   & > :last-child {
     margin-left: 15px;
   }

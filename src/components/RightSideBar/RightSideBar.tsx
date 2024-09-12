@@ -38,16 +38,17 @@ const RightSidebar = () => {
   } = useQuery(QUERY_USERS_LIST, {
     variables: { handle: searchText },
   });
+  let usersArray:
+    | Array<{
+        id: string;
+        handle: string;
+        avatar: string;
+        isActive: string;
+      }>
+    | undefined;
   if (data) {
     const { usersList } = data;
-    var usersArray:
-      | Array<{
-          id: string;
-          handle: string;
-          avatar: string;
-          isActive: string;
-        }>
-      | undefined = usersList;
+    usersArray = usersList;
   }
 
   const pending =

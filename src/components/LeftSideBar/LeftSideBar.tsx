@@ -47,7 +47,14 @@ const LeftSidebar = () => {
 
   return (
     <>
-      <Box sx={{ minWidth: "40px" }}>
+      <Box
+        sx={{
+          minWidth: "0px",
+          "@media (max-width: 1197px)": {
+            minWidth: "0px",
+          },
+        }}
+      >
         <List>
           <NavLink
             to="/home/feed"
@@ -73,7 +80,7 @@ const LeftSidebar = () => {
                     fontSize: "18px",
                     fontFamily: "inherit",
                   }}
-                  primary="HOME"
+                  primary="Home"
                 />
               </Hidden>
             </ListItem>
@@ -124,7 +131,7 @@ const LeftSidebar = () => {
                     fontSize: "18px",
                     fontFamily: "inherit",
                   }}
-                  primary="CRYPTO"
+                  primary="Crypto"
                 />
               </Hidden>
             </ListItem>
@@ -159,7 +166,7 @@ const LeftSidebar = () => {
                     fontSize: "18px",
                     fontWeight: "bold",
                   }}
-                  primary="FOLLOW REQUESTS"
+                  primary="Requests"
                   secondary={
                     friendRequestsData?.length
                       ? `(${friendRequestsData?.length})`
@@ -169,35 +176,6 @@ const LeftSidebar = () => {
               </Hidden>
             </ListItem>
           </NavLink>
-          {/* <NavLink
-            to={`/home/notifications`}
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              backgroundColor: "inherit",
-            }}
-          >
-            <ListItem
-              button
-              sx={{
-                borderRadius: "28px",
-                // margin: ".5rem 0",
-              }}
-            >
-              <ListItemIcon>
-                <NotificationsNoneIcon fontSize="medium" color="action" />
-              </ListItemIcon>
-              <Hidden lgDown>
-                <ListItemText
-                  primaryTypographyProps={{
-                    fontSize: "18px",
-                  }}
-                  primary="Notifications"
-                />
-              </Hidden>
-            </ListItem>
-          </NavLink> */}
-
           <NavLink
             to={`/home/messages`}
             style={{
@@ -222,41 +200,11 @@ const LeftSidebar = () => {
                     fontSize: "18px",
                     fontFamily: "inherit",
                   }}
-                  primary="MESSAGES"
+                  primary="Messages"
                 />
               </Hidden>
             </ListItem>
           </NavLink>
-
-          {/* <NavLink
-            to={`/home/chat`}
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              backgroundColor: "inherit",
-            }}
-          >
-            <ListItem
-              button
-              sx={{
-                borderRadius: "28px",
-                // margin: ".5rem 0",
-              }}
-            >
-              <ListItemIcon>
-                <ChatIcon fontSize="medium" color="action" />
-              </ListItemIcon>
-              <Hidden lgDown>
-                <ListItemText
-                  primaryTypographyProps={{
-                    fontSize: "18px",
-                  }}
-                  primary="Chat"
-                />
-              </Hidden>
-            </ListItem>
-          </NavLink> */}
-
           <NavLink
             to={`/home/profile`}
             style={{
@@ -281,7 +229,7 @@ const LeftSidebar = () => {
                     fontSize: "18px",
                     fontFamily: "inherit",
                   }}
-                  primary="PROFILE"
+                  primary="Profile"
                 />
               </Hidden>
             </ListItem>
@@ -294,6 +242,7 @@ const LeftSidebar = () => {
               sx={{
                 borderRadius: "28px",
                 padding: "10px",
+                marginTop: "10px",
                 fontFamily: "inherit",
                 background: "black",
                 "&:hover": {

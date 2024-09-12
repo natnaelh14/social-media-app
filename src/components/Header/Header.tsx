@@ -30,7 +30,7 @@ const Header = (props: any) => {
         {!(loading || error) && user && (
           <OptionsContainer>
             <OptionTag onClick={() => auth.signOut()}>
-              <span>SIGN OUT</span>
+              <span>Sign Out</span>
             </OptionTag>
           </OptionsContainer>
         )}

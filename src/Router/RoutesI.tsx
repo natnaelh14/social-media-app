@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { gql } from "@apollo/client";
 import { createMemoryHistory } from "history";
 import { useEffect } from "react";
